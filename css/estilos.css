@@ -160,6 +160,8 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    /* Centrado vertical PERFECTO */
     transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.4s;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -299,20 +301,22 @@ main {
 }
 
 /* Botón OJO ocultar imagen */
+/* Botón OJO ocultar imagen - FUERA de la imagen */
 .btn-toggle-img {
     position: absolute;
-    top: 10px;
-    right: 35px;
-    /* Ajustado para que no estorbe en el círculo */
+    top: -15px;
+    /* Salir un poco por arriba */
+    right: -10px;
+    /* Salir un poco por la derecha */
     background: var(--white);
-    border: 2px solid var(--secondary);
+    border: 3px solid var(--secondary);
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.6rem;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 20;
     transition: transform 0.2s;
     display: flex;
     align-items: center;
@@ -358,6 +362,24 @@ main {
 .btn:active {
     transform: translateY(6px);
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen de pista en juego de completar palabra */
+.spelling-hint-img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 4px solid white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+/* Efectos de Serpentina para el confeti */
+.confetti.serpentine {
+    width: 6px;
+    height: 25px;
+    border-radius: 2px;
 }
 
 .btn-primary {
@@ -424,6 +446,26 @@ main {
     color: white;
 }
 
+/* Botón flotante para salir del juego (ya que no hay header) */
+.btn-back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    padding: 8px 15px;
+    font-size: 1rem;
+    border-radius: 20px;
+    background: white;
+    color: var(--secondary-web);
+    border: 2px solid var(--secondary);
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn-back:active {
+    transform: scale(0.95);
+    box-shadow: none;
+}
+
 /* --- ESTILOS PARA JUEGOS --- */
 .game-instruction {
     font-size: 1.8rem;
@@ -438,13 +480,15 @@ main {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* JUEGO 1 & 2: Opción de respuesta */
+/* JUEGO 1 & 2: Opción de respuesta - PIRÁMIDE INVERTIDA */
 .game-options {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .game-option {
@@ -454,9 +498,18 @@ main {
     cursor: pointer;
     transition: transform 0.2s;
     background: white;
-    padding: 15px;
-    border-radius: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.1);
+    border: 4px solid transparent;
+    /* Base más ancha para las de arriba */
+    flex: 1 1 40%;
+}
+
+/* El tercer elemento (si son 3) que quede centrado y grande abajo */
+.game-option:last-child:nth-child(odd) {
+    flex: 0 1 60%;
+    /* Más ancho si está solo */
 }
 
 .game-option:active {
@@ -464,10 +517,10 @@ main {
 }
 
 .game-option img {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    /* Aumentado de 120px */
+    height: 140px;
     border-radius: 50%;
-    /* Círculo perfecto */
     object-fit: cover;
     border: 4px solid var(--white);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -624,6 +677,9 @@ main {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    /* Permitir que baje si es muy larga */
+    justify-content: center;
 }
 
 .letter-slot {
@@ -754,9 +810,9 @@ main {
 
     /* --- MODO SUPER COMPACTO (MOBILE) --- */
     .screen {
-        padding: 5px;
-        justify-content: space-between;
-        /* Distribuye espacio */
+        padding: 10px;
+        justify-content: center;
+        /* Centrado vertical cuando no hay header */
     }
 
     /* REDUCIR ENCABEZADO */
@@ -794,11 +850,21 @@ main {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        /* Centrar contenido */
-        max-height: 60vh;
-        /* Límite para que no empuje controles */
-        overflow-y: auto;
-        /* Scroll interno si es MUY necesario */
+        /* Centrar contenido verticalmente */
+        max-height: 85vh;
+        /* Permitir más altura si header se oculta */
+        background: var(--white);
+        position: relative;
+        /* Para el botón de ojo */
+    }
+
+    /* Ocultar header si estamos jugando */
+    body.playing header {
+        display: none !important;
+    }
+
+    body.playing main {
+        height: 100dvh;
     }
 
     .card-image-area {
@@ -952,3 +1018,4 @@ main {
 .toast.show {
     transform: translateX(-50%) translateY(0);
 }
+
