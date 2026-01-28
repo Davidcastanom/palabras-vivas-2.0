@@ -106,11 +106,12 @@
             <div class="flashcard-container">
                 <!-- La tarjeta interactiva -->
                 <div class="flashcard" id="flashcard-element">
+                    <!-- Botón para ocultar/mostrar imagen - Ahora fuera del área de recorte -->
+                    <button class="btn-toggle-img" onclick="app.toggleImage()"
+                        title="Ocultar/Mostrar imagen">👁️</button>
+
                     <div class="card-image-area">
                         <img id="card-image" src="" alt="Imagen">
-                        <!-- Botón para ocultar/mostrar imagen -->
-                        <button class="btn-toggle-img" onclick="app.toggleImage()"
-                            title="Ocultar/Mostrar imagen">👁️</button>
                     </div>
                     <div class="card-word" id="card-word">PALABRA</div>
                     <div class="card-syllables" id="card-syllables">Pa-la-bra</div>
