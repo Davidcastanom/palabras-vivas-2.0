@@ -230,6 +230,11 @@ const app = {
     gameFlippedCards: [], // Cartas volteadas en memoria
     gameMatchedPairs: 0,  // Pares encontrados en memoria
 
+    // Progreso de Ronda (para recompensas)
+    roundWins: 0,
+    cardsPerRound: 5, // Mostrar premio grande cada 5 aciertos
+
+
     // Control de audio - Para detener sonidos anteriores
     currentAudioTimeouts: [], // Array de timeouts activos
     currentAudioObjects: [],  // Array de objetos Audio activos
@@ -308,6 +313,14 @@ const app = {
         setTimeout(() => {
             target.classList.add('active');
         }, 50);
+
+        // Ocultar HEADER si es pantalla de juego (screen-game-play)
+        if (screenId === 'screen-game-play') {
+            document.body.classList.add('playing');
+        } else {
+            document.body.classList.remove('playing');
+            this.roundWins = 0; // Reiniciar contador de ronda al salir
+        }
     },
 
     goHome: function () {
@@ -1119,7 +1132,7 @@ const app = {
 
         // 2. Instrucción
         const instruction = document.getElementById('game-instruction');
-        instruction.innerHTML = `✍️ Completa la palabra: <br><img src="${this.gameTarget.img}" style="width:100px; border-radius:15px; margin-top:10px;">`;
+        instruction.innerHTML = `✍️ Completa la palabra: <br><img src="${this.gameTarget.img}" class="spelling-hint-img">`;
         this.speak("Completa la palabra " + word);
 
         // 3. Lógica de huecos (ocultar 1 o 2 letras aleatorias)
@@ -1298,9 +1311,13 @@ const app = {
         // Guardar en memoria del navegador
         localStorage.setItem('palabraVivaStars', this.stars);
 
-        // Mostrar modal cada 5 estrellas
-        if (this.stars % 5 === 0) {
+        // Control de Ronda: Mostrar modal solo al completar una "ronda" (ej: 5 aciertos)
+        this.roundWins++;
+        if (this.roundWins >= this.cardsPerRound) {
             document.getElementById('reward-modal').classList.add('show');
+            this.playVictorySound(); // Sonido especial extra
+            this.createConfetti();   // Confeti extra
+            this.roundWins = 0;      // Reiniciar ronda
         }
     },
 
@@ -1364,17 +1381,26 @@ const app = {
         for (let i = 0; i < confettiCount; i++) {
             setTimeout(() => {
                 const confetti = document.createElement('div');
-                confetti.className = 'confetti';
+                const isSerpentine = Math.random() > 0.7; // 30% serpentinas
+
+                confetti.className = isSerpentine ? 'confetti serpentine' : 'confetti';
                 confetti.style.left = Math.random() * 100 + '%';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.animationDelay = Math.random() * 0.5 + 's';
                 confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+                // Variar el tamaño de las serpentinas
+                if (isSerpentine) {
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 30 + 20) + 'px';
+                }
+
                 document.body.appendChild(confetti);
 
                 // Remover después de la animación
                 setTimeout(() => {
                     confetti.remove();
-                }, 3000);
+                }, 4000); // Un poco más largo para serpentinas
             }, i * 20);
         }
     },
