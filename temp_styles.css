@@ -1,0 +1,222 @@
+/* --- RESPONSIVE OPTIMIZADO PARA MÓVIL/TABLET --- */
+@media (max-width: 768px) {
+
+    /* Ajustes para Tablets */
+    .flashcard {
+        padding: 20px;
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .card-image-area {
+        width: 220px;
+        height: 220px;
+    }
+
+    .card-word {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* --- MODO SUPER COMPACTO (MOBILE) --- */
+    .screen {
+        padding: 5px;
+        justify-content: space-between;
+        /* Distribuye espacio */
+    }
+
+    /* REDUCIR ENCABEZADO */
+    header {
+        padding: 5px 15px;
+        margin: 0;
+        border-radius: 0 0 15px 15px;
+        flex-shrink: 0;
+        /* No encoger más de lo necesario */
+    }
+
+    .logo-emoji {
+        font-size: 1.5rem;
+    }
+
+    .logo-title {
+        font-size: 1.2rem;
+    }
+
+    .star-counter {
+        padding: 4px 12px;
+        font-size: 0.9rem;
+    }
+
+    /* TARJETA PRINCIPAL (Lo que ocupa más espacio) */
+    .flashcard {
+        padding: 10px;
+        width: 100%;
+        margin: 5px auto;
+        border-width: 3px;
+        border-radius: 25px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        flex: 1;
+        /* Ocupa el espacio disponible */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Centrar contenido */
+        max-height: 60vh;
+        /* Límite para que no empuje controles */
+        overflow-y: auto;
+        /* Scroll interno si es MUY necesario */
+    }
+
+    .card-image-area {
+        width: 140px;
+        /* MUCHO MÁS PEQUEÑO */
+        height: 140px;
+        border-width: 3px;
+        margin-bottom: 15px;
+        flex-shrink: 0;
+    }
+
+    .card-word {
+        font-size: 2rem;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .card-syllables {
+        font-size: 1.3rem;
+        padding: 2px 12px;
+        margin-top: 5px;
+    }
+
+    /* BOTONES DE CONTROL (Pegados abajo) */
+    .card-controls {
+        padding: 5px 10px;
+        width: 100%;
+        margin-top: 5px;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.95);
+        /* Más sólido */
+    }
+
+    .btn-nav {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+        box-shadow: 0 3px 0 #4834d4;
+    }
+
+    .btn-mic {
+        font-size: 1rem;
+        margin: 5px auto;
+        padding: 8px;
+        width: 90%;
+    }
+
+    /* RECOMPENSA COMPACTA */
+    .modal-content {
+        width: 85%;
+        padding: 20px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .big-star {
+        font-size: 3rem;
+    }
+
+    /* JUEGOS COMPACTOS */
+    .game-options {
+        gap: 10px;
+    }
+
+    .game-option {
+        padding: 8px;
+    }
+
+    .game-option img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .game-option div {
+        font-size: 0.9rem !important;
+    }
+}
+
+/* --- ESTILOS DEL MODAL (Globales) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 5px solid var(--accent);
+    max-width: 90%;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+.big-star {
+    font-size: 5rem;
+    margin-bottom: 10px;
+    animation: spin 3s infinite linear;
+    display: block;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--dark);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: bold;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+    z-index: 3000;
+    text-align: center;
+    width: max-content;
+    max-width: 90%;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}

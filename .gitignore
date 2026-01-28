@@ -1,0 +1,16 @@
+# System files
+thumbs.db
+desktop.ini
+.DS_Store
+
+# Node modules (if added later)
+node_modules/
+npm-debug.log
+
+# IDE files
+.vscode/
+.idea/
+
+# Dist/Build folders
+dist/
+build/
