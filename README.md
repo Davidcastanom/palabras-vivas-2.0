@@ -1,4 +1,4 @@
-# 🦜 Palabras Vivas
+Palabras Vivas
 
 **Palabras Vivas** es una aplicación web educativa e interactiva diseñada para ayudar a los niños a aprender palabras, sílabas y asociaciones mediante juegos divertidos.
 
@@ -18,7 +18,7 @@
 
 ## 🚀 Cómo usar
 
-1.  Abre el archivo `index.html` en tu navegador web.
+1.  Abre la pagina o descarga la app y diviertete.
 2.  Elige una categoría para empezar a aprender.
 3.  ¡Diviértete jugando y aprendiendo!
 
@@ -37,3 +37,4 @@
 
 ---
 Hecho con 💖 para el aprendizaje infantil.
+
