@@ -279,6 +279,13 @@ class BaseGame {
   }
 
   /**
+   * Limpiar selección actual (override por subclases)
+   */
+  clearSelection() {
+    // Default: no-op. Los juegos que manejan selección lo sobreescriben.
+  }
+
+  /**
    * Obtener estado actual
    */
   getState() {

@@ -97,7 +97,7 @@ class App {
 
   initHeader() {
     this.header = new Header({
-      logo: '/logo.png',
+      logo: './logo.png',
       title: 'Palabras Vivas',
       stars: this.state.stars,
       theme: this.state.theme,
