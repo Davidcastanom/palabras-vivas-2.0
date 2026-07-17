@@ -13,6 +13,7 @@ import Toast from '../components/core/Toast/Toast.js';
 // Screens
 import HomeScreen from '../screens/Home/Home.js';
 import GameMenuScreen from '../screens/GameMenu/GameMenu.js';
+import GameIntroScreen from '../screens/GameIntro/GameIntro.js';
 
 class App {
   constructor() {
@@ -121,6 +122,16 @@ class App {
         this.header.options.showBack = true;
         break;
 
+      case 'gameIntro':
+        this.currentScreenInstance = new GameIntroScreen({
+          gameId: options.gameId,
+          category: options.category,
+          onStart: (gameId, category) => this.startGame(gameId, category),
+          onBack: () => this.goBack()
+        });
+        this.header.options.showBack = true;
+        break;
+
       default:
         this.currentScreenInstance = new HomeScreen({
           onCategorySelect: (categoryId) => this.selectCategory(categoryId)
@@ -146,14 +157,30 @@ class App {
 
   selectGame(gameId) {
     this.state.game = gameId;
-    Toast.info(`Juego: ${gameId}`);
+    this.renderScreen('gameIntro', { 
+      gameId: gameId, 
+      category: this.state.category 
+    });
     console.log('Game selected:', gameId);
   }
 
+  startGame(gameId, category) {
+    Toast.info(`Iniciando: ${gameId}`);
+    console.log('Starting game:', gameId, 'in category:', category);
+    // TODO: Implement GamePlay screen in Phase 5
+  }
+
   goBack() {
-    if (this.state.currentScreen === 'gameMenu') {
-      this.state.category = null;
-      this.renderScreen('home');
+    switch (this.state.currentScreen) {
+      case 'gameMenu':
+        this.state.category = null;
+        this.renderScreen('home');
+        break;
+      case 'gameIntro':
+        this.renderScreen('gameMenu', { category: this.state.category });
+        break;
+      default:
+        this.renderScreen('home');
     }
   }
 }

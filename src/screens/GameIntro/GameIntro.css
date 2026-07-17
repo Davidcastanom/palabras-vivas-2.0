@@ -1,0 +1,275 @@
+/* ========================================
+   GAME INTRO SCREEN - PALABRAS VIVAS 2.0
+   ======================================== */
+
+.game-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-lg) 0;
+  min-height: calc(100vh - var(--header-height));
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.game-intro__header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.game-intro__icon {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-lg);
+  font-size: 48px;
+  transition: transform var(--transition-normal);
+}
+
+.game-intro__icon:hover {
+  transform: scale(1.1);
+}
+
+.game-intro__title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-md);
+}
+
+.game-intro__description {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: var(--line-height-relaxed);
+}
+
+/* ========================================
+   CONTENT CARDS
+   ======================================== */
+.game-intro__content {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* How to Play Card */
+.game-intro__card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+}
+
+.game-intro__card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.game-intro__card-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-light);
+  border-radius: var(--radius-full);
+  color: var(--color-primary);
+  font-size: var(--text-xl);
+  flex-shrink: 0;
+}
+
+.game-intro__card-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* Steps List */
+.game-intro__steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-intro__step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+}
+
+.game-intro__step-number {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: var(--text-on-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.game-intro__step-text {
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  line-height: var(--line-height-normal);
+  padding-top: 2px;
+}
+
+/* Objective & Reward */
+.game-intro__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-color);
+}
+
+.game-intro__meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.game-intro__meta-icon {
+  color: var(--color-primary);
+}
+
+.game-intro__meta-icon--star {
+  color: var(--color-accent);
+}
+
+.game-intro__meta-icon--clock {
+  color: var(--color-secondary);
+}
+
+.game-intro__meta-icon--difficulty {
+  color: var(--color-category-animals);
+}
+
+/* Tip Card */
+.game-intro__tip {
+  background: var(--color-accent-light);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+}
+
+.game-intro__tip-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.game-intro__tip-icon {
+  color: var(--color-accent);
+  font-size: var(--text-xl);
+}
+
+.game-intro__tip-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.game-intro__tip-text {
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  line-height: var(--line-height-normal);
+  margin: 0;
+}
+
+/* ========================================
+   ACTION BUTTON
+   ======================================== */
+.game-intro__action {
+  margin-top: var(--space-xl);
+  width: 100%;
+  max-width: 300px;
+}
+
+.game-intro__action .button {
+  width: 100%;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (min-width: 640px) {
+  .game-intro {
+    padding: var(--space-xl) 0;
+  }
+
+  .game-intro__icon {
+    width: 120px;
+    height: 120px;
+    font-size: 56px;
+  }
+
+  .game-intro__card {
+    padding: var(--space-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .game-intro {
+    justify-content: center;
+  }
+
+  .game-intro__content {
+    max-width: 700px;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+.game-intro__header {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.game-intro__card {
+  animation: fadeInUp 0.4s ease-out 0.1s both;
+}
+
+.game-intro__tip {
+  animation: fadeInUp 0.4s ease-out 0.2s both;
+}
+
+.game-intro__action {
+  animation: fadeInUp 0.4s ease-out 0.3s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
