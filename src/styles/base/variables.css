@@ -26,7 +26,7 @@
 
   /* Colores de categorías */
   --color-category-animals: #FF6B6B;
-  --color-category-fruits: #00D4AA;
+
   --color-category-objects: #3B82F6;
   --color-category-family: #A855F7;
   --color-category-body: #F97316;
@@ -35,13 +35,15 @@
      COLORES DE ESTADO
      ======================================== */
   --color-success: #00C853;
+  --color-success-hover: #00B894;
   --color-success-light: rgba(0, 200, 83, 0.1);
   --color-error: #FF5252;
+  --color-error-hover: #CC3838;
   --color-error-light: rgba(255, 82, 82, 0.1);
   --color-warning: #FFB300;
+  --color-warning-hover: #E6A817;
   --color-warning-light: rgba(255, 179, 0, 0.1);
-  --color-info: #0066FF;
-  --color-info-light: rgba(0, 102, 255, 0.1);
+
 
   /* ========================================
      FONDOS (MODO OSCURO - DEFAULT)
@@ -80,7 +82,7 @@
   --surface-hover: rgba(255, 255, 255, 0.2);
   --surface-active: rgba(255, 255, 255, 0.25);
   --surface-instruction-bg: rgba(0, 102, 255, 0.1);
-  --surface-instruction-color: var(--color-primary-light);
+  --surface-instruction-color: var(--color-primary);
 
   /* ========================================
      SOMBRAS
@@ -91,7 +93,8 @@
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
   --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
   --shadow-glow: 0 0 20px var(--color-primary-glow);
-  --shadow-glow-strong: 0 0 40px var(--color-primary-glow);
+  --shadow-glow-primary: 0 8px 24px rgba(0, 102, 255, 0.25);
+  --shadow-glow-strong: 0 4px 16px rgba(0, 102, 255, 0.4);
 
   /* ========================================
      ESPACIADO
@@ -121,14 +124,18 @@
   /* ========================================
      TRANSICIONES
      ======================================== */
+  --transition-quick: 0.2s ease;
   --transition-fast: 0.15s ease;
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s ease;
   --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
+  --focus-ring: 0 0 0 3px rgba(0, 102, 255, 0.3);
+  --min-touch-target: 44px;
+
   /* ========================================
-     TIPOGRAFÍA
-     ======================================== */
+      TIPOGRAFÍA
+      ======================================== */
   --font-display: 'Fredoka One', cursive;
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'Poppins', sans-serif;
@@ -145,6 +152,8 @@
   --text-4xl: 40px;
   --text-5xl: 48px;
   --text-6xl: 64px;
+  --text-7xl: 56px;
+  --text-8xl: 80px;
 
   /* Pesos de fuente */
   --font-weight-regular: 400;
@@ -213,7 +222,7 @@
   --surface-hover: rgba(0, 0, 0, 0.14);
   --surface-active: rgba(0, 0, 0, 0.18);
   --surface-instruction-bg: rgba(0, 102, 255, 0.08);
-  --surface-instruction-color: #0052CC;
+  --surface-instruction-color: var(--color-primary);
 
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);

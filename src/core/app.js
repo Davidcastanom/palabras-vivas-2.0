@@ -14,6 +14,12 @@ import Header from '../components/layout/Header/Header.js';
 import Toast from '../components/core/Toast/Toast.js';
 import Modal from '../components/core/Modal/Modal.js';
 
+// Router
+import router from './router.js';
+
+// Store
+import store from './store.js';
+
 // Screens
 import HomeScreen from '../screens/Home/Home.js';
 import GameMenuScreen from '../screens/GameMenu/GameMenu.js';
@@ -22,14 +28,6 @@ import GamePlayScreen from '../screens/GamePlay/GamePlay.js';
 
 class App {
   constructor() {
-    this.state = {
-      currentScreen: 'home',
-      category: null,
-      game: null,
-      stars: 0,
-      theme: 'dark'
-    };
-    
     this.header = null;
     this.currentScreenInstance = null;
     this.mainContent = null;
@@ -46,9 +44,6 @@ class App {
       loadingScreen.remove();
     }
     
-    // Cargar datos guardados
-    this.loadSavedData();
-    
     // Cargar tema guardado
     this.loadTheme();
     
@@ -61,6 +56,9 @@ class App {
     // Renderizar pantalla inicial
     this.renderScreen('home');
     
+    // Setup router
+    this.setupRoutes();
+    
     // Toast de bienvenida
     setTimeout(() => {
       Toast.info('¡Bienvenido a Palabras Vivas!');
@@ -69,27 +67,57 @@ class App {
     console.log('Palabras Vivas 2.0 initialized');
   }
 
-  loadSavedData() {
-    // Cargar estrellas guardadas
-    const savedStars = localStorage.getItem('pv-stars');
-    if (savedStars) {
-      this.state.stars = parseInt(savedStars, 10) || 0;
-    }
+  setupRoutes() {
+    router.beforeEach = async (to, from) => {
+      // Confirm exit if leaving gamePlay
+      if (from && from.startsWith('game/') && from.split('/').length >= 3) {
+        if (store.getState('currentScreen') === 'gamePlay') {
+          const confirmed = await Modal.confirm({
+            title: '¿Salir del juego?',
+            message: 'Perderás el progreso de esta partida.',
+            confirmText: 'Salir',
+            cancelText: 'Seguir jugando'
+          });
+          if (!confirmed) return false;
+        }
+      }
+      return true;
+    };
+
+    router.on('home', () => {
+      this.renderScreen('home');
+    });
+
+    router.on('game/:category', (params) => {
+      store.setState({ category: params.category });
+      this.renderScreen('gameMenu', { category: params.category });
+    });
+
+    router.on('game/:category/:game', (params) => {
+      store.setState({ category: params.category, game: params.game });
+      this.renderScreen('gameIntro', { 
+        gameId: params.game, 
+        category: params.category 
+      });
+    });
+
+    router.on('play/:category/:game', (params) => {
+      store.setState({ category: params.category, game: params.game });
+      this.startGame(params.game, params.category);
+    });
+
+    router.init();
   }
 
   loadTheme() {
-    const savedTheme = localStorage.getItem('pv-theme');
-    if (savedTheme) {
-      this.state.theme = savedTheme;
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    }
+    const theme = store.getState('theme');
+    document.documentElement.setAttribute('data-theme', theme);
   }
 
   toggleTheme() {
-    const newTheme = this.state.theme === 'dark' ? 'light' : 'dark';
-    this.state.theme = newTheme;
+    const newTheme = store.getState('theme') === 'dark' ? 'light' : 'dark';
+    store.setState({ theme: newTheme });
     document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('pv-theme', newTheme);
     
     if (this.header) {
       this.header.setTheme(newTheme);
@@ -100,9 +128,9 @@ class App {
     this.header = new Header({
       logo: './logo.png',
       title: 'Palabras Vivas',
-      stars: this.state.stars,
+      stars: store.getState('stars'),
       level: this.getLevel(),
-      theme: this.state.theme,
+      theme: store.getState('theme'),
       showBack: false,
       onBack: () => this.handleHeaderBack(),
       onThemeToggle: () => this.toggleTheme()
@@ -188,10 +216,10 @@ class App {
       }
 
       // Update state
-      this.state.currentScreen = screenName;
+      store.setState({ currentScreen: screenName });
 
       // Update header
-      this.header.setStars(this.state.stars);
+      this.header.setStars(store.getState('stars'));
       this.header.setLevel(this.getLevel());
       this.updateHeaderForScreen(screenName);
 
@@ -240,7 +268,7 @@ class App {
   }
 
   async handleHeaderBack() {
-    if (this.state.currentScreen === 'gamePlay') {
+    if (store.getState('currentScreen') === 'gamePlay') {
       const confirmed = await Modal.confirm({
         title: '¿Salir del juego?',
         message: 'Perderás el progreso de esta partida.',
@@ -253,16 +281,13 @@ class App {
   }
 
   selectCategory(categoryId) {
-    this.state.category = categoryId;
-    this.renderScreen('gameMenu', { category: categoryId });
+    store.setState({ category: categoryId });
+    router.navigate(`game/${categoryId}`);
   }
 
   selectGame(gameId) {
-    this.state.game = gameId;
-    this.renderScreen('gameIntro', { 
-      gameId: gameId, 
-      category: this.state.category 
-    });
+    store.setState({ game: gameId });
+    router.navigate(`game/${store.getState('category')}/${gameId}`);
   }
 
   startGame(gameId, category) {
@@ -276,19 +301,19 @@ class App {
   }
 
   goBack() {
-    switch (this.state.currentScreen) {
+    switch (store.getState('currentScreen')) {
       case 'gameMenu':
-        this.state.category = null;
-        this.renderScreen('home');
+        store.setState({ category: null });
+        router.navigate('home');
         break;
       case 'gameIntro':
-        this.renderScreen('gameMenu', { category: this.state.category });
+        router.navigate(`game/${store.getState('category')}`);
         break;
       case 'gamePlay':
-        this.renderScreen('home');
+        router.navigate('home');
         break;
       default:
-        this.renderScreen('home');
+        router.navigate('home');
     }
   }
 
@@ -316,10 +341,10 @@ class App {
     });
     localStorage.setItem('pv-game-results', JSON.stringify(savedResults));
 
-    this.state.stars += result.stars;
-    this.header.setStars(this.state.stars);
+    const newStars = store.getState('stars') + result.stars;
+    store.setState({ stars: newStars });
+    this.header.setStars(newStars);
     this.header.setLevel(this.getLevel());
-    localStorage.setItem('pv-stars', this.state.stars.toString());
 
     // Save best score per game+category
     this.saveBestScore(result);
@@ -346,7 +371,7 @@ class App {
   }
 
   getLevel() {
-    const stars = this.state.stars;
+    const stars = store.getState('stars');
     if (stars >= 100) return { name: 'Maestro', icon: 'fa-crown' };
     if (stars >= 50) return { name: 'Explorador', icon: 'fa-compass' };
     if (stars >= 20) return { name: 'Aprendiz', icon: 'fa-book' };

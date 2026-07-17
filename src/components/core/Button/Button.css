@@ -134,7 +134,7 @@
 }
 
 .button--danger:hover:not(:disabled) {
-  background: #E64545;
+  background: var(--color-error-hover);
   transform: translateY(-2px);
 }
 

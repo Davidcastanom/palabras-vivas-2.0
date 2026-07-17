@@ -132,15 +132,6 @@
   }
 }
 
-@keyframes spinSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* Shake */
 @keyframes shake {
   0%, 100% {
@@ -281,7 +272,7 @@
 }
 
 .animate-spinSlow {
-  animation: spinSlow 3s linear infinite;
+  animation: spin 3s linear infinite;
 }
 
 /* Shake */

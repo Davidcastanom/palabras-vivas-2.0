@@ -20,15 +20,15 @@
 }
 
 .game-play-pause-btn {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-full);
   background: var(--surface-light);
   border: none;
   color: var(--text-primary);
   font-size: var(--text-lg);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-quick);
 }
 
 .game-play-pause-btn:hover {
@@ -42,15 +42,15 @@
 }
 
 .game-play-reset-btn {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-full);
   background: var(--surface-light);
   border: none;
   color: var(--text-primary);
   font-size: var(--text-base);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-quick);
 }
 
 .game-play-reset-btn:hover {
@@ -73,7 +73,7 @@
   height: 100%;
   background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
   border-radius: var(--radius-full);
-  transition: width 0.3s ease;
+  transition: width var(--transition-normal);
 }
 
 .game-play-progress-text {
@@ -242,7 +242,7 @@
   font-size: var(--text-lg);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-quick);
 }
 
 .syllable-btn:hover {
@@ -284,14 +284,14 @@
 .word-search-grid {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-xs);
   max-width: 400px;
   margin: 0 auto var(--space-lg);
 }
 
 .word-search-row {
   display: flex;
-  gap: 4px;
+  gap: var(--space-xs);
 }
 
 .word-search-cell {
@@ -307,7 +307,7 @@
   font-size: var(--text-base);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-quick);
 }
 
 .word-search-cell:hover {
@@ -395,7 +395,7 @@
   font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-quick);
 }
 
 .letter-btn:hover {
@@ -435,14 +435,14 @@
   border: 3px solid transparent;
   border-radius: var(--radius-xl);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all var(--transition-normal);
 }
 
 .game-image-option:hover {
   background: var(--surface-medium);
   border-color: var(--color-primary);
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 102, 255, 0.25);
+  box-shadow: var(--shadow-glow-primary);
 }
 
 .game-image-option:active {
@@ -553,7 +553,7 @@
   gap: var(--space-md);
   font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
-  z-index: 1000;
+  z-index: var(--z-toast);
   animation: fadeInOut 1.5s ease;
 }
 
@@ -597,12 +597,6 @@
 }
 
 /* Animations */
-@keyframes bounceIn {
-  0% { transform: scale(0); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
 @keyframes fadeInOut {
   0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
   20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
@@ -634,14 +628,14 @@
   justify-content: center;
   margin-bottom: var(--space-xl);
   border: 3px solid var(--color-primary);
-  box-shadow: 0 8px 32px rgba(0, 102, 255, 0.2);
+  box-shadow: var(--shadow-glow-primary);
 }
 
 .learn-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-normal);
 }
 
 .learn-flashcard:hover .learn-image {
@@ -651,7 +645,7 @@
 .learn-word {
   font-family: var(--font-display);
   font-size: clamp(36px, 8vw, 56px);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--text-primary);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -675,10 +669,10 @@
   border-radius: var(--radius-lg);
   font-family: var(--font-heading);
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-quick);
 }
 
 .learn-syllable-btn:hover,
@@ -686,7 +680,7 @@
   background: var(--color-primary);
   color: var(--text-on-primary);
   transform: scale(1.1);
-  box-shadow: 0 4px 16px rgba(0, 102, 255, 0.4);
+  box-shadow: var(--shadow-glow-strong);
 }
 
 .learn-controls {
