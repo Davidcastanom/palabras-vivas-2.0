@@ -1,0 +1,222 @@
+/* ========================================
+   BUTTON COMPONENT - PALABRAS VIVAS 2.0
+   ======================================== */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  min-height: 44px;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ========================================
+   SIZES
+   ======================================== */
+.button--sm {
+  min-height: 36px;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--text-xs);
+  border-radius: var(--radius-sm);
+}
+
+.button--md {
+  min-height: 44px;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+}
+
+.button--lg {
+  min-height: 52px;
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--text-base);
+  border-radius: var(--radius-lg);
+}
+
+.button--xl {
+  min-height: 60px;
+  padding: var(--space-lg) var(--space-xl);
+  font-size: var(--text-lg);
+  border-radius: var(--radius-xl);
+}
+
+/* ========================================
+   VARIANTS
+   ======================================== */
+
+/* Primary */
+.button--primary {
+  background: var(--color-primary);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.button--primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.button--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Secondary */
+.button--secondary {
+  background: var(--color-secondary);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.button--secondary:hover:not(:disabled) {
+  background: var(--color-secondary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Accent */
+.button--accent {
+  background: var(--color-accent);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.button--accent:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Ghost */
+.button--ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.button--ghost:hover:not(:disabled) {
+  background: var(--bg-elevated);
+  border-color: var(--border-color-hover);
+}
+
+/* Outline */
+.button--outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.button--outline:hover:not(:disabled) {
+  background: var(--color-primary-light);
+}
+
+/* Danger */
+.button--danger {
+  background: var(--color-error);
+  color: var(--text-on-primary);
+}
+
+.button--danger:hover:not(:disabled) {
+  background: #E64545;
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   FULL WIDTH
+   ======================================== */
+.button--full {
+  width: 100%;
+}
+
+/* ========================================
+   ICON ONLY
+   ======================================== */
+.button--icon {
+  padding: 0;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.button--icon.button--sm {
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.button--icon.button--lg {
+  min-width: 52px;
+  min-height: 52px;
+}
+
+/* ========================================
+   ROUNDED
+   ======================================== */
+.button--rounded {
+  border-radius: var(--radius-full);
+}
+
+/* ========================================
+   LOADING STATE
+   ======================================== */
+.button--loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+
+.button--loading::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+/* ========================================
+   GLOW EFFECT
+   ======================================== */
+.button--glow {
+  box-shadow: 0 0 20px var(--color-primary-glow);
+}
+
+.button--glow:hover:not(:disabled) {
+  box-shadow: 0 0 30px var(--color-primary-glow);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (min-width: 640px) {
+  .button--md {
+    min-height: 48px;
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--text-base);
+  }
+}
+
+@media (min-width: 1024px) {
+  .button--lg {
+    min-height: 56px;
+    padding: var(--space-lg) var(--space-xl);
+    font-size: var(--text-lg);
+  }
+}

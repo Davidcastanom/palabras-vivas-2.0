@@ -1,0 +1,218 @@
+/* ========================================
+   CARD COMPONENT - PALABRAS VIVAS 2.0
+   ======================================== */
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========================================
+   VARIANTS
+   ======================================== */
+
+/* Default */
+.card--default {
+  background: var(--bg-card);
+}
+
+/* Elevated */
+.card--elevated {
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-md);
+}
+
+/* Outlined */
+.card--outlined {
+  background: transparent;
+  border: 2px solid var(--border-color);
+}
+
+/* Flat */
+.card--flat {
+  background: var(--bg-secondary);
+  border: none;
+}
+
+/* ========================================
+   SIZES
+   ======================================== */
+.card--sm {
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+}
+
+.card--md {
+  padding: var(--space-md);
+}
+
+.card--lg {
+  padding: var(--space-lg);
+  border-radius: var(--radius-xl);
+}
+
+.card--xl {
+  padding: var(--space-xl);
+  border-radius: var(--radius-2xl);
+}
+
+/* ========================================
+   INTERACTIVE (clickable)
+   ======================================== */
+.card--interactive {
+  cursor: pointer;
+}
+
+.card--interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+.card--interactive:active {
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   GLOW ON HOVER
+   ======================================== */
+.card--glow:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+/* ========================================
+   BORDER ACCENT (left border colored)
+   ======================================== */
+.card--border-left {
+  border-left: 4px solid var(--color-primary);
+}
+
+.card--border-top {
+  border-top: 4px solid var(--color-primary);
+}
+
+/* ========================================
+   FULL WIDTH
+   ======================================== */
+.card--full {
+  width: 100%;
+}
+
+/* ========================================
+   CENTERED CONTENT
+   ======================================== */
+.card--center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ========================================
+   CARD HEADER
+   ======================================== */
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.card__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ========================================
+   CARD BODY
+   ======================================== */
+.card__body {
+  color: var(--text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+/* ========================================
+   CARD FOOTER
+   ======================================== */
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-color);
+}
+
+/* ========================================
+   CARD IMAGE
+   ======================================== */
+.card__image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+}
+
+/* ========================================
+   CATEGORY CARD (specific)
+   ======================================== */
+.card--category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  text-align: center;
+  min-height: 120px;
+  gap: var(--space-md);
+}
+
+.card--category .card__icon {
+  font-size: 48px;
+  transition: transform var(--transition-normal);
+}
+
+.card--category:hover .card__icon {
+  transform: scale(1.1);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (min-width: 640px) {
+  .card--md {
+    padding: var(--space-lg);
+  }
+
+  .card--category {
+    min-height: 160px;
+    padding: var(--space-xl);
+  }
+
+  .card--category .card__icon {
+    font-size: 56px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card--lg {
+    padding: var(--space-xl);
+  }
+
+  .card--category {
+    min-height: 180px;
+  }
+
+  .card--category .card__icon {
+    font-size: 64px;
+  }
+}

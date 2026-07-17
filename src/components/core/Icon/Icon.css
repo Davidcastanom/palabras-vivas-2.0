@@ -1,0 +1,126 @@
+/* ========================================
+   ICON COMPONENT - PALABRAS VIVAS 2.0
+   ======================================== */
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  font-size: inherit;
+  line-height: 1;
+}
+
+/* ========================================
+   SIZES
+   ======================================== */
+.icon--xs {
+  font-size: 12px;
+}
+
+.icon--sm {
+  font-size: 16px;
+}
+
+.icon--md {
+  font-size: 24px;
+}
+
+.icon--lg {
+  font-size: 32px;
+}
+
+.icon--xl {
+  font-size: 48px;
+}
+
+.icon--2xl {
+  font-size: 64px;
+}
+
+/* ========================================
+   COLORS
+   ======================================== */
+.icon--primary {
+  color: var(--color-primary);
+}
+
+.icon--secondary {
+  color: var(--color-secondary);
+}
+
+.icon--accent {
+  color: var(--color-accent);
+}
+
+.icon--success {
+  color: var(--color-success);
+}
+
+.icon--error {
+  color: var(--color-error);
+}
+
+.icon--warning {
+  color: var(--color-warning);
+}
+
+.icon--muted {
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+.icon--spin {
+  animation: spin 1s linear infinite;
+}
+
+.icon--spin-slow {
+  animation: spinSlow 3s linear infinite;
+}
+
+.icon--pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.icon--float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.icon--glow {
+  filter: drop-shadow(0 0 8px var(--color-primary-glow));
+}
+
+/* ========================================
+   WITH BACKGROUND
+   ======================================== */
+.icon--bg {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-light);
+}
+
+.icon--bg-sm {
+  width: 36px;
+  height: 36px;
+}
+
+.icon--bg-lg {
+  width: 64px;
+  height: 64px;
+}
+
+/* ========================================
+   CONTAINER (wrapper for icon + text)
+   ======================================== */
+.icon-container {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.icon-container--right {
+  flex-direction: row-reverse;
+}

@@ -1,0 +1,200 @@
+/* ========================================
+   MODAL COMPONENT - PALABRAS VIVAS 2.0
+   ======================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  z-index: var(--z-modal);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-normal);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  transform: scale(0.9) translateY(20px);
+  transition: transform var(--transition-bounce);
+  position: relative;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+/* ========================================
+   SIZES
+   ======================================== */
+.modal-content--sm {
+  max-width: 320px;
+  padding: var(--space-lg);
+}
+
+.modal-content--md {
+  max-width: 400px;
+  padding: var(--space-xl);
+}
+
+.modal-content--lg {
+  max-width: 560px;
+  padding: var(--space-2xl);
+}
+
+.modal-content--xl {
+  max-width: 720px;
+  padding: var(--space-2xl);
+}
+
+/* ========================================
+   CLOSE BUTTON
+   ======================================== */
+.modal-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: var(--text-lg);
+}
+
+.modal-close:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ========================================
+   BODY
+   ======================================== */
+.modal-body {
+  color: var(--text-secondary);
+  line-height: var(--line-height-normal);
+  margin-bottom: var(--space-lg);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.modal-footer--stacked {
+  flex-direction: column;
+}
+
+/* ========================================
+   REWARD MODAL (specific)
+   ======================================== */
+.modal--reward .modal-content {
+  text-align: center;
+}
+
+.modal--reward .modal-icon {
+  font-size: 80px;
+  margin-bottom: var(--space-lg);
+  animation: popIn 0.5s ease-out;
+}
+
+.modal--reward .modal-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-sm);
+}
+
+.modal--reward .modal-subtitle {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modalSlideOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (min-width: 640px) {
+  .modal-content {
+    padding: var(--space-2xl);
+  }
+
+  .modal-title {
+    font-size: var(--text-3xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .modal-content--lg {
+    max-width: 640px;
+  }
+}
