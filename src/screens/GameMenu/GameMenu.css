@@ -1,0 +1,187 @@
+/* ========================================
+   GAME MENU SCREEN - PALABRAS VIVAS 2.0
+   ======================================== */
+
+.game-menu {
+  text-align: center;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.game-menu__header {
+  padding: var(--space-lg) 0 var(--space-xl);
+}
+
+.game-menu__category {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.game-menu__category-icon {
+  font-size: var(--text-base);
+}
+
+.game-menu__title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ========================================
+   GAMES GRID
+   ======================================== */
+.game-menu__games {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.game-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+/* ========================================
+   GAME CARD
+   ======================================== */
+.game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  min-height: 160px;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+.game-card:active {
+  transform: translateY(-2px);
+}
+
+.game-card__icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-light);
+  border-radius: var(--radius-full);
+  font-size: 28px;
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+  transition: all var(--transition-normal);
+}
+
+.game-card:hover .game-card__icon {
+  background: var(--color-primary);
+  color: var(--text-on-primary);
+  transform: scale(1.1);
+}
+
+.game-card__name {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-xs);
+}
+
+.game-card__description {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.game-card__difficulty {
+  display: flex;
+  gap: 4px;
+  margin-top: var(--space-sm);
+}
+
+.game-card__star {
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+}
+
+.game-card__star--empty {
+  color: var(--text-tertiary);
+  opacity: 0.3;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (min-width: 640px) {
+  .game-menu__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .game-card {
+    min-height: 180px;
+    padding: var(--space-xl);
+  }
+
+  .game-card__icon {
+    width: 72px;
+    height: 72px;
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .game-menu__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .game-card {
+    min-height: 200px;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+.game-card {
+  opacity: 0;
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.game-card:nth-child(1) { animation-delay: 0ms; }
+.game-card:nth-child(2) { animation-delay: 50ms; }
+.game-card:nth-child(3) { animation-delay: 100ms; }
+.game-card:nth-child(4) { animation-delay: 150ms; }
+.game-card:nth-child(5) { animation-delay: 200ms; }
+.game-card:nth-child(6) { animation-delay: 250ms; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
