@@ -1,0 +1,142 @@
+/* ========================================
+   LETTER SLOT COMPONENT - PALABRAS VIVAS 2.0
+   ======================================== */
+
+.letter-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 64px;
+  background: var(--bg-secondary);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  transition: all var(--transition-fast);
+}
+
+/* ========================================
+   FILLED STATE
+   ======================================== */
+.letter-slot.filled {
+  background: var(--color-primary-light);
+  border-style: solid;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ========================================
+   CORRECT STATE
+   ======================================== */
+.letter-slot.correct {
+  background: var(--color-success-light);
+  border-style: solid;
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+/* ========================================
+   WRONG STATE
+   ======================================== */
+.letter-slot.wrong {
+  background: var(--color-error-light);
+  border-style: solid;
+  border-color: var(--color-error);
+  color: var(--color-error);
+  animation: wrongShake 0.5s ease-out;
+}
+
+/* ========================================
+   ACTIVE STATE
+   ======================================== */
+.letter-slot.active {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* ========================================
+   DISABLED STATE
+   ======================================== */
+.letter-slot:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   SIZES
+   ======================================== */
+.letter-slot--sm {
+  width: 44px;
+  height: 52px;
+  font-size: var(--text-xl);
+}
+
+.letter-slot--lg {
+  width: 72px;
+  height: 80px;
+  font-size: var(--text-3xl);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (min-width: 640px) {
+  .letter-slot {
+    width: 64px;
+    height: 72px;
+    font-size: var(--text-3xl);
+  }
+
+  .letter-slot--sm {
+    width: 52px;
+    height: 60px;
+    font-size: var(--text-2xl);
+  }
+
+  .letter-slot--lg {
+    width: 80px;
+    height: 88px;
+    font-size: var(--text-4xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .letter-slot:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes wrongShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-4px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(4px);
+  }
+}
+
+.letter-slot.pop {
+  animation: slotPop 0.3s ease-out;
+}
+
+@keyframes slotPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,144 @@
+/* ========================================
+   BUCKET COMPONENT - PALABRAS VIVAS 2.0
+   ======================================== */
+
+.bucket {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  background: var(--bg-secondary);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-md);
+  transition: all var(--transition-fast);
+}
+
+/* ========================================
+   HOVER STATE (drag over)
+   ======================================== */
+.bucket.drag-over {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  transform: scale(1.02);
+}
+
+/* ========================================
+   FILLED STATE
+   ======================================== */
+.bucket.filled {
+  border-style: solid;
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+/* ========================================
+   CORRECT STATE
+   ======================================== */
+.bucket.correct {
+  border-color: var(--color-success);
+  background: var(--color-success-light);
+}
+
+/* ========================================
+   WRONG STATE
+   ======================================== */
+.bucket.wrong {
+  border-color: var(--color-error);
+  background: var(--color-error-light);
+  animation: wrongShake 0.5s ease-out;
+}
+
+/* ========================================
+   ICON
+   ======================================== */
+.bucket__icon {
+  font-size: 32px;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-sm);
+  transition: color var(--transition-fast);
+}
+
+.bucket.drag-over .bucket__icon,
+.bucket.filled .bucket__icon {
+  color: var(--color-primary);
+}
+
+/* ========================================
+   LABEL
+   ======================================== */
+.bucket__label {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+/* ========================================
+   CONTENT
+   ======================================== */
+.bucket__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  justify-content: center;
+  min-height: 40px;
+}
+
+/* ========================================
+   SIZES
+   ======================================== */
+.bucket--sm {
+  min-height: 80px;
+  padding: var(--space-sm);
+}
+
+.bucket--lg {
+  min-height: 120px;
+  padding: var(--space-lg);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (min-width: 640px) {
+  .bucket {
+    min-height: 120px;
+    padding: var(--space-lg);
+  }
+
+  .bucket__icon {
+    font-size: 40px;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes wrongShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+.bucket.drop-animation {
+  animation: dropBounce 0.3s ease-out;
+}
+
+@keyframes dropBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
