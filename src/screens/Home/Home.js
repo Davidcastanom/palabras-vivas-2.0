@@ -4,6 +4,7 @@
  */
 
 import Screen from '../../components/layout/Screen/Screen.js';
+import { categoryMeta, categories } from '../../data/words.js';
 import './Home.css';
 
 class HomeScreen {
@@ -18,13 +19,13 @@ class HomeScreen {
     };
 
     this.screen = null;
-    this.categories = [
-      { id: 'animales', name: 'Animales', icon: 'fa-paw', color: 'var(--color-category-animals)', count: 15 },
-      { id: 'frutas', name: 'Frutas', icon: 'fa-apple-whole', color: 'var(--color-category-fruits)', count: 12 },
-      { id: 'objetos', name: 'Objetos', icon: 'fa-cube', color: 'var(--color-category-objects)', count: 12 },
-      { id: 'familia', name: 'Familia', icon: 'fa-people-roof', color: 'var(--color-category-family)', count: 11 },
-      { id: 'cuerpo', name: 'Cuerpo', icon: 'fa-person', color: 'var(--color-category-body)', count: 12 }
-    ];
+    this.categories = Object.entries(categoryMeta).map(([id, meta]) => ({
+      id,
+      name: meta.name,
+      icon: meta.icon,
+      color: meta.cssColor,
+      count: categories[id]?.words?.length ?? 0
+    }));
   }
 
   render() {
@@ -40,10 +41,22 @@ class HomeScreen {
   buildContent() {
     return `
       <div class="home-hero">
-        <h1 class="home-hero__title animate-fadeInUp">¡Elige un mundo!</h1>
+        <span class="home-hero__badge animate-fadeInUp">
+          <i class="fa-solid fa-child-reaching"></i>
+          Para niños de 4 a 6 años
+        </span>
+        <h1 class="home-hero__title animate-fadeInUp animation-delay-50">
+          Aprende palabras y sílabas jugando
+        </h1>
         <p class="home-hero__subtitle animate-fadeInUp animation-delay-100">
-          Aprende jugando con palabras increíbles
+          Herramienta interactiva para que los más pequeños aprendan vocabulario, sílabas y sonidos a través de imágenes, audio y juegos.
         </p>
+        <div class="home-hero__stats animate-fadeInUp animation-delay-100">
+          <span class="home-hero__stat"><i class="fa-solid fa-spell-check"></i> 62 palabras</span>
+          <span class="home-hero__stat"><i class="fa-solid fa-globe"></i> 5 mundos</span>
+          <span class="home-hero__stat"><i class="fa-solid fa-gamepad"></i> 7 juegos</span>
+        </div>
+        <h2 class="home-hero__section-title animate-fadeInUp animation-delay-100">¡Elige un mundo!</h2>
       </div>
 
       <div class="home-categories">

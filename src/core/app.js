@@ -7,11 +7,12 @@
 import '../styles/index.css';
 
 // Datos
-import { categories as wordCategories, getWordsForCategory as getWords } from '../data/words.js';
+import { getWordsForCategory as getWords } from '../data/words.js';
 
 // Componentes
 import Header from '../components/layout/Header/Header.js';
 import Toast from '../components/core/Toast/Toast.js';
+import Modal from '../components/core/Modal/Modal.js';
 
 // Screens
 import HomeScreen from '../screens/Home/Home.js';
@@ -100,9 +101,10 @@ class App {
       logo: './logo.png',
       title: 'Palabras Vivas',
       stars: this.state.stars,
+      level: this.getLevel(),
       theme: this.state.theme,
       showBack: false,
-      onBack: () => this.goBack(),
+      onBack: () => this.handleHeaderBack(),
       onThemeToggle: () => this.toggleTheme()
     });
 
@@ -123,6 +125,7 @@ class App {
     this.isTransitioning = true;
 
     const transitionDuration = 200;
+    const onMounted = options.onMounted || null;
 
     // Unmount current screen
     if (this.currentScreenInstance) {
@@ -159,7 +162,8 @@ class App {
             gameId: options.gameId,
             category: options.category,
             onStart: (gameId, category) => this.startGame(gameId, category),
-            onBack: () => this.goBack()
+            onBack: () => this.goBack(),
+            app: this
           });
           break;
 
@@ -188,9 +192,15 @@ class App {
 
       // Update header
       this.header.setStars(this.state.stars);
+      this.header.setLevel(this.getLevel());
       this.updateHeaderForScreen(screenName);
 
       this.isTransitioning = false;
+
+      // Fire onMounted callback after screen is ready
+      if (onMounted) {
+        onMounted();
+      }
     };
 
     // If there's a current screen, animate out then render new
@@ -220,12 +230,26 @@ class App {
         this.header.show();
         break;
       case 'gamePlay':
-        this.header.hide();
+        this.header.setBackButton(true);
+        this.header.show();
         break;
       default:
         this.header.setBackButton(false);
         this.header.show();
     }
+  }
+
+  async handleHeaderBack() {
+    if (this.state.currentScreen === 'gamePlay') {
+      const confirmed = await Modal.confirm({
+        title: '¿Salir del juego?',
+        message: 'Perderás el progreso de esta partida.',
+        confirmText: 'Salir',
+        cancelText: 'Seguir jugando'
+      });
+      if (!confirmed) return;
+    }
+    this.goBack();
   }
 
   selectCategory(categoryId) {
@@ -242,14 +266,13 @@ class App {
   }
 
   startGame(gameId, category) {
-    this.renderScreen('gamePlay');
-    
-    // Initialize game after screen is rendered and transition completes (200ms exit + buffer)
-    setTimeout(() => {
-      if (this.currentScreenInstance && typeof this.currentScreenInstance.init === 'function') {
-        this.currentScreenInstance.init(gameId, category);
+    this.renderScreen('gamePlay', {
+      onMounted: () => {
+        if (this.currentScreenInstance && typeof this.currentScreenInstance.init === 'function') {
+          this.currentScreenInstance.init(gameId, category);
+        }
       }
-    }, 350);
+    });
   }
 
   goBack() {
@@ -262,13 +285,7 @@ class App {
         this.renderScreen('gameMenu', { category: this.state.category });
         break;
       case 'gamePlay':
-        if (this.currentScreenInstance && typeof this.currentScreenInstance.destroy === 'function') {
-          this.currentScreenInstance.destroy();
-        }
-        this.renderScreen('gameIntro', { 
-          gameId: this.state.game, 
-          category: this.state.category 
-        });
+        this.renderScreen('home');
         break;
       default:
         this.renderScreen('home');
@@ -301,7 +318,39 @@ class App {
 
     this.state.stars += result.stars;
     this.header.setStars(this.state.stars);
+    this.header.setLevel(this.getLevel());
     localStorage.setItem('pv-stars', this.state.stars.toString());
+
+    // Save best score per game+category
+    this.saveBestScore(result);
+  }
+
+  saveBestScore(result) {
+    const key = `pv-best-${result.gameId}-${result.category}`;
+    const existing = JSON.parse(localStorage.getItem(key) || 'null');
+
+    if (!existing || result.stars > existing.stars || 
+        (result.stars === existing.stars && result.score > existing.score)) {
+      localStorage.setItem(key, JSON.stringify({
+        stars: result.stars,
+        score: result.score,
+        accuracy: result.accuracy,
+        timestamp: new Date().toISOString()
+      }));
+    }
+  }
+
+  getBestScore(gameId, category) {
+    const key = `pv-best-${gameId}-${category}`;
+    return JSON.parse(localStorage.getItem(key) || 'null');
+  }
+
+  getLevel() {
+    const stars = this.state.stars;
+    if (stars >= 100) return { name: 'Maestro', icon: 'fa-crown' };
+    if (stars >= 50) return { name: 'Explorador', icon: 'fa-compass' };
+    if (stars >= 20) return { name: 'Aprendiz', icon: 'fa-book' };
+    return { name: 'Principiante', icon: 'fa-seedling' };
   }
 
   getWordsForCategory(category) {

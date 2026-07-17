@@ -14,10 +14,9 @@ class CompleteWordGame extends BaseGame {
   }
 
   init() {
+    super.init();
     this.state.currentRound = 0;
-    this.state.score = 0;
-    this.state.streak = 0;
-    this.state.isComplete = false;
+    this.correctCount = 0;
     this.generateRound();
     return this.state;
   }
@@ -40,10 +39,19 @@ class CompleteWordGame extends BaseGame {
 
     if (isCorrect) {
       this.correctCount++;
+      this.state.currentRound++;
+
+      this.config.onCorrectAnswer?.({
+        word: this.currentTarget,
+        points: 10 + this.state.streak * 2,
+        streak: this.state.streak + 1
+      });
+
       this.state.score += 10 + this.state.streak * 2;
       this.state.streak++;
-      this.state.currentRound++;
-      this.handleCorrectAnswer({ word: this.currentTarget, points: 10 + (this.state.streak - 1) * 2 });
+      this.state.bestStreak = Math.max(this.state.bestStreak, this.state.streak);
+      this.state.wordsCompleted.push(this.currentTarget);
+      this.notifyStateChange();
 
       if (this.state.currentRound >= this.config.totalRounds) {
         this.completeGame();
@@ -52,7 +60,14 @@ class CompleteWordGame extends BaseGame {
       }
     } else {
       this.state.streak = 0;
-      this.handleWrongAnswer({ word: this.currentTarget });
+      this.state.mistakes++;
+
+      this.config.onWrongAnswer?.({
+        word: this.currentTarget,
+        mistakes: this.state.mistakes
+      });
+
+      this.notifyStateChange();
     }
 
     return isCorrect;

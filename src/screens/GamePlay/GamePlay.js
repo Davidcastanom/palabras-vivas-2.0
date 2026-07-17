@@ -9,8 +9,8 @@ import MemoryGame from '../../games/memory/MemoryGame.js';
 import SyllablesGame from '../../games/syllables/SyllablesGame.js';
 import WordSearchGame from '../../games/word-search/WordSearchGame.js';
 import SortLettersGame from '../../games/sort-letters/SortLettersGame.js';
-import AssociationGame from '../../games/association/AssociationGame.js';
 import audioService from '../../services/AudioService.js';
+import Modal from '../../components/core/Modal/Modal.js';
 
 class GamePlay {
   constructor(app) {
@@ -28,9 +28,14 @@ class GamePlay {
       <div class="screen__content">
         <div class="game-play-container">
           <div class="game-play-header">
-            <button class="game-play-pause-btn" id="pause-btn">
-              <i class="fas fa-pause"></i>
-            </button>
+            <div class="game-play-header__left">
+              <button class="game-play-pause-btn" id="pause-btn">
+                <i class="fas fa-pause"></i>
+              </button>
+              <button class="game-play-reset-btn" id="reset-btn" title="Reiniciar juego">
+                <i class="fas fa-rotate-right"></i>
+              </button>
+            </div>
             
             <div class="game-play-progress">
               <div class="game-play-progress-bar">
@@ -63,7 +68,12 @@ class GamePlay {
     }
     const pauseBtn = this.element.querySelector('#pause-btn');
     if (pauseBtn) {
-      pauseBtn.addEventListener('click', () => this.handleBack());
+      pauseBtn.addEventListener('click', () => this.handlePause());
+    }
+
+    const resetBtn = this.element.querySelector('#reset-btn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => this.handleReset());
     }
   }
 
@@ -227,7 +237,7 @@ class GamePlay {
       case 'sort-letters':
         return new SortLettersGame(config);
       case 'association':
-        return new AssociationGame(config);
+        return new CompleteWordGame({ ...config, id: 'association' });
       default:
         return null;
     }
@@ -433,9 +443,21 @@ class GamePlay {
     const grid = this.gameInstance.getGrid();
     const currentWord = this.gameInstance.getCurrentWord();
 
+    const instruction = this.element.querySelector('#game-instruction');
+    if (instruction) {
+      instruction.innerHTML = `
+        <div class="instruction-text">
+          <i class="fas fa-search"></i>
+          <span>Busca la palabra en la cuadrícula</span>
+        </div>
+      `;
+    }
+
     gameArea.innerHTML = `
-      <div class="word-search-word">
-        Busca: <strong>${currentWord.word.toUpperCase()}</strong>
+      <div class="word-search-hint">
+        <img class="word-search-hint__img" src="${currentWord.img}" alt="${currentWord.word}" 
+             onerror="this.style.display='none'">
+        <div class="word-search-hint__word">Busca: <strong>${currentWord.word.toUpperCase()}</strong></div>
       </div>
 
       <div class="word-search-grid">
@@ -515,8 +537,24 @@ class GamePlay {
   renderSortLetters(gameArea) {
     const shuffled = this.gameInstance.getShuffledLetters();
     const selected = this.gameInstance.getSelectedLetters();
+    const currentWord = this.gameInstance.state.currentWord;
+
+    const instruction = this.element.querySelector('#game-instruction');
+    if (instruction) {
+      instruction.innerHTML = `
+        <div class="instruction-text">
+          <i class="fas fa-sort-amount-down"></i>
+          <span>Ordena las letras para formar la palabra</span>
+        </div>
+      `;
+    }
 
     gameArea.innerHTML = `
+      <div class="sort-letters-hint">
+        <img class="sort-letters-hint__img" src="${currentWord.img}" alt="${currentWord.word}" 
+             onerror="this.style.display='none'">
+      </div>
+
       <div class="sort-letters-display">
         <div class="sort-letters-word">
           ${selected.map(s => `<span class="letter-selected">${s.letter}</span>`).join('')}
@@ -631,16 +669,6 @@ class GamePlay {
           audioService.speak('Oh, no. Inténtalo de nuevo');
         }
       });
-    });
-  }
-
-  updateAssociationDisplay() {
-    if (!this.element) return;
-    const gameArea = this.element.querySelector('#game-area');
-    if (!gameArea) return;
-
-    gameArea.querySelectorAll('.association-option').forEach(btn => {
-      btn.classList.remove('selected', 'correct', 'wrong');
     });
   }
 
@@ -767,6 +795,35 @@ class GamePlay {
     this.element.querySelector('#back-to-menu')?.addEventListener('click', () => {
       this.app.goBack();
     });
+  }
+
+  async handlePause() {
+    const confirmed = await Modal.confirm({
+      title: '¿Salir del juego?',
+      message: 'Perderás el progreso de esta partida.',
+      confirmText: 'Salir',
+      cancelText: 'Seguir jugando'
+    });
+    if (confirmed) {
+      audioService.stopAll();
+      this.app.goBack();
+    }
+  }
+
+  async handleReset() {
+    if (!this.gameInstance || this.currentGameId === 'learn') return;
+
+    const confirmed = await Modal.confirm({
+      title: '¿Reiniciar juego?',
+      message: 'Se perderá el progreso actual.',
+      confirmText: 'Reiniciar',
+      cancelText: 'Cancelar'
+    });
+    if (confirmed) {
+      audioService.stopAll();
+      this.gameInstance.reset();
+      this.renderGame();
+    }
   }
 
   destroy() {

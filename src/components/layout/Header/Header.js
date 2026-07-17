@@ -24,6 +24,7 @@ class Header {
       logo: '/logo.png',
       title: 'Palabras Vivas',
       stars: 0,
+      level: { name: 'Principiante', icon: 'fa-seedling' },
       theme: 'dark',
       navItems: [],
       showBack: false,
@@ -83,6 +84,12 @@ class Header {
 
         <!-- Right Section -->
         <div class="header__right">
+          <!-- Level Badge -->
+          <div class="header__level">
+            <i class="fa-solid ${this.options.level.icon}"></i>
+            <span class="header__level-text">${this.options.level.name}</span>
+          </div>
+
           <!-- Star Counter -->
           <div class="star-counter">
             <i class="star-counter__icon fa-solid fa-star"></i>
@@ -205,6 +212,14 @@ class Header {
     this.options.stars = stars;
     const valueEl = this.element.querySelector('.star-counter__value');
     if (valueEl) valueEl.textContent = stars;
+  }
+
+  setLevel(level) {
+    this.options.level = level;
+    const icon = this.element.querySelector('.header__level i');
+    const text = this.element.querySelector('.header__level-text');
+    if (icon) icon.className = `fa-solid ${level.icon}`;
+    if (text) text.textContent = level.name;
   }
 
   setTheme(theme) {

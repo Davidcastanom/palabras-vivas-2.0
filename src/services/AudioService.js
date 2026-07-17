@@ -3,9 +3,7 @@
  * Handles audio playback with MP3 + TTS fallback
  */
 
-const BASE_AUDIO_URL = import.meta.env.PROD 
-  ? '/palabras-vivas-2.0/audio' 
-  : '/audio';
+import { audioBaseUrl as BASE_AUDIO_URL } from '../data/words.js';
 
 class AudioService {
   constructor() {

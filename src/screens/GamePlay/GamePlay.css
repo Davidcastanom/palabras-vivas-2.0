@@ -35,6 +35,28 @@
   background: var(--surface-hover);
 }
 
+.game-play-header__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.game-play-reset-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--surface-light);
+  border: none;
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.game-play-reset-btn:hover {
+  background: var(--surface-hover);
+}
+
 .game-play-progress {
   flex: 1;
   margin: 0 var(--space-md);
@@ -101,64 +123,6 @@
 .game-play-area {
   min-height: 400px;
   padding: var(--space-md);
-}
-
-/* Complete Word */
-.complete-word-display {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-xl);
-}
-
-.letter-slot {
-  width: 50px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--surface-light);
-  border-radius: var(--radius-md);
-  font-size: var(--text-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
-  text-transform: uppercase;
-}
-
-.letter-slot.missing {
-  background: var(--color-primary);
-  color: var(--bg-primary);
-  animation: pulse 1.5s infinite;
-}
-
-.complete-word-options {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-md);
-}
-
-.complete-word-option {
-  width: 60px;
-  height: 60px;
-  border-radius: var(--radius-md);
-  background: var(--surface-light);
-  border: 2px solid transparent;
-  color: var(--text-primary);
-  font-size: var(--text-xl);
-  font-weight: var(--font-weight-bold);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.complete-word-option:hover {
-  background: var(--surface-hover);
-  border-color: var(--color-primary);
-  transform: scale(1.05);
-}
-
-.complete-word-option:active {
-  transform: scale(0.95);
 }
 
 /* Memory */
@@ -300,10 +264,21 @@
 }
 
 /* Word Search */
-.word-search-word {
+.word-search-hint {
   text-align: center;
-  font-size: var(--text-xl);
   margin-bottom: var(--space-lg);
+}
+
+.word-search-hint__img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-sm);
+}
+
+.word-search-hint__word {
+  font-size: var(--text-xl);
 }
 
 .word-search-grid {
@@ -362,6 +337,18 @@
 }
 
 /* Sort Letters */
+.sort-letters-hint {
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.sort-letters-hint__img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+}
+
 .sort-letters-display {
   text-align: center;
   margin-bottom: var(--space-xl);
@@ -427,90 +414,6 @@
   display: flex;
   justify-content: center;
   gap: var(--space-md);
-}
-
-/* Association */
-.association-word {
-  text-align: center;
-  margin-bottom: var(--space-xl);
-}
-
-.association-word h3 {
-  font-size: var(--text-3xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
-}
-
-.association-options {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md);
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.association-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: var(--space-md);
-  background: var(--surface-light);
-  border: 2px solid transparent;
-  border-radius: var(--radius-lg);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.association-option:hover {
-  background: var(--surface-hover);
-  border-color: var(--color-primary);
-}
-
-.association-option img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: var(--space-sm);
-  border-radius: var(--radius-sm);
-}
-
-.association-option-image {
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: var(--space-sm);
-  background: var(--surface-subtle);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-
-.association-option-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.association-option span {
-  font-size: var(--text-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-primary);
-}
-
-.association-option.selected {
-  border-color: var(--color-primary);
-  background: rgba(0, 102, 255, 0.2);
-}
-
-.association-option.correct {
-  border-color: var(--color-success);
-  background: rgba(46, 204, 113, 0.2);
-}
-
-.association-option.wrong {
-  border-color: var(--color-error);
-  background: rgba(231, 76, 60, 0.2);
 }
 
 /* Game Image Options (for Encuentra la Palabra / Escucha y Elige) */
@@ -694,11 +597,6 @@
 }
 
 /* Animations */
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
 @keyframes bounceIn {
   0% { transform: scale(0); }
   50% { transform: scale(1.2); }

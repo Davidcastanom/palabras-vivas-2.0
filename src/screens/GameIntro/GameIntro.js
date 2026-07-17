@@ -21,11 +21,13 @@ class GameIntroScreen {
       category: null,
       onStart: null,
       onBack: null,
+      app: null,
       ...options
     };
 
     this.screen = null;
     this.gameData = gameIntroData[this.options.gameId];
+    this.bestScore = this.options.app?.getBestScore(this.options.gameId, this.options.category) || null;
   }
 
   render() {
@@ -48,7 +50,7 @@ class GameIntroScreen {
 
     return `
       <div class="game-intro__header">
-        <div class="game-intro__icon" style="background: ${game.iconColor}20; color: ${game.iconColor}">
+        <div class="game-intro__icon" style="--icon-color: ${game.iconColor}">
           <i class="fa-solid ${game.icon}"></i>
         </div>
         <h1 class="game-intro__title">${game.title}</h1>
@@ -95,6 +97,30 @@ class GameIntroScreen {
             </div>
           </div>
         </div>
+
+        ${this.bestScore ? `
+        <div class="game-intro__best-score">
+          <div class="game-intro__best-score-header">
+            <i class="fa-solid fa-trophy"></i>
+            <span>Tu mejor puntuación</span>
+          </div>
+          <div class="game-intro__best-score-stars">
+            ${[1, 2, 3].map(s => `<i class="fa-solid fa-star ${s <= this.bestScore.stars ? 'earned' : ''}"></i>`).join('')}
+          </div>
+          <div class="game-intro__best-score-details">
+            <span>${this.bestScore.score} puntos</span>
+            <span>·</span>
+            <span>${this.bestScore.accuracy}% precisión</span>
+          </div>
+        </div>
+        ` : `
+        <div class="game-intro__best-score game-intro__best-score--empty">
+          <div class="game-intro__best-score-header">
+            <i class="fa-solid fa-trophy"></i>
+            <span>¡Intenta ganar las ${game.reward} estrellas!</span>
+          </div>
+        </div>
+        `}
       </div>
 
       <div class="game-intro__action">

@@ -9,6 +9,14 @@ const BASE_AUDIO_URL = import.meta.env.PROD
 
 const CLOUDINARY_BASE = 'https://res.cloudinary.com/dfn5g9ve3/image/upload';
 
+export const categoryMeta = {
+  animales: { name: 'Animales', icon: 'fa-paw', cssColor: 'var(--color-category-animals)', iconColor: '#22c55e' },
+  frutas: { name: 'Frutas', icon: 'fa-apple-whole', cssColor: 'var(--color-category-fruits)', iconColor: '#ef4444' },
+  objetos: { name: 'Objetos', icon: 'fa-cube', cssColor: 'var(--color-category-objects)', iconColor: '#3b82f6' },
+  familia: { name: 'Familia', icon: 'fa-people-roof', cssColor: 'var(--color-category-family)', iconColor: '#a855f7' },
+  cuerpo: { name: 'Cuerpo', icon: 'fa-person', cssColor: 'var(--color-category-body)', iconColor: '#f97316' }
+};
+
 export const categories = {
   animales: {
     name: 'Animales',
@@ -114,8 +122,4 @@ export const audioBaseUrl = BASE_AUDIO_URL;
 export function getWordsForCategory(categoryKey) {
   const category = categories[categoryKey];
   return category ? category.words : [];
-}
-
-export function getAudioPath(filename) {
-  return `${BASE_AUDIO_URL}/${filename}`;
 }

@@ -498,71 +498,6 @@ body {
    GAME COMPONENTS RESPONSIVE
    ======================================== */
 
-/* Flashcard */
-.flashcard {
-  width: 100%;
-  max-width: 280px;
-  aspect-ratio: 3/4;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-}
-
-@media (min-width: 640px) {
-  .flashcard {
-    max-width: 320px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .flashcard {
-    max-width: 400px;
-  }
-}
-
-/* Game Options Grid */
-.game-options {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-sm);
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-}
-
-@media (min-width: 640px) {
-  .game-options {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-md);
-    max-width: 480px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .game-options {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-lg);
-    max-width: 600px;
-  }
-}
-
-.game-option {
-  aspect-ratio: 1;
-  min-height: 80px;
-  border-radius: var(--radius-lg);
-}
-
-@media (min-width: 640px) {
-  .game-option {
-    min-height: 100px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .game-option {
-    min-height: 120px;
-  }
-}
-
 /* Syllable Buttons */
 .syllable-btn {
   width: 56px;
@@ -581,29 +516,6 @@ body {
 @media (min-width: 1024px) {
   .syllable-btn {
     width: 72px;
-    height: 72px;
-    font-size: var(--text-3xl);
-  }
-}
-
-/* Letter Slot */
-.letter-slot {
-  width: 48px;
-  height: 56px;
-  font-size: var(--text-xl);
-}
-
-@media (min-width: 640px) {
-  .letter-slot {
-    width: 56px;
-    height: 64px;
-    font-size: var(--text-2xl);
-  }
-}
-
-@media (min-width: 1024px) {
-  .letter-slot {
-    width: 64px;
     height: 72px;
     font-size: var(--text-3xl);
   }

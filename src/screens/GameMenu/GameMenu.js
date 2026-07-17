@@ -4,6 +4,8 @@
  */
 
 import Screen from '../../components/layout/Screen/Screen.js';
+import { categoryMeta } from '../../data/words.js';
+import gameIntroData from '../../data/games.js';
 import './GameMenu.css';
 
 class GameMenuScreen {
@@ -32,30 +34,6 @@ class GameMenuScreen {
       { id: 'syllables', name: 'Letras y Sílabas', icon: 'fa-font', description: 'Aprende a separar palabras', difficulty: 1 },
       { id: 'word-search', name: 'Sopa de Letras', icon: 'fa-search', description: 'Encuentra palabras ocultas', difficulty: 3 }
     ];
-
-    this.categoryNames = {
-      animales: 'Animales',
-      frutas: 'Frutas',
-      objetos: 'Objetos',
-      familia: 'Familia',
-      cuerpo: 'Cuerpo'
-    };
-
-    this.categoryIcons = {
-      animales: 'fa-paw',
-      frutas: 'fa-apple-whole',
-      objetos: 'fa-cube',
-      familia: 'fa-people-roof',
-      cuerpo: 'fa-person'
-    };
-
-    this.categoryColors = {
-      animales: 'var(--color-category-animals)',
-      frutas: 'var(--color-category-fruits)',
-      objetos: 'var(--color-category-objects)',
-      familia: 'var(--color-category-family)',
-      cuerpo: 'var(--color-category-body)'
-    };
   }
 
   render() {
@@ -69,17 +47,18 @@ class GameMenuScreen {
   }
 
   buildContent() {
-    const categoryName = this.categoryNames[this.options.category] || this.options.category;
-    const categoryIcon = this.categoryIcons[this.options.category] || 'fa-folder';
-    const categoryColor = this.categoryColors[this.options.category] || 'var(--color-primary)';
+    const meta = categoryMeta[this.options.category];
+    const categoryName = meta?.name || this.options.category;
+    const categoryIcon = meta?.icon || 'fa-folder';
+    const categoryColor = meta?.cssColor || 'var(--color-primary)';
 
     return `
       <div class="game-menu__header">
-        <div class="game-menu__category">
+        <div class="game-menu__category-title">
           <i class="game-menu__category-icon fa-solid ${categoryIcon}" style="color: ${categoryColor}"></i>
-          <span>${categoryName}</span>
+          <h1 class="game-menu__category-name">${categoryName}</h1>
         </div>
-        <h1 class="game-menu__title">Elige un juego</h1>
+        <p class="game-menu__subtitle">Elige un juego</p>
       </div>
 
       <div class="game-menu__games">
