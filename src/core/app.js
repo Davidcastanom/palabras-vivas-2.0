@@ -14,6 +14,7 @@ import Toast from '../components/core/Toast/Toast.js';
 import HomeScreen from '../screens/Home/Home.js';
 import GameMenuScreen from '../screens/GameMenu/GameMenu.js';
 import GameIntroScreen from '../screens/GameIntro/GameIntro.js';
+import GamePlayScreen from '../screens/GamePlay/GamePlay.js';
 
 class App {
   constructor() {
@@ -132,6 +133,11 @@ class App {
         this.header.options.showBack = true;
         break;
 
+      case 'gamePlay':
+        this.currentScreenInstance = new GamePlayScreen(this);
+        this.header.options.showBack = false;
+        break;
+
       default:
         this.currentScreenInstance = new HomeScreen({
           onCategorySelect: (categoryId) => this.selectCategory(categoryId)
@@ -165,9 +171,16 @@ class App {
   }
 
   startGame(gameId, category) {
-    Toast.info(`Iniciando: ${gameId}`);
+    this.renderScreen('gamePlay');
+    
+    // Initialize game after screen is rendered
+    setTimeout(() => {
+      if (this.currentScreenInstance && this.currentScreenInstance.init) {
+        this.currentScreenInstance.init(gameId, category);
+      }
+    }, 100);
+    
     console.log('Starting game:', gameId, 'in category:', category);
-    // TODO: Implement GamePlay screen in Phase 5
   }
 
   goBack() {
@@ -179,9 +192,54 @@ class App {
       case 'gameIntro':
         this.renderScreen('gameMenu', { category: this.state.category });
         break;
+      case 'gamePlay':
+        // Destroy current game instance
+        if (this.currentScreenInstance && this.currentScreenInstance.destroy) {
+          this.currentScreenInstance.destroy();
+        }
+        this.renderScreen('gameIntro', { 
+          gameId: this.state.game, 
+          category: this.state.category 
+        });
+        break;
       default:
         this.renderScreen('home');
     }
+  }
+
+  navigateTo(screen, options = {}) {
+    this.renderScreen(screen, options);
+  }
+
+  showToast(message, type = 'info') {
+    if (type === 'success') {
+      Toast.success(message);
+    } else if (type === 'error') {
+      Toast.error(message);
+    } else if (type === 'warning') {
+      Toast.warning(message);
+    } else {
+      Toast.info(message);
+    }
+  }
+
+  saveGameResult(result) {
+    // Save to localStorage
+    const savedResults = JSON.parse(localStorage.getItem('pv-game-results') || '[]');
+    savedResults.push({
+      ...result,
+      timestamp: new Date().toISOString()
+    });
+    localStorage.setItem('pv-game-results', JSON.stringify(savedResults));
+
+    // Update stars
+    this.state.stars += result.stars;
+    if (this.header) {
+      this.header.setStars(this.state.stars);
+    }
+
+    // Save stars
+    localStorage.setItem('pv-stars', this.state.stars.toString());
   }
 }
 
