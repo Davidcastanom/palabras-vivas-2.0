@@ -25,12 +25,12 @@ class GameMenuScreen {
 
     this.games = [
       { id: 'learn', name: 'Aprender', icon: 'fa-book-open', description: 'Escucha y repite las palabras', difficulty: 0, isLearn: true },
-      { id: 'complete-word', name: 'Completa la Palabra', icon: 'fa-puzzle-piece', description: 'Encuentra la letra que falta', difficulty: 1 },
+      { id: 'complete-word', name: 'Encuentra la Palabra', icon: 'fa-images', description: 'Toca la imagen correcta', difficulty: 1 },
+      { id: 'association', name: 'Escucha y Elige', icon: 'fa-ear-listen', description: 'Escucha y toca la imagen', difficulty: 1 },
       { id: 'memory', name: 'Memoria', icon: 'fa-brain', description: 'Encuentra los pares', difficulty: 2 },
+      { id: 'sort-letters', name: 'Ordena las Sílabas', icon: 'fa-sort-amount-down', description: 'Ordena las sílabas', difficulty: 2 },
       { id: 'syllables', name: 'Letras y Sílabas', icon: 'fa-font', description: 'Aprende a separar palabras', difficulty: 1 },
-      { id: 'word-search', name: 'Sopa de Letras', icon: 'fa-search', description: 'Encuentra palabras ocultas', difficulty: 2 },
-      { id: 'sort-letters', name: 'Acomoda las Sílabas', icon: 'fa-sort-amount-down', description: 'Ordena las sílabas', difficulty: 3 },
-      { id: 'association', name: 'Asociación', icon: 'fa-project-diagram', description: 'Conecta imagen con palabra', difficulty: 2 }
+      { id: 'word-search', name: 'Sopa de Letras', icon: 'fa-search', description: 'Encuentra palabras ocultas', difficulty: 3 }
     ];
 
     this.categoryNames = {

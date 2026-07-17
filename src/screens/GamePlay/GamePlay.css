@@ -513,6 +513,73 @@
   background: rgba(231, 76, 60, 0.2);
 }
 
+/* Game Image Options (for Encuentra la Palabra / Escucha y Elige) */
+.game-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  max-width: 500px;
+  margin: 0 auto;
+  padding: var(--space-md);
+}
+
+.game-image-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.08);
+  border: 3px solid transparent;
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.game-image-option:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--color-primary);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 102, 255, 0.25);
+}
+
+.game-image-option:active {
+  transform: scale(0.95);
+}
+
+.game-image-option__img {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+}
+
+.game-image-option__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.game-image-option__img i {
+  font-size: var(--text-3xl);
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+.game-image-option__word {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 /* Game Results */
 .game-results {
   text-align: center;
@@ -607,8 +674,9 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .association-options {
-    grid-template-columns: 1fr;
+  .game-options-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
   }
 
   .results-stats {

@@ -1,8 +1,3 @@
-/**
- * CompleteWord Game
- * Juego de completar palabras eligiendo la letra correcta
- */
-
 import BaseGame from '../base/BaseGame.js';
 
 class CompleteWordGame extends BaseGame {
@@ -13,100 +8,71 @@ class CompleteWordGame extends BaseGame {
       ...config
     });
 
-    this.missingLetterIndex = -1;
-    this.options = [];
+    this.currentOptions = [];
+    this.currentTarget = null;
+    this.correctCount = 0;
   }
 
   init() {
-    super.init();
-    this.generateOptions();
+    this.state.currentRound = 0;
+    this.state.score = 0;
+    this.state.streak = 0;
+    this.state.isComplete = false;
+    this.generateRound();
     return this.state;
   }
 
-  /**
-   * Generar opciones para la letra faltante
-   */
-  generateOptions() {
-    const word = this.state.currentWord.word;
-    
-    // Seleccionar posición aleatoria para la letra faltante
-    this.missingLetterIndex = Math.floor(Math.random() * word.length);
-    const missingLetter = word[this.missingLetterIndex];
+  generateRound() {
+    const allWords = this.config.words;
+    const targetIndex = Math.floor(Math.random() * allWords.length);
+    this.currentTarget = allWords[targetIndex];
 
-    // Generar opciones (letra correcta + 3 distractoras)
-    const incorrectLetters = this.generateDistractors(missingLetter);
-    this.options = [missingLetter, ...incorrectLetters];
-    
-    // Mezclar opciones
-    this.options = this.shuffleArray(this.options);
+    let distractors = allWords.filter(w => w.id !== this.currentTarget.id);
+    const numDistractors = Math.min(2, distractors.length);
+    distractors = this.shuffleArray([...distractors]).slice(0, numDistractors);
+
+    this.currentOptions = this.shuffleArray([this.currentTarget, ...distractors]);
+    this.notifyStateChange();
   }
 
-  /**
-   * Generar letras distractores
-   */
-  generateDistractors(correctLetter) {
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const distractors = [];
-    
-    while (distractors.length < 3) {
-      const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
-      if (randomLetter !== correctLetter && !distractors.includes(randomLetter)) {
-        distractors.push(randomLetter);
+  checkAnswer(selectedOption) {
+    const isCorrect = selectedOption.id === this.currentTarget.id;
+
+    if (isCorrect) {
+      this.correctCount++;
+      this.state.score += 10 + this.state.streak * 2;
+      this.state.streak++;
+      this.state.currentRound++;
+      this.handleCorrectAnswer({ word: this.currentTarget, points: 10 + (this.state.streak - 1) * 2 });
+
+      if (this.state.currentRound >= this.config.totalRounds) {
+        this.completeGame();
+      } else {
+        this.generateRound();
       }
+    } else {
+      this.state.streak = 0;
+      this.handleWrongAnswer({ word: this.currentTarget });
     }
-    
-    return distractors;
+
+    return isCorrect;
   }
 
-  /**
-   * Verificar respuesta
-   */
-  checkAnswer(answer) {
-    const isCorrect = super.checkAnswer(answer);
-    
-    if (isCorrect || this.state.mistakes < 3) {
-      // Si es correcto o aún tiene intentos
-      return isCorrect;
-    }
-    
-    return false;
-  }
-
-  /**
-   * Obtener palabra con letra faltante
-   */
-  getWordWithMissing() {
-    const word = this.state.currentWord.word;
-    return word.split('').map((letter, index) => ({
-      letter,
-      isMissing: index === this.missingLetterIndex,
-      isVisible: index !== this.missingLetterIndex
-    }));
-  }
-
-  /**
-   * Obtener opciones
-   */
   getOptions() {
-    return this.options;
+    return this.currentOptions;
   }
 
-  /**
-   * Avanzar a siguiente ronda
-   */
-  nextRound() {
-    super.nextRound();
-    if (!this.state.isComplete) {
-      this.generateOptions();
-    }
+  getTarget() {
+    return this.currentTarget;
   }
 
-  /**
-   * Reiniciar juego
-   */
   reset() {
-    super.reset();
-    this.generateOptions();
+    this.correctCount = 0;
+    this.state.currentRound = 0;
+    this.state.score = 0;
+    this.state.streak = 0;
+    this.state.isComplete = false;
+    this.generateRound();
   }
 }
 

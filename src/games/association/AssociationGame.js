@@ -1,8 +1,3 @@
-/**
- * Association Game
- * Juego de asociar imágenes con palabras
- */
-
 import BaseGame from '../base/BaseGame.js';
 
 class AssociationGame extends BaseGame {
@@ -13,120 +8,71 @@ class AssociationGame extends BaseGame {
       ...config
     });
 
-    this.options = [];
-    this.selectedOption = null;
-    this.matchedPairs = 0;
-    this.totalPairs = 0;
-    this.shuffledWords = [];
+    this.currentOptions = [];
+    this.currentTarget = null;
+    this.correctCount = 0;
   }
 
   init() {
-    super.init();
-    this.totalPairs = Math.min(this.config.totalRounds, this.config.words.length);
-    this.generateOptions();
+    this.state.currentRound = 0;
+    this.state.score = 0;
+    this.state.streak = 0;
+    this.state.isComplete = false;
+    this.generateRound();
     return this.state;
   }
 
-  /**
-   * Generar opciones para asociar
-   */
-  generateOptions() {
-    const currentWord = this.state.currentWord;
-    
-    // Obtener palabras incorrectas
-    const incorrectWords = this.config.words
-      .filter(w => w.word !== currentWord.word)
-      .slice(0, 3);
+  generateRound() {
+    const allWords = this.config.words;
+    const targetIndex = Math.floor(Math.random() * allWords.length);
+    this.currentTarget = allWords[targetIndex];
 
-    // Crear opciones
-    this.options = [
-      { word: currentWord.word, image: currentWord.img || currentWord.image, isCorrect: true },
-      ...incorrectWords.map(w => ({ word: w.word, image: w.img || w.image, isCorrect: false }))
-    ];
+    let distractors = allWords.filter(w => w.id !== this.currentTarget.id);
+    const numDistractors = Math.min(2, distractors.length);
+    distractors = this.shuffleArray([...distractors]).slice(0, numDistractors);
 
-    // Mezclar opciones
-    this.options = this.shuffleArray(this.options);
-  }
-
-  /**
-   * Seleccionar opción
-   */
-  selectOption(optionIndex) {
-    const option = this.options[optionIndex];
-    if (!option) return null;
-
-    this.selectedOption = option;
+    this.currentOptions = this.shuffleArray([this.currentTarget, ...distractors]);
     this.notifyStateChange();
-    return option;
   }
 
-  /**
-   * Verificar selección
-   */
-  checkSelection() {
-    if (!this.selectedOption) return false;
-
-    const isCorrect = this.selectedOption.isCorrect;
+  checkAnswer(selectedOption) {
+    const isCorrect = selectedOption.id === this.currentTarget.id;
 
     if (isCorrect) {
-      this.matchedPairs++;
-      this.handleCorrectAnswer({ word: this.selectedOption.word });
+      this.correctCount++;
+      this.state.score += 10 + this.state.streak * 2;
+      this.state.streak++;
+      this.state.currentRound++;
+      this.handleCorrectAnswer({ word: this.currentTarget, points: 10 + (this.state.streak - 1) * 2 });
 
-      if (this.matchedPairs >= this.totalPairs) {
+      if (this.state.currentRound >= this.config.totalRounds) {
         this.completeGame();
+      } else {
+        this.generateRound();
       }
     } else {
-      this.handleWrongAnswer({ word: this.selectedOption.word });
+      this.state.streak = 0;
+      this.handleWrongAnswer({ word: this.currentTarget });
     }
 
-    this.selectedOption = null;
-    this.notifyStateChange();
     return isCorrect;
   }
 
-  /**
-   * Obtener opciones
-   */
   getOptions() {
-    return this.options;
+    return this.currentOptions;
   }
 
-  /**
-   * Obtener selección actual
-   */
-  getSelectedOption() {
-    return this.selectedOption;
+  getTarget() {
+    return this.currentTarget;
   }
 
-  /**
-   * Obtener progreso de pares
-   */
-  getMatchProgress() {
-    return {
-      matched: this.matchedPairs,
-      total: this.totalPairs,
-      percentage: Math.round((this.matchedPairs / this.totalPairs) * 100)
-    };
-  }
-
-  /**
-   * Avanzar a siguiente ronda
-   */
-  nextRound() {
-    super.nextRound();
-    if (!this.state.isComplete) {
-      this.generateOptions();
-    }
-  }
-
-  /**
-   * Reiniciar juego
-   */
   reset() {
-    super.reset();
-    this.matchedPairs = 0;
-    this.selectedOption = null;
-    this.generateOptions();
+    this.correctCount = 0;
+    this.state.currentRound = 0;
+    this.state.score = 0;
+    this.state.streak = 0;
+    this.state.isComplete = false;
+    this.generateRound();
   }
 }
 

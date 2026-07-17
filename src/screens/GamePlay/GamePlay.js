@@ -239,13 +239,6 @@ class GamePlay {
 
     if (!gameArea || !this.gameInstance) return;
 
-    gameInstruction.innerHTML = `
-      <div class="instruction-text">
-        <i class="fas fa-lightbulb"></i>
-        <span>Selecciona la opcion correcta</span>
-      </div>
-    `;
-
     switch (this.currentGameId) {
       case 'complete-word':
         this.renderCompleteWord(gameArea);
@@ -266,42 +259,52 @@ class GamePlay {
         this.renderAssociation(gameArea);
         break;
     }
+
+    this.updateUI(this.gameInstance.state || this.gameInstance.getState());
   }
 
   renderCompleteWord(gameArea) {
-    const wordDisplay = this.gameInstance.getWordWithMissing();
+    const target = this.gameInstance.getTarget();
     const options = this.gameInstance.getOptions();
 
-    gameArea.innerHTML = `
-      <div class="complete-word-display">
-        ${wordDisplay.map(item => `
-          <span class="letter-slot ${item.isMissing ? 'missing' : ''}" 
-                ${item.isMissing ? 'id="missing-letter"' : ''}>
-            ${item.isVisible ? item.letter : '_'}
-          </span>
-        `).join('')}
-      </div>
+    const instruction = this.element.querySelector('#game-instruction');
+    if (instruction) {
+      instruction.innerHTML = `
+        <div class="instruction-text">
+          <i class="fas fa-lightbulb"></i>
+          <span>¿Dónde está <strong>${target.word}</strong>?</span>
+        </div>
+      `;
+      audioService.speak('¿Dónde está ' + target.word + '?');
+    }
 
-      <div class="complete-word-options">
-        ${options.map((letter, index) => `
-          <button class="complete-word-option" data-index="${index}" data-letter="${letter}">
-            ${letter}
+    gameArea.innerHTML = `
+      <div class="game-options-grid">
+        ${options.map((opt, index) => `
+          <button class="game-image-option" data-index="${index}" data-id="${opt.id}">
+            <div class="game-image-option__img">
+              <img src="${opt.img}" alt="${opt.word}" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-image\\'></i>'">
+            </div>
+            <div class="game-image-option__word">${opt.word}</div>
           </button>
         `).join('')}
       </div>
     `;
 
-    gameArea.querySelectorAll('.complete-word-option').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const letter = e.target.dataset.letter;
-        const targetWord = this.gameInstance.state.currentWord.word;
-        const isCorrect = this.gameInstance.checkAnswer(targetWord);
-        
+    gameArea.querySelectorAll('.game-image-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const selected = options.find(o => o.id === id);
+        const isCorrect = this.gameInstance.checkAnswer(selected);
+
         if (isCorrect) {
           this.showFeedback(true);
-          setTimeout(() => this.nextRound(), 1500);
+          this.addStarToApp();
+          audioService.speak('¡Muy bien!');
+          setTimeout(() => this.renderGame(), 1500);
         } else {
           this.showFeedback(false);
+          audioService.speak('Oh, no. Inténtalo de nuevo');
         }
       });
     });
@@ -583,41 +586,49 @@ class GamePlay {
   }
 
   renderAssociation(gameArea) {
+    const target = this.gameInstance.getTarget();
     const options = this.gameInstance.getOptions();
 
-    gameArea.innerHTML = `
-      <div class="association-word">
-        <h3>${this.gameInstance.state.currentWord.word}</h3>
-      </div>
+    const instruction = this.element.querySelector('#game-instruction');
+    if (instruction) {
+      instruction.innerHTML = `
+        <div class="instruction-text">
+          <i class="fas fa-ear-listen"></i>
+          <span>Escucha y toca la imagen correcta</span>
+        </div>
+      `;
+      setTimeout(() => {
+        audioService.speak('Toca... ' + target.word);
+      }, 1000);
+    }
 
-      <div class="association-options">
-        ${options.map((option, index) => `
-          <button class="association-option" data-index="${index}">
-            <span class="association-option-image">
-              <img src="${option.image}" alt="${option.word}" onerror="this.style.display='none'">
-            </span>
-            <span>${option.word}</span>
+    gameArea.innerHTML = `
+      <div class="game-options-grid">
+        ${options.map((opt, index) => `
+          <button class="game-image-option" data-index="${index}" data-id="${opt.id}">
+            <div class="game-image-option__img">
+              <img src="${opt.img}" alt="${opt.word}" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-image\\'></i>'">
+            </div>
+            <div class="game-image-option__word">${opt.word}</div>
           </button>
         `).join('')}
       </div>
     `;
 
-    gameArea.querySelectorAll('.association-option').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const index = parseInt(e.target.closest('.association-option').dataset.index);
-        this.gameInstance.selectOption(index);
-        
-        const isCorrect = this.gameInstance.checkSelection();
-        
+    gameArea.querySelectorAll('.game-image-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const selected = options.find(o => o.id === id);
+        const isCorrect = this.gameInstance.checkAnswer(selected);
+
         if (isCorrect) {
           this.showFeedback(true);
-          this.updateAssociationDisplay();
-          
-          if (!this.gameInstance.state.isComplete) {
-            setTimeout(() => this.nextRound(), 1500);
-          }
+          this.addStarToApp();
+          audioService.speak('¡Muy bien!');
+          setTimeout(() => this.renderGame(), 1500);
         } else {
           this.showFeedback(false);
+          audioService.speak('Oh, no. Inténtalo de nuevo');
         }
       });
     });
@@ -639,13 +650,16 @@ class GamePlay {
     const progressText = this.element.querySelector('#progress-text');
     const scoreText = this.element.querySelector('#score-text');
 
-    if (progressFill && state.currentRound) {
-      const progress = (state.currentRound / this.gameInstance.config.totalRounds) * 100;
+    const totalRounds = this.gameInstance.config.totalRounds;
+    const currentRound = state.currentRound || 0;
+
+    if (progressFill && totalRounds) {
+      const progress = (currentRound / totalRounds) * 100;
       progressFill.style.width = `${progress}%`;
     }
 
-    if (progressText && state.currentRound) {
-      progressText.textContent = `${state.currentRound}/${this.gameInstance.config.totalRounds}`;
+    if (progressText && totalRounds) {
+      progressText.textContent = `${currentRound}/${totalRounds}`;
     }
 
     if (scoreText && state.score !== undefined) {
@@ -670,17 +684,32 @@ class GamePlay {
 
   nextRound() {
     if (this.gameInstance) {
-      this.gameInstance.nextRound();
+      if (typeof this.gameInstance.nextRound === 'function') {
+        this.gameInstance.nextRound();
+      }
       this.renderGame();
     }
   }
 
   handleCorrectAnswer(data) {
     this.app.showToast(`+${data.points} puntos`, 'success');
+    this.updateUI(this.gameInstance.state || this.gameInstance.getState());
   }
 
   handleWrongAnswer() {
     this.app.showToast('¡Intentalo de nuevo!', 'warning');
+  }
+
+  addStarToApp() {
+    if (this.app && typeof this.app.addStar === 'function') {
+      this.app.addStar();
+    } else if (this.app && this.app.state) {
+      this.app.state.stars++;
+      if (this.app.header) {
+        this.app.header.setStars(this.app.state.stars);
+      }
+      localStorage.setItem('pv-stars', this.app.state.stars.toString());
+    }
   }
 
   handleGameComplete(result) {
