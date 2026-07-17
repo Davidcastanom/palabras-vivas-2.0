@@ -244,12 +244,12 @@ class App {
   startGame(gameId, category) {
     this.renderScreen('gamePlay');
     
-    // Initialize game after screen is rendered
+    // Initialize game after screen is rendered and transition completes (200ms exit + buffer)
     setTimeout(() => {
       if (this.currentScreenInstance && typeof this.currentScreenInstance.init === 'function') {
         this.currentScreenInstance.init(gameId, category);
       }
-    }, 100);
+    }, 350);
   }
 
   goBack() {
