@@ -330,7 +330,7 @@ body {
   left: 0;
   right: 0;
   height: var(--header-height);
-  background: rgba(10, 10, 15, 0.9);
+  background: var(--bg-overlay);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
   z-index: var(--z-header);
@@ -338,7 +338,7 @@ body {
 }
 
 .header.scrolled {
-  background: rgba(10, 10, 15, 0.98);
+  background: var(--bg-primary);
   box-shadow: var(--shadow-md);
 }
 

@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-md);
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--surface-light);
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-md);
 }
@@ -23,7 +23,7 @@
   width: 44px;
   height: 44px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-light);
   border: none;
   color: var(--text-primary);
   font-size: var(--text-lg);
@@ -32,7 +32,7 @@
 }
 
 .game-play-pause-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-hover);
 }
 
 .game-play-progress {
@@ -42,7 +42,7 @@
 
 .game-play-progress-bar {
   height: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-light);
   border-radius: var(--radius-full);
   overflow: hidden;
 }
@@ -87,9 +87,9 @@
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  background: rgba(0, 102, 255, 0.1);
+  background: var(--surface-instruction-bg);
   border-radius: var(--radius-full);
-  color: var(--color-primary-light);
+  color: var(--surface-instruction-color);
   font-size: var(--text-base);
 }
 
@@ -117,7 +117,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-light);
   border-radius: var(--radius-md);
   font-size: var(--text-2xl);
   font-weight: var(--font-weight-bold);
@@ -142,7 +142,7 @@
   width: 60px;
   height: 60px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-light);
   border: 2px solid transparent;
   color: var(--text-primary);
   font-size: var(--text-xl);
@@ -152,7 +152,7 @@
 }
 
 .complete-word-option:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-hover);
   border-color: var(--color-primary);
   transform: scale(1.05);
 }
@@ -196,7 +196,7 @@
 }
 
 .memory-card-back {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-light);
   transform: rotateY(180deg);
 }
 
@@ -271,7 +271,7 @@
 
 .syllable-btn {
   padding: var(--space-sm) var(--space-lg);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-light);
   border: 2px solid transparent;
   border-radius: var(--radius-md);
   color: var(--text-primary);
@@ -282,7 +282,7 @@
 }
 
 .syllable-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-hover);
   border-color: var(--color-primary);
 }
 
@@ -325,7 +325,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-light);
   border: none;
   border-radius: var(--radius-sm);
   color: var(--text-primary);
@@ -336,7 +336,7 @@
 }
 
 .word-search-cell:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-hover);
 }
 
 .word-search-cell.selected {
@@ -401,7 +401,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-light);
   border: 2px solid transparent;
   border-radius: var(--radius-md);
   color: var(--text-primary);
@@ -412,7 +412,7 @@
 }
 
 .letter-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-hover);
   border-color: var(--color-primary);
 }
 
@@ -454,7 +454,7 @@
   flex-direction: column;
   align-items: center;
   padding: var(--space-md);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-light);
   border: 2px solid transparent;
   border-radius: var(--radius-lg);
   cursor: pointer;
@@ -462,7 +462,7 @@
 }
 
 .association-option:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-hover);
   border-color: var(--color-primary);
 }
 
@@ -481,7 +481,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: var(--space-sm);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface-subtle);
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
@@ -528,7 +528,7 @@
   flex-direction: column;
   align-items: center;
   padding: var(--space-md);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--surface-subtle);
   border: 3px solid transparent;
   border-radius: var(--radius-xl);
   cursor: pointer;
@@ -536,7 +536,7 @@
 }
 
 .game-image-option:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--surface-medium);
   border-color: var(--color-primary);
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 102, 255, 0.25);
@@ -552,7 +552,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface-subtle);
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: var(--space-sm);
@@ -593,7 +593,7 @@
 .results-stars i {
   font-size: 48px;
   margin: 0 var(--space-sm);
-  color: rgba(255, 255, 255, 0.2);
+  color: var(--surface-hover);
 }
 
 .results-stars i.earned {
