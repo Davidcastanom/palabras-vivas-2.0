@@ -12,7 +12,7 @@
     "format": "prettier --write src/",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit --skipLibCheck"
   },
   "keywords": [
     "educacion",
@@ -32,6 +32,7 @@
     "eslint": "^9.0.0",
     "jsdom": "^29.1.1",
     "prettier": "^3.3.0",
+    "typescript": "^7.0.2",
     "vite": "^5.4.0",
     "vitest": "^2.0.0"
   }

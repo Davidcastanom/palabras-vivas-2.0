@@ -126,7 +126,14 @@ class Header {
   }
 
   buildMobileNavLinks() {
-    return this.options.navItems.map(item => `
+    const items = this.options.navItems.length > 0 
+      ? this.options.navItems 
+      : [
+          { label: 'Inicio', href: 'home', icon: 'fa-home' },
+          { label: 'Cambiar tema', href: 'theme', icon: 'fa-palette' }
+        ];
+
+    return items.map(item => `
       <button class="header__mobile-link ${item.active ? 'active' : ''}" data-nav="${item.href}">
         <i class="fa-solid ${item.icon || 'fa-chevron-right'}"></i>
         ${item.label}

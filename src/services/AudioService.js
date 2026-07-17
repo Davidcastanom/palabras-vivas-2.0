@@ -23,7 +23,7 @@ class AudioService {
       try {
         audio.pause();
         audio.currentTime = 0;
-      } catch (e) {}
+      } catch (_e) { /* ignore */ }
     });
     this.currentAudio = [];
 

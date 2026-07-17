@@ -12,17 +12,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@screens/*": ["src/screens/*"],
-      "@games/*": ["src/games/*"],
-      "@services/*": ["src/services/*"],
-      "@data/*": ["src/data/*"],
-      "@core/*": ["src/core/*"],
-      "@utils/*": ["src/utils/*"]
-    },
     "lib": ["ES2020", "DOM", "DOM.Iterable"]
   },
   "include": ["src/**/*.js", "src/**/*.d.ts"],

@@ -140,7 +140,14 @@ class App {
       theme: store.getState('theme'),
       showBack: false,
       onBack: () => this.handleHeaderBack(),
-      onThemeToggle: () => this.toggleTheme()
+      onThemeToggle: () => this.toggleTheme(),
+      onNavClick: (href) => {
+        if (href === 'home') {
+          router.navigate('home');
+        } else if (href === 'theme') {
+          this.toggleTheme();
+        }
+      }
     });
 
     const app = document.getElementById('app');

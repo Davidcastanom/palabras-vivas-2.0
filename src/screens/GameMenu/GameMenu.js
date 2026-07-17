@@ -5,7 +5,6 @@
 
 import Screen from '../../components/layout/Screen/Screen.js';
 import { categoryMeta } from '../../data/words.js';
-import gameIntroData from '../../data/games.js';
 import './GameMenu.css';
 
 class GameMenuScreen {
