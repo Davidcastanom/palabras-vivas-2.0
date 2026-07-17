@@ -63,7 +63,14 @@ class App {
     setTimeout(() => {
       Toast.info('¡Bienvenido a Palabras Vivas!');
     }, 1000);
-    
+
+    // Register Service Worker for offline support
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/palabras-vivas-2.0/sw.js')
+        .then(reg => console.log('SW registered:', reg.scope))
+        .catch(err => console.log('SW registration failed:', err));
+    }
+
     console.log('Palabras Vivas 2.0 initialized');
   }
 
