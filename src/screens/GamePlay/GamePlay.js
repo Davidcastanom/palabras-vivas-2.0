@@ -58,6 +58,9 @@ class GamePlay {
 
   mount(container) {
     this.isMounted = true;
+    if (container && this.element) {
+      container.appendChild(this.element);
+    }
     const pauseBtn = this.element.querySelector('#pause-btn');
     if (pauseBtn) {
       pauseBtn.addEventListener('click', () => this.handleBack());
@@ -317,8 +320,8 @@ class GamePlay {
             </div>
             <div class="memory-card-back">
               ${card.type === 'image' 
-                ? `<span class="memory-card-emoji">${card.content}</span>`
-                : `<span>${card.content}</span>`
+                ? `<img src="${card.content}" alt="${card.text}" class="memory-card-image" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'memory-card-emoji\\'>🔍</span>'">`
+                : `<span class="memory-card-word">${card.content}</span>`
               }
             </div>
           </div>
@@ -590,7 +593,9 @@ class GamePlay {
       <div class="association-options">
         ${options.map((option, index) => `
           <button class="association-option" data-index="${index}">
-            <span class="association-option-emoji">${option.image}</span>
+            <span class="association-option-image">
+              <img src="${option.image}" alt="${option.word}" onerror="this.style.display='none'">
+            </span>
             <span>${option.word}</span>
           </button>
         `).join('')}

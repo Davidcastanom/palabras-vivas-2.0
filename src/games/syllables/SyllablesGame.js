@@ -28,7 +28,12 @@ class SyllablesGame extends BaseGame {
    */
   generateSyllables() {
     const word = this.state.currentWord;
-    this.currentSyllables = word.syllables || this.splitIntoSyllables(word.word);
+    // Handle both string 'Pe-rro' and array ['PE-RRO'] formats
+    if (typeof word.syllables === 'string') {
+      this.currentSyllables = word.syllables.split('-').map(s => s.trim());
+    } else {
+      this.currentSyllables = word.syllables || this.splitIntoSyllables(word.word);
+    }
     this.selectedSyllables = [];
   }
 

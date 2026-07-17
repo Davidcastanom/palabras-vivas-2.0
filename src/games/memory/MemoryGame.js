@@ -41,7 +41,7 @@ class MemoryGame extends BaseGame {
         id: `img-${index}`,
         pairId: index,
         type: 'image',
-        content: word.image,
+        content: word.img || word.image,
         text: word.word,
         isFlipped: false,
         isMatched: false

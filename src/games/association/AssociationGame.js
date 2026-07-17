@@ -40,8 +40,8 @@ class AssociationGame extends BaseGame {
 
     // Crear opciones
     this.options = [
-      { word: currentWord.word, image: currentWord.image, isCorrect: true },
-      ...incorrectWords.map(w => ({ word: w.word, image: w.image, isCorrect: false }))
+      { word: currentWord.word, image: currentWord.img || currentWord.image, isCorrect: true },
+      ...incorrectWords.map(w => ({ word: w.word, image: w.img || w.image, isCorrect: false }))
     ];
 
     // Mezclar opciones

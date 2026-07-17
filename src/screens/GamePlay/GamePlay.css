@@ -174,6 +174,7 @@
   aspect-ratio: 1;
   perspective: 1000px;
   cursor: pointer;
+  position: relative;
 }
 
 .memory-card-front,
@@ -208,6 +209,21 @@
 .memory-card-back span {
   font-size: var(--text-lg);
   font-weight: var(--font-weight-bold);
+}
+
+.memory-card-image {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+}
+
+.memory-card-word {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  text-align: center;
+  padding: var(--space-xs);
 }
 
 .memory-card.flipped .memory-card-front {
@@ -455,6 +471,25 @@
   height: 80px;
   object-fit: contain;
   margin-bottom: var(--space-sm);
+  border-radius: var(--radius-sm);
+}
+
+.association-option-image {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.association-option-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .association-option span {
