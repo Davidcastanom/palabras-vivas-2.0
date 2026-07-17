@@ -24,6 +24,7 @@ class GameMenuScreen {
     this.screen = null;
 
     this.games = [
+      { id: 'learn', name: 'Aprender', icon: 'fa-book-open', description: 'Escucha y repite las palabras', difficulty: 0, isLearn: true },
       { id: 'complete-word', name: 'Completa la Palabra', icon: 'fa-puzzle-piece', description: 'Encuentra la letra que falta', difficulty: 1 },
       { id: 'memory', name: 'Memoria', icon: 'fa-brain', description: 'Encuentra los pares', difficulty: 2 },
       { id: 'syllables', name: 'Letras y Sílabas', icon: 'fa-font', description: 'Aprende a separar palabras', difficulty: 1 },
@@ -33,27 +34,27 @@ class GameMenuScreen {
     ];
 
     this.categoryNames = {
-      animals: 'Animales',
-      fruits: 'Frutas',
-      colors: 'Colores',
-      shapes: 'Formas',
-      clothes: 'Ropa'
+      animales: 'Animales',
+      frutas: 'Frutas',
+      objetos: 'Objetos',
+      familia: 'Familia',
+      cuerpo: 'Cuerpo'
     };
 
     this.categoryIcons = {
-      animals: 'fa-paw',
-      fruits: 'fa-apple-whole',
-      colors: 'fa-palette',
-      shapes: 'fa-shapes',
-      clothes: 'fa-shirt'
+      animales: 'fa-paw',
+      frutas: 'fa-apple-whole',
+      objetos: 'fa-cube',
+      familia: 'fa-people-roof',
+      cuerpo: 'fa-person'
     };
 
     this.categoryColors = {
-      animals: 'var(--color-category-animals)',
-      fruits: 'var(--color-category-fruits)',
-      colors: 'var(--color-category-colors)',
-      shapes: 'var(--color-category-shapes)',
-      clothes: 'var(--color-category-clothes)'
+      animales: 'var(--color-category-animals)',
+      frutas: 'var(--color-category-fruits)',
+      objetos: 'var(--color-category-objects)',
+      familia: 'var(--color-category-family)',
+      cuerpo: 'var(--color-category-body)'
     };
   }
 

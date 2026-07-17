@@ -19,11 +19,11 @@ class HomeScreen {
 
     this.screen = null;
     this.categories = [
-      { id: 'animals', name: 'Animales', icon: 'fa-paw', color: 'var(--color-category-animals)', count: 10 },
-      { id: 'fruits', name: 'Frutas', icon: 'fa-apple-whole', color: 'var(--color-category-fruits)', count: 10 },
-      { id: 'colors', name: 'Colores', icon: 'fa-palette', color: 'var(--color-category-colors)', count: 10 },
-      { id: 'shapes', name: 'Formas', icon: 'fa-shapes', color: 'var(--color-category-shapes)', count: 10 },
-      { id: 'clothes', name: 'Ropa', icon: 'fa-shirt', color: 'var(--color-category-clothes)', count: 10 }
+      { id: 'animales', name: 'Animales', icon: 'fa-paw', color: 'var(--color-category-animals)', count: 15 },
+      { id: 'frutas', name: 'Frutas', icon: 'fa-apple-whole', color: 'var(--color-category-fruits)', count: 12 },
+      { id: 'objetos', name: 'Objetos', icon: 'fa-cube', color: 'var(--color-category-objects)', count: 12 },
+      { id: 'familia', name: 'Familia', icon: 'fa-people-roof', color: 'var(--color-category-family)', count: 11 },
+      { id: 'cuerpo', name: 'Cuerpo', icon: 'fa-person', color: 'var(--color-category-body)', count: 12 }
     ];
   }
 

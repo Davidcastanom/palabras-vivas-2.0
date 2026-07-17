@@ -4,6 +4,25 @@
  */
 
 const gameIntroData = {
+  'learn': {
+    id: 'learn',
+    title: 'Aprender',
+    icon: 'fa-book-open',
+    iconColor: '#10B981',
+    description: 'Escucha, mira y repite las palabras con imágenes y sonidos reales.',
+    howToPlay: [
+      'Mira la imagen de la palabra',
+      'Escucha cómo se pronuncia',
+      'Toca las sílabas para escucharlas por separado',
+      'Usa las flechas para navegar entre palabras'
+    ],
+    objective: 'Aprender el vocabulario de la categoría',
+    reward: 0,
+    tip: 'Repite cada palabra en voz alta para aprender mejor',
+    difficulty: 0,
+    estimatedTime: '5 min'
+  },
+
   'complete-word': {
     id: 'complete-word',
     title: 'Completa la Palabra',

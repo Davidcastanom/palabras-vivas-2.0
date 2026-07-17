@@ -10,6 +10,7 @@ import SyllablesGame from '../../games/syllables/SyllablesGame.js';
 import WordSearchGame from '../../games/word-search/WordSearchGame.js';
 import SortLettersGame from '../../games/sort-letters/SortLettersGame.js';
 import AssociationGame from '../../games/association/AssociationGame.js';
+import audioService from '../../services/AudioService.js';
 
 class GamePlay {
   constructor(app) {
@@ -68,11 +69,118 @@ class GamePlay {
       this.gameInstance.destroy();
       this.gameInstance = null;
     }
+    audioService.stopAll();
     this.isMounted = false;
+  }
+
+  initLearn(category) {
+    this.learnWords = this.app.getWordsForCategory(category);
+    this.learnIndex = 0;
+    this.learnCategory = category;
+    
+    if (this.learnWords.length === 0) {
+      this.app.showToast('No hay palabras disponibles', 'error');
+      return;
+    }
+
+    this.renderLearn();
+  }
+
+  renderLearn() {
+    const gameArea = this.element.querySelector('#game-area');
+    const gameInstruction = this.element.querySelector('#game-instruction');
+    const progressFill = this.element.querySelector('#progress-fill');
+    const progressText = this.element.querySelector('#progress-text');
+    const scoreText = this.element.querySelector('#score-text');
+    const controls = this.element.querySelector('#game-controls');
+
+    if (!gameArea) return;
+
+    const word = this.learnWords[this.learnIndex];
+    const total = this.learnWords.length;
+    const syllablesArray = word.syllables.split('-');
+
+    if (progressFill) progressFill.style.width = `${((this.learnIndex + 1) / total) * 100}%`;
+    if (progressText) progressText.textContent = `${this.learnIndex + 1}/${total}`;
+    if (scoreText) scoreText.textContent = this.learnIndex + 1;
+
+    if (gameInstruction) {
+      gameInstruction.innerHTML = `
+        <div class="instruction-text">
+          <i class="fas fa-ear-listen"></i>
+          <span>Escucha y repite la palabra</span>
+        </div>
+      `;
+    }
+
+    gameArea.innerHTML = `
+      <div class="learn-flashcard">
+        <div class="learn-image-container">
+          <img src="${word.img}" alt="${word.word}" class="learn-image" onerror="this.style.display='none'">
+        </div>
+        <div class="learn-word">${word.word}</div>
+        <div class="learn-syllables">
+          ${syllablesArray.map((s, i) => `
+            <button class="learn-syllable-btn" data-index="${i}">${s}</button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    if (controls) {
+      controls.innerHTML = `
+        <div class="learn-controls">
+          <button class="btn btn-secondary learn-nav-btn" id="learn-prev" ${this.learnIndex === 0 ? 'disabled' : ''}>
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="btn btn-primary learn-audio-btn" id="learn-play">
+            <i class="fas fa-volume-high"></i> Escuchar
+          </button>
+          <button class="btn btn-secondary learn-nav-btn" id="learn-next" ${this.learnIndex === total - 1 ? 'disabled' : ''}>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      `;
+    }
+
+    // Event listeners
+    this.element.querySelector('#learn-play')?.addEventListener('click', () => {
+      audioService.playWordSequence(word);
+    });
+
+    this.element.querySelector('#learn-prev')?.addEventListener('click', () => {
+      if (this.learnIndex > 0) {
+        this.learnIndex--;
+        this.renderLearn();
+      }
+    });
+
+    this.element.querySelector('#learn-next')?.addEventListener('click', () => {
+      if (this.learnIndex < total - 1) {
+        this.learnIndex++;
+        this.renderLearn();
+      }
+    });
+
+    gameArea.querySelectorAll('.learn-syllable-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        audioService.playSyllables(word);
+        btn.classList.add('active');
+        setTimeout(() => btn.classList.remove('active'), 500);
+      });
+    });
+
+    // Auto-play on first load
+    setTimeout(() => audioService.playWordSequence(word), 300);
   }
 
   init(gameId, category) {
     this.currentGameId = gameId;
+    
+    if (gameId === 'learn') {
+      this.initLearn(category);
+      return;
+    }
     
     const words = this.app.getWordsForCategory(category);
     

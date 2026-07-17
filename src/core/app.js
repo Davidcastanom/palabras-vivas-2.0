@@ -6,6 +6,9 @@
 // Estilos
 import '../styles/index.css';
 
+// Datos
+import { categories as wordCategories, getWordsForCategory as getWords } from '../data/words.js';
+
 // Componentes
 import Header from '../components/layout/Header/Header.js';
 import Toast from '../components/core/Toast/Toast.js';
@@ -302,70 +305,7 @@ class App {
   }
 
   getWordsForCategory(category) {
-    const wordsData = {
-      animals: [
-        { word: 'PERRO', image: '🐕', syllables: ['PE-RRO'], definition: 'Animal doméstico que ladra' },
-        { word: 'GATO', image: '🐱', syllables: ['GA-TO'], definition: 'Animal doméstico que maúlla' },
-        { word: 'CABALLO', image: '🐴', syllables: ['CA-BA-LLO'], definition: 'Animal grande que se puede montar' },
-        { word: 'ELEFANTE', image: '🐘', syllables: ['E-LE-FAN-TE'], definition: 'Animal grande con trompa' },
-        { word: 'LEON', image: '🦁', syllables: ['LE-ON'], definition: 'El rey de la selva' },
-        { word: 'TORTUGA', image: '🐢', syllables: ['TOR-TU-GA'], definition: 'Animal con caparazón' },
-        { word: 'PEZ', image: '🐟', syllables: ['PEZ'], definition: 'Animal que vive en el agua' },
-        { word: 'PAJARO', image: '🐦', syllables: ['PA-JA-RO'], definition: 'Animal que vuela' },
-        { word: 'VACA', image: '🐄', syllables: ['VA-CA'], definition: 'Animal que da leche' },
-        { word: 'CONEJO', image: '🐰', syllables: ['CO-NE-JO'], definition: 'Animal con orejas largas' }
-      ],
-      fruits: [
-        { word: 'MANZANA', image: '🍎', syllables: ['MAN-ZA-NA'], definition: 'Fruta roja o verde' },
-        { word: 'PLATANO', image: '🍌', syllables: ['PLA-TA-NO'], definition: 'Fruta amarilla curvada' },
-        { word: 'NARANJA', image: '🍊', syllables: ['NA-RAN-JA'], definition: 'Fruta cítrica naranja' },
-        { word: 'UVA', image: '🍇', syllables: ['U-VA'], definition: 'Fruta pequeña en racimos' },
-        { word: 'FRESA', image: '🍓', syllables: ['FRE-SA'], definition: 'Fruta roja con semillas' },
-        { word: 'SANDIA', image: '🍉', syllables: ['SAN-DIA'], definition: 'Fruta grande y roja' },
-        { word: 'LIMON', image: '🍋', syllables: ['LI-MON'], definition: 'Fruta cítrica amarilla' },
-        { word: 'PINA', image: '🍍', syllables: ['PI-NA'], definition: 'Fruta con corona verde' },
-        { word: 'CEREZA', image: '🍒', syllables: ['CE-RE-ZA'], definition: 'Fruta roja pequeña' },
-        { word: 'MELON', image: '🍈', syllables: ['ME-LON'], definition: 'Fruta dulce y jugosa' }
-      ],
-      colors: [
-        { word: 'ROJO', image: '🔴', syllables: ['RO-JO'], definition: 'Color del fuego' },
-        { word: 'AZUL', image: '🔵', syllables: ['A-ZUL'], definition: 'Color del cielo' },
-        { word: 'VERDE', image: '🟢', syllables: ['VER-DE'], definition: 'Color de las hojas' },
-        { word: 'AMARILLO', image: '🟡', syllables: ['A-MA-RI-LLO'], definition: 'Color del sol' },
-        { word: 'NARANJA', image: '🟠', syllables: ['NA-RAN-JA'], definition: 'Color de la fruta' },
-        { word: 'MORADO', image: '🟣', syllables: ['MO-RA-DO'], definition: 'Color de la uvA' },
-        { word: 'ROSA', image: '🩷', syllables: ['RO-SA'], definition: 'Color de la flor' },
-        { word: 'NEGRO', image: '⚫', syllables: ['NE-GRO'], definition: 'Color de la noche' },
-        { word: 'BLANCO', image: '⚪', syllables: ['BLAN-CO'], definition: 'Color de la nieve' },
-        { word: 'CAFE', image: '🟤', syllables: ['CA-FE'], definition: 'Color del chocolate' }
-      ],
-      shapes: [
-        { word: 'CIRCULO', image: '⭕', syllables: ['CIR-CU-LO'], definition: 'Forma redonda' },
-        { word: 'CUADRADO', image: '🟧', syllables: ['CUA-DRA-DO'], definition: 'Forma con 4 lados iguales' },
-        { word: 'TRIANGULO', image: '🔺', syllables: ['TRI-AN-GU-LO'], definition: 'Forma con 3 lados' },
-        { word: 'RECTANGULO', image: '▬', syllables: ['REC-TAN-GU-LO'], definition: 'Forma con 4 lados' },
-        { word: 'ESTRELLA', image: '⭐', syllables: ['ES-TRE-LYA'], definition: 'Forma con puntas' },
-        { word: 'CORAZON', image: '❤️', syllables: ['CO-RA-ZON'], definition: 'Forma de amor' },
-        { word: 'ROMBO', image: '💎', syllables: ['ROM-BO'], definition: 'Forma como diamante' },
-        { word: 'OVALO', image: '🥚', syllables: ['O-VA-LO'], definition: 'Forma elongada' },
-        { word: 'PENTAGONO', image: '⬠', syllables: ['PEN-TA-GO-NO'], definition: 'Forma con 5 lados' },
-        { word: 'HEXAGONO', image: '⬡', syllables: ['HE-XA-GO-NO'], definition: 'Forma con 6 lados' }
-      ],
-      clothes: [
-        { word: 'CAMISA', image: '👔', syllables: ['CA-MI-SA'], definition: 'Ropa para la parte superior' },
-        { word: 'PANTALON', image: '👖', syllables: ['PAN-TA-LON'], definition: 'Ropa para las piernas' },
-        { word: 'VESTIDO', image: '👗', syllables: ['VES-TI-DO'], definition: 'Ropa de una sola pieza' },
-        { word: 'ZAPATO', image: '👟', syllables: ['ZA-PA-TO'], definition: 'Calzado para los pies' },
-        { word: 'SOMBRERO', image: '🎩', syllables: ['som-BRE-ro'], definition: 'Cobertura para la cabeza' },
-        { word: 'CALCETINES', image: '🧦', syllables: ['cal-ce-TI-NES'], definition: 'Ropa para los pies' },
-        { word: 'CHAQUETA', image: '🧥', syllables: ['cha-QUE-ta'], definition: 'Ropa para el frío' },
-        { word: 'FALDA', image: '🩳', syllables: ['FAL-da'], definition: 'Ropa para las piernas' },
-        { word: 'BUFANDA', image: '🧣', syllables: ['bu-FAN-da'], definition: 'Accesorio para el cuello' },
-        { word: 'GUANTES', image: '🧤', syllables: ['GUAN-tes'], definition: 'Ropa para las manos' }
-      ]
-    };
-    
-    return wordsData[category] || [];
+    return getWords(category);
   }
 }
 
