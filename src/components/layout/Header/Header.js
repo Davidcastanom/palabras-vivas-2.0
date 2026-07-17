@@ -215,6 +215,25 @@ class Header {
     }
   }
 
+  setBackButton(show) {
+    this.options.showBack = show;
+    const leftSection = this.element.querySelector('.header__left');
+    const existingBack = this.element.querySelector('.header__back');
+    
+    if (show && !existingBack) {
+      const backBtn = document.createElement('button');
+      backBtn.className = 'header__back';
+      backBtn.setAttribute('aria-label', 'Volver');
+      backBtn.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
+      if (this.options.onBack) {
+        backBtn.addEventListener('click', this.options.onBack);
+      }
+      leftSection.prepend(backBtn);
+    } else if (!show && existingBack) {
+      existingBack.remove();
+    }
+  }
+
   setActiveNav(href) {
     // Desktop nav
     const desktopLinks = this.element.querySelectorAll('.header__nav-link');

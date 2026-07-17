@@ -3,8 +3,7 @@
  * Pantalla principal de juego
  */
 
-import Screen from '../../components/layout/Screen/Screen.js';
-import Container from '../../components/layout/Container/Container.js';
+import './GamePlay.css';
 import CompleteWordGame from '../../games/complete-word/CompleteWordGame.js';
 import MemoryGame from '../../games/memory/MemoryGame.js';
 import SyllablesGame from '../../games/syllables/SyllablesGame.js';
@@ -15,72 +14,73 @@ import AssociationGame from '../../games/association/AssociationGame.js';
 class GamePlay {
   constructor(app) {
     this.app = app;
-    this.container = null;
+    this.element = null;
     this.gameInstance = null;
     this.currentGameId = null;
+    this.isMounted = false;
   }
 
-  async render() {
-    const screen = new Screen({
-      id: 'game-play',
-      className: 'screen-game-play',
-      showHeader: false,
-      showBackButton: true,
-      onBack: () => this.handleBack()
-    });
+  render() {
+    this.element = document.createElement('div');
+    this.element.className = 'screen screen-game-play';
+    this.element.innerHTML = `
+      <div class="screen__content">
+        <div class="game-play-container">
+          <div class="game-play-header">
+            <button class="game-play-pause-btn" id="pause-btn">
+              <i class="fas fa-pause"></i>
+            </button>
+            
+            <div class="game-play-progress">
+              <div class="game-play-progress-bar">
+                <div class="game-play-progress-fill" id="progress-fill"></div>
+              </div>
+              <span class="game-play-progress-text" id="progress-text">1/5</span>
+            </div>
 
-    this.container = new Container({
-      className: 'game-play-container',
-      padding: 'md'
-    });
-
-    const content = document.createElement('div');
-    content.className = 'game-play-content';
-
-    content.innerHTML = `
-      <div class="game-play-header">
-        <button class="game-play-pause-btn" id="pause-btn">
-          <i class="fas fa-pause"></i>
-        </button>
-        
-        <div class="game-play-progress">
-          <div class="game-play-progress-bar">
-            <div class="game-play-progress-fill" id="progress-fill"></div>
+            <div class="game-play-score">
+              <i class="fas fa-star"></i>
+              <span id="score-text">0</span>
+            </div>
           </div>
-          <span class="game-play-progress-text" id="progress-text">1/5</span>
-        </div>
 
-        <div class="game-play-score">
-          <i class="fas fa-star"></i>
-          <span id="score-text">0</span>
+          <div class="game-play-instruction" id="game-instruction"></div>
+
+          <div class="game-play-area" id="game-area"></div>
+
+          <div class="game-play-controls" id="game-controls"></div>
         </div>
       </div>
-
-      <div class="game-play-instruction" id="game-instruction"></div>
-
-      <div class="game-play-area" id="game-area"></div>
-
-      <div class="game-play-controls" id="game-controls"></div>
     `;
-
-    this.container.appendChild(content);
-    screen.addContent(this.container);
-
-    return screen.render();
+    return this.element;
   }
 
-  async init(gameId, category) {
+  mount(container) {
+    this.isMounted = true;
+    const pauseBtn = this.element.querySelector('#pause-btn');
+    if (pauseBtn) {
+      pauseBtn.addEventListener('click', () => this.handleBack());
+    }
+  }
+
+  unmount() {
+    if (this.gameInstance) {
+      this.gameInstance.destroy();
+      this.gameInstance = null;
+    }
+    this.isMounted = false;
+  }
+
+  init(gameId, category) {
     this.currentGameId = gameId;
     
-    // Obtener palabras de la categoría
-    const words = this.app.state.categories[category] || [];
+    const words = this.app.getWordsForCategory(category);
     
     if (words.length === 0) {
       this.app.showToast('No hay palabras disponibles', 'error');
       return;
     }
 
-    // Crear instancia del juego
     this.gameInstance = this.createGameInstance(gameId, words, category);
     
     if (!this.gameInstance) {
@@ -88,16 +88,12 @@ class GamePlay {
       return;
     }
 
-    // Configurar callbacks
     this.gameInstance.config.onStateChange = (state) => this.updateUI(state);
     this.gameInstance.config.onGameComplete = (result) => this.handleGameComplete(result);
     this.gameInstance.config.onCorrectAnswer = (data) => this.handleCorrectAnswer(data);
     this.gameInstance.config.onWrongAnswer = (data) => this.handleWrongAnswer(data);
 
-    // Iniciar juego
     this.gameInstance.init();
-    
-    // Renderizar juego específico
     this.renderGame();
   }
 
@@ -127,47 +123,41 @@ class GamePlay {
   }
 
   renderGame() {
-    const gameArea = document.getElementById('game-area');
-    const gameInstruction = document.getElementById('game-instruction');
-    const gameControls = document.getElementById('game-controls');
+    const gameArea = this.element.querySelector('#game-area');
+    const gameInstruction = this.element.querySelector('#game-instruction');
 
     if (!gameArea || !this.gameInstance) return;
 
-    const state = this.gameInstance.getState();
-    const word = state.currentWord;
-
-    // Mostrar instrucción
     gameInstruction.innerHTML = `
       <div class="instruction-text">
         <i class="fas fa-lightbulb"></i>
-        <span>Selecciona la opción correcta</span>
+        <span>Selecciona la opcion correcta</span>
       </div>
     `;
 
-    // Renderizar según tipo de juego
     switch (this.currentGameId) {
       case 'complete-word':
-        this.renderCompleteWord(gameArea, gameControls);
+        this.renderCompleteWord(gameArea);
         break;
       case 'memory':
-        this.renderMemory(gameArea, gameControls);
+        this.renderMemory(gameArea);
         break;
       case 'syllables':
-        this.renderSyllables(gameArea, gameControls);
+        this.renderSyllables(gameArea);
         break;
       case 'word-search':
-        this.renderWordSearch(gameArea, gameControls);
+        this.renderWordSearch(gameArea);
         break;
       case 'sort-letters':
-        this.renderSortLetters(gameArea, gameControls);
+        this.renderSortLetters(gameArea);
         break;
       case 'association':
-        this.renderAssociation(gameArea, gameControls);
+        this.renderAssociation(gameArea);
         break;
     }
   }
 
-  renderCompleteWord(gameArea, gameControls) {
+  renderCompleteWord(gameArea) {
     const wordDisplay = this.gameInstance.getWordWithMissing();
     const options = this.gameInstance.getOptions();
 
@@ -190,11 +180,11 @@ class GamePlay {
       </div>
     `;
 
-    // Event listeners
     gameArea.querySelectorAll('.complete-word-option').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const letter = e.target.dataset.letter;
-        const isCorrect = this.gameInstance.checkAnswer(this.gameInstance.state.currentWord.word);
+        const targetWord = this.gameInstance.state.currentWord.word;
+        const isCorrect = this.gameInstance.checkAnswer(targetWord);
         
         if (isCorrect) {
           this.showFeedback(true);
@@ -206,7 +196,7 @@ class GamePlay {
     });
   }
 
-  renderMemory(gameArea, gameControls) {
+  renderMemory(gameArea) {
     const cards = this.gameInstance.getCards();
 
     gameArea.innerHTML = `
@@ -219,7 +209,7 @@ class GamePlay {
             </div>
             <div class="memory-card-back">
               ${card.type === 'image' 
-                ? `<img src="${card.content}" alt="${card.text}">`
+                ? `<span class="memory-card-emoji">${card.content}</span>`
                 : `<span>${card.content}</span>`
               }
             </div>
@@ -228,7 +218,6 @@ class GamePlay {
       </div>
     `;
 
-    // Event listeners
     gameArea.querySelectorAll('.memory-card').forEach(card => {
       card.addEventListener('click', () => {
         const cardId = card.dataset.id;
@@ -246,8 +235,9 @@ class GamePlay {
   }
 
   updateMemoryCards() {
+    if (!this.gameInstance || !this.element) return;
     const cards = this.gameInstance.getCards();
-    const gameArea = document.getElementById('game-area');
+    const gameArea = this.element.querySelector('#game-area');
     
     if (!gameArea) return;
 
@@ -260,7 +250,7 @@ class GamePlay {
     });
   }
 
-  renderSyllables(gameArea, gameControls) {
+  renderSyllables(gameArea) {
     const syllables = this.gameInstance.getSyllables();
     const selected = this.gameInstance.getSelectedSyllables();
 
@@ -285,7 +275,6 @@ class GamePlay {
       </div>
     `;
 
-    // Event listeners
     gameArea.querySelectorAll('.syllable-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const index = parseInt(e.target.dataset.index);
@@ -296,13 +285,13 @@ class GamePlay {
       });
     });
 
-    document.getElementById('clear-syllables')?.addEventListener('click', () => {
+    this.element.querySelector('#clear-syllables')?.addEventListener('click', () => {
       this.gameInstance.clearSelection();
       this.updateSyllablesDisplay();
       gameArea.querySelectorAll('.syllable-btn').forEach(btn => btn.classList.remove('selected'));
     });
 
-    document.getElementById('check-syllables')?.addEventListener('click', () => {
+    this.element.querySelector('#check-syllables')?.addEventListener('click', () => {
       const isCorrect = this.gameInstance.checkSyllables();
       
       if (isCorrect) {
@@ -315,8 +304,9 @@ class GamePlay {
   }
 
   updateSyllablesDisplay() {
+    if (!this.gameInstance || !this.element) return;
     const selected = this.gameInstance.getSelectedSyllables();
-    const display = document.querySelector('.syllables-word');
+    const display = this.element.querySelector('.syllables-word');
     
     if (display) {
       display.innerHTML = selected.map(s => 
@@ -325,7 +315,7 @@ class GamePlay {
     }
   }
 
-  renderWordSearch(gameArea, gameControls) {
+  renderWordSearch(gameArea) {
     const grid = this.gameInstance.getGrid();
     const currentWord = this.gameInstance.getCurrentWord();
 
@@ -357,7 +347,6 @@ class GamePlay {
       </div>
     `;
 
-    // Event listeners
     gameArea.querySelectorAll('.word-search-cell').forEach(cell => {
       cell.addEventListener('click', (e) => {
         const row = parseInt(e.target.dataset.row);
@@ -367,12 +356,12 @@ class GamePlay {
       });
     });
 
-    document.getElementById('clear-word-search')?.addEventListener('click', () => {
+    this.element.querySelector('#clear-word-search')?.addEventListener('click', () => {
       this.gameInstance.clearSelection();
       this.updateWordSearchDisplay();
     });
 
-    document.getElementById('check-word-search')?.addEventListener('click', () => {
+    this.element.querySelector('#check-word-search')?.addEventListener('click', () => {
       const isCorrect = this.gameInstance.checkSelection();
       
       if (isCorrect) {
@@ -386,16 +375,16 @@ class GamePlay {
   }
 
   updateWordSearchDisplay() {
+    if (!this.gameInstance || !this.element) return;
     const selected = this.gameInstance.getSelectedLetters();
     const grid = this.gameInstance.getGrid();
-    const selectedWordEl = document.getElementById('selected-word');
-    const gameArea = document.getElementById('game-area');
+    const selectedWordEl = this.element.querySelector('#selected-word');
+    const gameArea = this.element.querySelector('#game-area');
 
     if (selectedWordEl) {
       selectedWordEl.textContent = selected.map(l => l.letter).join('');
     }
 
-    // Actualizar estado visual de celdas
     if (gameArea) {
       grid.forEach((row, rowIndex) => {
         row.forEach((cell, colIndex) => {
@@ -409,7 +398,7 @@ class GamePlay {
     }
   }
 
-  renderSortLetters(gameArea, gameControls) {
+  renderSortLetters(gameArea) {
     const shuffled = this.gameInstance.getShuffledLetters();
     const selected = this.gameInstance.getSelectedLetters();
 
@@ -436,7 +425,6 @@ class GamePlay {
       </div>
     `;
 
-    // Event listeners
     gameArea.querySelectorAll('.letter-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const index = parseInt(e.target.dataset.index);
@@ -445,12 +433,12 @@ class GamePlay {
       });
     });
 
-    document.getElementById('clear-sort')?.addEventListener('click', () => {
+    this.element.querySelector('#clear-sort')?.addEventListener('click', () => {
       this.gameInstance.clearSelection();
       this.updateSortLettersDisplay();
     });
 
-    document.getElementById('check-sort')?.addEventListener('click', () => {
+    this.element.querySelector('#check-sort')?.addEventListener('click', () => {
       const isCorrect = this.gameInstance.checkWord();
       
       if (isCorrect) {
@@ -463,10 +451,11 @@ class GamePlay {
   }
 
   updateSortLettersDisplay() {
+    if (!this.gameInstance || !this.element) return;
     const selected = this.gameInstance.getSelectedLetters();
     const shuffled = this.gameInstance.getShuffledLetters();
-    const display = document.querySelector('.sort-letters-word');
-    const gameArea = document.getElementById('game-area');
+    const display = this.element.querySelector('.sort-letters-word');
+    const gameArea = this.element.querySelector('#game-area');
 
     if (display) {
       display.innerHTML = selected.map(s => 
@@ -482,7 +471,7 @@ class GamePlay {
     }
   }
 
-  renderAssociation(gameArea, gameControls) {
+  renderAssociation(gameArea) {
     const options = this.gameInstance.getOptions();
 
     gameArea.innerHTML = `
@@ -493,14 +482,13 @@ class GamePlay {
       <div class="association-options">
         ${options.map((option, index) => `
           <button class="association-option" data-index="${index}">
-            <img src="${option.image}" alt="${option.word}">
+            <span class="association-option-emoji">${option.image}</span>
             <span>${option.word}</span>
           </button>
         `).join('')}
       </div>
     `;
 
-    // Event listeners
     gameArea.querySelectorAll('.association-option').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const index = parseInt(e.target.closest('.association-option').dataset.index);
@@ -523,28 +511,28 @@ class GamePlay {
   }
 
   updateAssociationDisplay() {
-    const gameArea = document.getElementById('game-area');
+    if (!this.element) return;
+    const gameArea = this.element.querySelector('#game-area');
     if (!gameArea) return;
 
-    const progress = this.gameInstance.getMatchProgress();
     gameArea.querySelectorAll('.association-option').forEach(btn => {
       btn.classList.remove('selected', 'correct', 'wrong');
     });
   }
 
   updateUI(state) {
-    // Actualizar barra de progreso
-    const progressFill = document.getElementById('progress-fill');
-    const progressText = document.getElementById('progress-text');
-    const scoreText = document.getElementById('score-text');
+    if (!this.element) return;
+    const progressFill = this.element.querySelector('#progress-fill');
+    const progressText = this.element.querySelector('#progress-text');
+    const scoreText = this.element.querySelector('#score-text');
 
     if (progressFill && state.currentRound) {
-      const progress = (state.currentRound / 5) * 100;
+      const progress = (state.currentRound / this.gameInstance.config.totalRounds) * 100;
       progressFill.style.width = `${progress}%`;
     }
 
     if (progressText && state.currentRound) {
-      progressText.textContent = `${state.currentRound}/5`;
+      progressText.textContent = `${state.currentRound}/${this.gameInstance.config.totalRounds}`;
     }
 
     if (scoreText && state.score !== undefined) {
@@ -578,21 +566,18 @@ class GamePlay {
     this.app.showToast(`+${data.points} puntos`, 'success');
   }
 
-  handleWrongAnswer(data) {
-    this.app.showToast('¡Inténtalo de nuevo!', 'warning');
+  handleWrongAnswer() {
+    this.app.showToast('¡Intentalo de nuevo!', 'warning');
   }
 
   handleGameComplete(result) {
-    // Guardar resultado
     this.app.saveGameResult(result);
-    
-    // Mostrar pantalla de resultados
     this.showResults(result);
   }
 
   showResults(result) {
-    const gameArea = document.getElementById('game-area');
-    const gameControls = document.getElementById('game-controls');
+    const gameArea = this.element.querySelector('#game-area');
+    const gameControls = this.element.querySelector('#game-controls');
 
     if (!gameArea) return;
 
@@ -613,7 +598,7 @@ class GamePlay {
           </div>
           <div class="stat-item">
             <span class="stat-value">${result.accuracy}%</span>
-            <span class="stat-label">Precisión</span>
+            <span class="stat-label">Precision</span>
           </div>
           <div class="stat-item">
             <span class="stat-value">${result.streak}</span>
@@ -623,7 +608,7 @@ class GamePlay {
 
         <div class="results-actions">
           <button class="btn btn-secondary" id="play-again">Jugar de nuevo</button>
-          <button class="btn btn-primary" id="back-to-menu">Volver al menú</button>
+          <button class="btn btn-primary" id="back-to-menu">Volver al menu</button>
         </div>
       </div>
     `;
@@ -632,22 +617,14 @@ class GamePlay {
       gameControls.innerHTML = '';
     }
 
-    // Event listeners
-    document.getElementById('play-again')?.addEventListener('click', () => {
+    this.element.querySelector('#play-again')?.addEventListener('click', () => {
       this.gameInstance.reset();
       this.renderGame();
     });
 
-    document.getElementById('back-to-menu')?.addEventListener('click', () => {
-      this.handleBack();
+    this.element.querySelector('#back-to-menu')?.addEventListener('click', () => {
+      this.app.goBack();
     });
-  }
-
-  handleBack() {
-    if (this.gameInstance) {
-      this.gameInstance.pause();
-    }
-    this.app.navigateTo('gameMenu');
   }
 
   destroy() {
@@ -655,6 +632,7 @@ class GamePlay {
       this.gameInstance.destroy();
       this.gameInstance = null;
     }
+    this.isMounted = false;
   }
 }
 

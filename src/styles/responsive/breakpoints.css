@@ -297,13 +297,9 @@ body {
 /* ========================================
    DARK MODE TOGGLE RESPONSIVE
    ======================================== */
-.theme-toggle {
-  position: fixed;
-  bottom: var(--space-lg);
-  right: var(--space-lg);
-  z-index: var(--z-sticky);
-  width: 48px;
-  height: 48px;
+.header__right .theme-toggle {
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-full);
   background: var(--bg-elevated);
   border: 1px solid var(--border-color);
@@ -312,20 +308,16 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: all var(--transition-normal);
-  box-shadow: var(--shadow-md);
 }
 
-.theme-toggle:hover {
+.header__right .theme-toggle:hover {
   transform: scale(1.1);
-  box-shadow: var(--shadow-lg);
 }
 
 @media (min-width: 768px) {
-  .theme-toggle {
-    width: 56px;
-    height: 56px;
-    bottom: var(--space-xl);
-    right: var(--space-xl);
+  .header__right .theme-toggle {
+    width: 40px;
+    height: 40px;
   }
 }
 

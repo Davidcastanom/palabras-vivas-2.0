@@ -70,31 +70,13 @@ class AssociationGame extends BaseGame {
 
     if (isCorrect) {
       this.matchedPairs++;
-      this.state.score += 10;
-      this.state.streak++;
+      this.handleCorrectAnswer({ word: this.selectedOption.word });
 
-      if (this.config.onCorrectAnswer) {
-        this.config.onCorrectAnswer({
-          word: this.selectedOption.word,
-          points: 10,
-          streak: this.state.streak
-        });
-      }
-
-      // Verificar si el juego terminó
       if (this.matchedPairs >= this.totalPairs) {
         this.completeGame();
       }
     } else {
-      this.state.streak = 0;
-      this.state.mistakes++;
-
-      if (this.config.onWrongAnswer) {
-        this.config.onWrongAnswer({
-          word: this.selectedOption.word,
-          mistakes: this.state.mistakes
-        });
-      }
+      this.handleWrongAnswer({ word: this.selectedOption.word });
     }
 
     this.selectedOption = null;

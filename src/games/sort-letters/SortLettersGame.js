@@ -91,21 +91,12 @@ class SortLettersGame extends BaseGame {
     const formedWord = this.selectedLetters.map(l => l.letter).join('');
     const targetWord = this.state.currentWord.word;
 
-    if (formedWord === targetWord) {
-      this.state.score += 10;
-      this.state.streak++;
-
-      if (this.config.onCorrectAnswer) {
-        this.config.onCorrectAnswer({
-          word: targetWord,
-          points: 10,
-          streak: this.state.streak
-        });
-      }
-
+    if (this.normalizeString(formedWord) === this.normalizeString(targetWord)) {
+      this.handleCorrectAnswer({ word: targetWord });
       return true;
     }
 
+    this.handleWrongAnswer({ word: targetWord });
     return false;
   }
 

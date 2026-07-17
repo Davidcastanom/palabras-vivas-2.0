@@ -22,8 +22,8 @@ class MemoryGame extends BaseGame {
 
   init() {
     super.init();
-    this.generateCards();
     this.totalPairs = Math.min(this.config.totalRounds, this.config.words.length);
+    this.generateCards();
     return this.state;
   }
 
@@ -94,38 +94,18 @@ class MemoryGame extends BaseGame {
 
     setTimeout(() => {
       if (isMatch) {
-        // Match correcto
         card1.isMatched = true;
         card2.isMatched = true;
         this.matchedPairs++;
-        this.state.score += 10;
-        this.state.streak++;
+        this.handleCorrectAnswer({ word: card1.text });
 
-        if (this.config.onCorrectAnswer) {
-          this.config.onCorrectAnswer({
-            word: card1.text,
-            points: 10,
-            streak: this.state.streak
-          });
-        }
-
-        // Verificar si el juego terminó
         if (this.matchedPairs === this.totalPairs) {
           this.completeGame();
         }
       } else {
-        // No match
         card1.isFlipped = false;
         card2.isFlipped = false;
-        this.state.streak = 0;
-        this.state.mistakes++;
-
-        if (this.config.onWrongAnswer) {
-          this.config.onWrongAnswer({
-            word: card1.text,
-            mistakes: this.state.mistakes
-          });
-        }
+        this.handleWrongAnswer({ word: card1.text });
       }
 
       this.flippedCards = [];
