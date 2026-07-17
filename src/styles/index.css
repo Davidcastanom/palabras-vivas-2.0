@@ -1,0 +1,16 @@
+/* ========================================
+   INDEX CSS - PALABRAS VIVAS 2.0
+   Importa todos los estilos
+   ======================================== */
+
+/* Base */
+@import './base/reset.css';
+@import './base/variables.css';
+@import './base/typography.css';
+@import './base/animations.css';
+
+/* Utilities */
+@import './utilities/helpers.css';
+
+/* Responsive */
+@import './responsive/breakpoints.css';

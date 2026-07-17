@@ -1,193 +1,77 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="es" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <!-- Metaetiqueta crucial para que se vea bien en móviles sin zoom accidental -->
-    <!-- Metaetiqueta para móviles (Corregida para evitar avisos de accesibilidad) -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Juego educativo para niños: aprende palabras, sílabas y clasificaciones de forma divertida.">
-    <title>Palabras Vivas - Aprende Jugando</title>
-
-    <!-- FAVICON - Icono de la aplicación -->
-    <!-- Favicon estándar para navegadores y escritorio Windows -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- Favicon PNG para navegadores modernos -->
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-
-    <!-- Iconos para Android (Tablet y móvil) - Acceso directo en pantalla principal -->
-    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png">
-
-    <!-- Meta tags para Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Palabra Viva">
-
-    <!-- Manifest para PWA (Progressive Web App) - Permite agregar a pantalla principal en Android -->
-    <link rel="manifest" href="site.webmanifest">
-
-    <!-- Color del tema para navegadores móviles -->
-    <meta name="theme-color" content="#FF6B6B">
-    <!-- Enlace a nuestra hoja de estilos -->
-    <link rel="stylesheet" href="css/estilos.css">
-
-    <!-- Fuente opcional de Google Fonts para un look más infantil (redondeada) -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Palabras Vivas - Aplicación educativa gamificada para el aprendizaje de lectoescritura en niños de 3 a 7 años">
+  <meta name="keywords" content="educación, niños, lectoescritura, gamificación, aprendizaje">
+  <meta name="author" content="Flujo Base">
+  
+  <title>Palabras Vivas | Flujo Base</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#0A0A0F">
+  <meta name="msapplication-TileColor" content="#0A0A0F">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Palabras Vivas | Flujo Base">
+  <meta property="og:description" content="Aplicación educativa gamificada para el aprendizaje de lectoescritura">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/assets/images/og/og-image.png">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Palabras Vivas | Flujo Base">
+  <meta name="twitter:description" content="Aplicación educativa gamificada para el aprendizaje de lectoescritura">
+  
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Entry point -->
+  <script type="module" src="/src/core/app.js"></script>
 </head>
-
 <body>
-
-    <!-- CABECERA: Logo y Contador de Estrellas -->
-    <header>
-        <div class="logo-container">
-            <!-- Logo de la aplicación -->
-            <!-- Si no existe logo.png, se mostrará un emoji como fallback -->
-            <img src="logo.png" alt="Palabra Viva Logo" class="logo-image" id="logo-image"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <span class="logo-emoji" style="display: none; font-size: 2rem;">📖</span>
-            <!-- Título de la aplicación -->
-            <h1 class="logo-title">Palabras Vivas</h1>
-        </div>
-        <div class="header-right">
-            <div class="star-counter">
-                <span>⭐</span>
-                <span id="star-display">0</span>
-            </div>
-            <button class="btn-reset-stars" onclick="app.resetStars()" title="Reiniciar estrellas">
-                🔄
-            </button>
-        </div>
-    </header>
-
-    <!-- ÁREA PRINCIPAL -->
-    <main>
-
-        <!-- PANTALLA 1: MENÚ PRINCIPAL (Mundos) -->
-        <section id="screen-home" class="screen active">
-            <h2 class="screen-title">¡Elige un mundo!</h2>
-            <div class="grid-menu">
-                <!-- Botón Animales -->
-                <div class="category-card cat-animales" onclick="app.loadCategory('animales')">
-                    <div class="category-icon">🐶</div>
-                    <div class="category-title">Animales</div>
-                </div>
-                <!-- Botón Frutas -->
-                <div class="category-card cat-frutas" onclick="app.loadCategory('frutas')">
-                    <div class="category-icon">🍎</div>
-                    <div class="category-title">Frutas</div>
-                </div>
-                <!-- Botón Objetos -->
-                <div class="category-card cat-objetos" onclick="app.loadCategory('objetos')">
-                    <div class="category-icon">🚗</div>
-                    <div class="category-title">Objetos</div>
-                </div>
-                <!-- Botón Familia -->
-                <div class="category-card cat-familia" onclick="app.loadCategory('familia')">
-                    <div class="category-icon">👨‍👩‍👧</div>
-                    <div class="category-title">Familia</div>
-                </div>
-                <!-- Botón Cuerpo -->
-                <div class="category-card cat-cuerpo" onclick="app.loadCategory('cuerpo')">
-                    <div class="category-icon">👕</div>
-                    <div class="category-title">Cuerpo</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PANTALLA 2: MODO APRENDIZAJE (Flashcards) -->
-        <section id="screen-learn" class="screen hidden">
-            <div class="top-bar">
-                <button class="btn btn-secondary" onclick="app.goHome()">🏠 Volver</button>
-                <button class="btn btn-accent" onclick="app.startGameMenu()">🎮 Jugar</button>
-            </div>
-
-            <div class="flashcard-container">
-                <!-- La tarjeta interactiva -->
-                <div class="flashcard" id="flashcard-element">
-                    <!-- Botón para ocultar/mostrar imagen - Ahora fuera del área de recorte -->
-                    <button class="btn-toggle-img" onclick="app.toggleImage()"
-                        title="Ocultar/Mostrar imagen">👁️</button>
-
-                    <div class="card-image-area">
-                        <img id="card-image" src="" alt="Imagen">
-                    </div>
-                    <div class="card-word" id="card-word">PALABRA</div>
-                    <div class="card-syllables" id="card-syllables">Pa-la-bra</div>
-                </div>
-
-                <!-- Botón de micrófono para el niño -->
-                <button class="btn btn-mic" id="btn-mic" onclick="app.startListening()">
-                    🎤 Ahora dilo tú
-                </button>
-
-                <!-- Controles de navegación -->
-                <div class="card-controls">
-                    <button class="btn btn-nav" onclick="app.prevCard()">⬅️</button>
-                    <button class="btn btn-nav" onclick="app.replayAudio()">🔊</button>
-                    <button class="btn btn-nav" onclick="app.nextCard()">➡️</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- PANTALLA 3: MENÚ DE SELECCIÓN DE JUEGO -->
-        <section id="screen-game-menu" class="screen hidden">
-            <h2 class="screen-title">Elige un juego</h2>
-            <div class="vertical-menu">
-                <button class="btn btn-primary btn-large" onclick="app.startGame(1)">
-                    🧩 Encuentra la palabra
-                </button>
-                <button class="btn btn-secondary btn-large" onclick="app.startGame(2)">
-                    👂 Escucha y elige
-                </button>
-                <button class="btn btn-accent btn-large" onclick="app.startGame(3)">
-                    🧠 Memoria
-                </button>
-                <button class="btn btn-primary btn-large" onclick="app.startGame(4)">
-                    🔤 Ordena las sílabas
-                </button>
-                <button class="btn btn-accent btn-large" onclick="app.startGame(5)">
-                    ✍️ Completa la Palabra
-                </button>
-                <button class="btn btn-secondary btn-large" onclick="app.startGame(6)">
-                    📂 Clasificación
-                </button>
-                <button class="btn btn-secondary" onclick="app.showScreen('screen-learn')">
-                    ⬅️ Volver a tarjetas
-                </button>
-            </div>
-        </section>
-
-        <!-- PANTALLA 4: JUEGO ACTIVO -->
-        <section id="screen-game-play" class="screen hidden">
-            <button class="btn btn-secondary btn-back" onclick="app.showScreen('screen-game-menu')">⬅️ Salir</button>
-
-            <div class="game-instruction" id="game-instruction">
-                Escucha la instrucción...
-            </div>
-
-            <!-- Aquí se inyectan las opciones dinámicamente con JS -->
-            <div class="game-options" id="game-options-container"></div>
-        </section>
-
-    </main>
-
-    <!-- MODAL DE RECOMPENSA (Aparece al ganar estrellas) -->
-    <div class="modal-overlay" id="reward-modal">
-        <div class="modal-content">
-            <div class="big-star">🌟</div>
-            <h2>¡Ganaste una estrella!</h2>
-            <p>¡Sigue así, campeón!</p>
-            <button class="btn btn-primary" onclick="app.closeModal()">¡Seguir!</button>
-        </div>
+  <div id="app">
+    <!-- Loading state -->
+    <div class="loading-screen" style="
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #0A0A0F;
+      color: #FFFFFF;
+      font-family: 'Poppins', sans-serif;
+    ">
+      <div style="text-align: center;">
+        <div style="
+          width: 64px;
+          height: 64px;
+          border: 3px solid rgba(255, 255, 255, 0.1);
+          border-top-color: #0066FF;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          margin: 0 auto 16px;
+        "></div>
+        <p style="color: rgba(255, 255, 255, 0.7);">Cargando Palabras Vivas...</p>
+      </div>
     </div>
-
-    <!-- NOTIFICACIONES FLOTANTES (Toast) -->
-    <div class="toast" id="toast">Mensaje</div>
-
-    <!-- Enlace al script de lógica -->
-    <script src="js/script.js"></script>
+  </div>
 </body>
-
 </html>

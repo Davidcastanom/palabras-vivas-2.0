@@ -1,0 +1,35 @@
+{
+  "name": "palabras-vivas-2",
+  "version": "2.0.0",
+  "description": "Aplicación educativa gamificada para aprendizaje de lectoescritura - Proyecto derivado de Flujo Base",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write src/",
+    "test": "vitest",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [
+    "educacion",
+    "ninos",
+    "lectoescritura",
+    "gamificacion",
+    "app-web"
+  ],
+  "author": "Flujo Base",
+  "license": "MIT",
+  "dependencies": {
+    "canvas-confetti": "^1.9.2"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0",
+    "vitest": "^2.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.3.0",
+    "@vitest/ui": "^2.0.0"
+  }
+}
