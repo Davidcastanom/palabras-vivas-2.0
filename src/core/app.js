@@ -34,6 +34,12 @@ class App {
   async init() {
     console.log('Palabras Vivas 2.0 initializing...');
     
+    // Eliminar pantalla de carga
+    const loadingScreen = document.querySelector('.loading-screen');
+    if (loadingScreen) {
+      loadingScreen.remove();
+    }
+    
     // Cargar tema guardado
     this.loadTheme();
     
