@@ -61,7 +61,7 @@ class HomeScreen {
 
       <div class="home-illustration animate-fadeInUp animation-delay-100">
         <img 
-          src="./hero-illustration.png" 
+          src="https://res.cloudinary.com/dwhe4jadc/image/upload/v1784331231/ChatGPT_Image_17_jul_2026_18_31_28_agt7kt.png" 
           alt="Ilustración de Palabras Vivas" 
           class="home-illustration__img"
           loading="eager"
