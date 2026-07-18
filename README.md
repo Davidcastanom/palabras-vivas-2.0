@@ -11,32 +11,35 @@
 ### Diseño pensado para niños
 - **Dark mode por defecto** con contraste optimizado para ojos jóvenes
 - **Tipografía Fredoka One** — redondeada, amigable, fácil de leer
-- **Colores por categoría** — cada mundo tiene su paleta visual (Animales azul, Comida naranja, Casa verde)
+- **Colores por categoría** — cada mundo tiene su paleta visual (Animales azul, Frutas naranja, Casa verde)
 - **Botones grandes** (mínimo 44px touch target) — accesible en tablets y móviles
-- **Menú hamburguesa responsive** — navegación limpia en móvil con tema + inicio
+- **Menú hamburguesa responsive** — navegación completa por categorías + tema + inicio en móvil
 
-### 7 juegos educativos progresivos
-| Juego | Tipo | Habilidad | Dificultad |
-|-------|------|-----------|------------|
-| Aprender | Flashcard con audio | Memoria visual + auditiva | ★☆☆ |
+### 8 modos de aprendizaje
+| Modo | Tipo | Habilidad | Dificultad |
+|------|------|-----------|------------|
+| Aprender | Flashcard con audio + sílabas | Memoria visual + auditiva | ★☆☆ |
 | Encuentra la Palabra | Selección de imagen | Vocabulario + asociación | ★☆☆ |
 | Escucha y Elige | Audio → imagen | Comprensión auditiva | ★☆☆ |
 | Memoria | Pares imagen-palabra | Memoria de trabajo | ★★☆ |
 | Ordena las Sílabas | Arrastrar sílabas | Conciencia fonológica | ★★☆ |
-| Letras y Sílabas | Construir palabras | Segmentación silábica | ★☆☆ |
+| Letras y Sílabas | Construir palabras con sílabas | Segmentación silábica + sonidos | ★★☆ |
 | Sopa de Letras | Búsqueda en cuadrícula | Reconocimiento visual | ★★★ |
+| Escribir | Escritura letra por letra | Motricidad fina + deletreo | ★★☆ |
 
 ### Sistema de audio completo
 - **138 archivos MP3** — audio nativo de alta calidad por cada palabra y sílaba
 - **Text-to-Speech (TTS)** — respaldo automático cuando el audio no está disponible
 - **Secuencias de audio** — reproduce palabra completa → sílabas individuales
-- **Sound effects** — feedback auditivo inmediato (correcto/incorrecto)
+- **Sound effects** — sonidos de éxito, error y celebración (Web Audio API) en todos los juegos
 
 ### Gamificación inteligente
 - **Sistema de estrellas** — 1, 2 o 3 estrellas por precisión (50%/70%/90%)
 - **Streak bonus** — puntos extra por rachas de respuestas correctas
 - **Nivel de progresión** — Principiante → Aprendiz → Explorador → Maestro
 - **Mejor puntuación guardada** — por juego y categoría, visible en la intro
+- **Reiniciar estrellas** — toca las estrellas en el header para reiniciar el conteo
+- **Pantalla de resultados** — al terminar cada juego: estadísticas, opción de reiniciar con palabras reordenadas o volver al menú
 - **Confetti animado** — celebración visual al completar un juego
 
 ### Funciona offline (PWA)
@@ -46,7 +49,7 @@
 - **Ideal para aulas** — internet inestable no es problema
 
 ### Router hash-based
-- Navegación limpia: `#/game/animals/memory`
+- Navegación limpia: `#/game/animales/memory`
 - Botón "atrás" con confirmación cuando hay progreso activo
 - URLs compartibles — profesores pueden enviar enlaces directos a juegos
 
@@ -68,32 +71,33 @@ palabras-vivas-2.0/
 │   │   └── store.js            # State management pub/sub
 │   ├── components/
 │   │   ├── core/               # Button, Card, Modal, Toast
-│   │   └── layout/             # Header, Screen
+│   │   └── layout/             # Header (nav, theme, stars), Screen
 │   ├── screens/
-│   │   ├── Home/               # Selección de categorías
+│   │   ├── Home/               # Categorías + escritura
 │   │   ├── GameMenu/           # Selección de juegos
 │   │   ├── GameIntro/          # Intro antes de jugar
-│   │   └── GamePlay/           # Pantalla de juego
-│   │       └── renderers/      # Renderers por juego (7 archivos)
-│   │           ├── learn.js
-│   │           ├── completeWord.js
-│   │           ├── association.js
-│   │           ├── memory.js
-│   │           ├── syllables.js
-│   │           ├── sortLetters.js
-│   │           └── wordSearch.js
+│   │   ├── GamePlay/           # Pantalla de juego
+│   │   │   └── renderers/      # Renderers por juego (8 archivos)
+│   │   │       ├── learn.js
+│   │   │       ├── completeWord.js
+│   │   │       ├── association.js
+│   │   │       ├── memory.js
+│   │   │       ├── syllables.js
+│   │   │       ├── sortLetters.js
+│   │   │       └── wordSearch.js
+│   │   └── WritePractice/      # Escritura letra por letra
 │   ├── games/
-│   │   ├── base/               # BaseGame (scoring, timer, state)
+│   │   ├── base/               # BaseGame (scoring, timer, state, shuffle)
 │   │   ├── complete-word/      # Encuentra la Palabra
 │   │   ├── memory/             # Memoria
 │   │   ├── syllables/          # Letras y Sílabas
-│   │   ├── sort-letters/       # Ordena las Sílabas
+│   │   ├── sort-letters/       # Ordena las Letras
 │   │   └── word-search/        # Sopa de Letras
 │   ├── data/
-│   │   ├── words.js            # 62 palabras + metadata
+│   │   ├── words.js            # 62 palabras + metadata (Cloudinary images)
 │   │   └── games.js            # Metadata de juegos
 │   ├── services/
-│   │   └── AudioService.js     # MP3 + TTS + sound effects
+│   │   └── AudioService.js     # MP3 + TTS + syllables + sound effects (Web Audio API)
 │   ├── styles/
 │   │   ├── base/               # Variables, reset, typography, animations
 │   │   └── responsive/         # Breakpoints
@@ -125,8 +129,9 @@ palabras-vivas-2.0/
 
 ### Design System
 - **120+ tokens CSS** — colores, espaciado, tipografía, sombras, z-index
-- **Dark/Light mode** — toggle con persistencia en localStorage
+- **Dark/Light mode** — toggle con persistencia en localStorage (🌙/☀️)
 - **BEM naming** — consistencia en todos los componentes
+- **Button component** — variantes primary/secondary con tamaños sm/md/lg/xl, glow, full-width
 - **Utility classes** — helpers para margin, padding, flex, text, rounded
 - **Responsive** — mobile-first con breakpoints en 480px, 640px, 768px y 1024px
 
@@ -172,17 +177,18 @@ npm run dev
 
 | Categoría | Palabras | Color |
 |-----------|----------|-------|
-| Animales | gato, perro, pez, pájaro, vaca, rana, león, oso | `#0066FF` |
-| Comida | manzana, pan, leche, agua, arroz, huevo, queso, galleta | `#FF6B35` |
-| Casa | casa, mesa, silla, puerta, ventana, cama, lámpara, espejo | `#00D4AA` |
-| Colores | rojo, azul, verde, amarillo, morado, naranja, rosa, negro | `#FFD93D` |
-| Familia | mamá, papá, hermano, abuelo, bebé, primo, tío, prima | `#FF6B9D` |
+| Animales | perro, gato, león, vaca, elefante, caballo, oso, pato, conejo, oveja, cerdo, gallina, tigre, mono, pez | `#0066FF` |
+| Frutas | manzana, uvas, banana, naranja, fresa, sandía, piña, melón, pera, cereza, limón, kiwi | `#FF6B35` |
+| Objetos | auto, pelota, libro, casa, mesa, silla, juguete, bicicleta, avión, barco, tren, globo | `#00D4AA` |
+| Familia | mamá, papá, abuelo, abuela, hermano, hermana, bebé, tío, tía, primo, prima | `#FF6B9D` |
+| Cuerpo | mano, pie, cabeza, ojo, nariz, boca, oreja, brazo, pierna, dedo, rodilla, hombro | `#FFD93D` |
 
 Cada palabra incluye:
 - Imagen Cloudinary de alta calidad
 - Nombre en español
-- Separación silábica (ej: `ga-to`)
-- Audio MP3 nativo
+- Separación silábica (ej: `Pe-rro`)
+- Audio MP3 nativo + audio de sílabas
+- Sonido representativo (ej: ladrido, maullido)
 
 ---
 
@@ -192,8 +198,13 @@ Cada palabra incluye:
 1. Abre la app en una tablet o computador
 2. La primera vez, necesitas internet para cargar todos los assets
 3. Después, la app funciona **sin internet** (Service Worker)
-4. Los alumnos eligen un mundo → eligen un juego → juegan
+4. Los alumnos eligen un mundo → eligen un modo → aprenden y juegan
 5. El progreso se guarda automáticamente en cada dispositivo
+
+### Modos disponibles
+- **Aprender** — Modo flashcard: imagen + palabra + sílabas con audio. Ideal para introducir vocabulario nuevo.
+- **Escribir** — Escritura guiada letra por letra con pronunciación de sílabas. Ideal para practicar ortografía.
+- **Juegos** — 6 juegos progresivos con sonidos de retroalimentación, imágenes y resultados detallados.
 
 ### Para configurar en múltiples aulas
 1. Abre la app en cada dispositivo con internet (una sola vez)
@@ -203,9 +214,11 @@ Cada palabra incluye:
 
 ### Tips
 - **Modo landscape** funciona mejor en tablets
-- **Audio** se reproduce automáticamente en el juego "Aprender"
+- **Audio** se reproduce automáticamente en el modo "Aprender"
 - **Reiniciar** un juego: toca el icono de reinicio (↺) al lado del botón de pausa
+- **Reiniciar estrellas**: toca el contador de estrellas en el header
 - **Salir** del juego: toca la flecha ← o el botón de pausa — se confirma antes de salir
+- **Cada vez que juegas** el orden de las palabras es diferente (variabilidad)
 
 ---
 
@@ -226,6 +239,7 @@ Cada palabra incluye:
 - **JS**: ES6+ modules, classes para componentes, funciones puras para utilidades
 - **Tests**: Vitest, cubrir lógica de negocio (juegos, scoring, router)
 - **Renderers**: Un archivo por juego en `renderers/`, importar en GamePlay.js
+- **Sonidos**: Usar `audioService` importado directamente en renderers
 
 ---
 
@@ -233,8 +247,8 @@ Cada palabra incluye:
 
 ### Completado
 - [x] 5 categorías con 62 palabras
-- [x] 7 juegos educativos
-- [x] Audio nativo + TTS (138 MP3)
+- [x] 8 modos de aprendizaje (7 juegos + escritura)
+- [x] Audio nativo + TTS (138 MP3) + sound effects (Web Audio API)
 - [x] Dark/Light mode
 - [x] Responsive mobile-first
 - [x] Hash router con guards
@@ -251,6 +265,15 @@ Cada palabra incluye:
 - [x] Renderers extraídos por juego
 - [x] Lazy loading de imágenes
 - [x] Accessibility (aria-labels, keyboard nav)
+- [x] Sound effects en todos los juegos (correcto/incorrecto/celebración)
+- [x] Imágenes en juegos de sílabas y ordena letras
+- [x] Botones de Limpiar/Verificar estilizados con iconos
+- [x] Flujo de finalización corregido — todos los juegos muestran resultados
+- [x] Reiniciar estrellas desde el header
+- [x] Pantalla de resultados con estadísticas + reiniciar/volver
+- [x] Variabilidad en cada reinicio (palabras reordenadas)
+- [x] Plataforma de escritura (letra por letra con pronunciación)
+- [x] Menú hamburguesa con navegación por categorías
 
 ### Próximamente
 - [ ] Analytics de progreso del estudiante
