@@ -40,14 +40,20 @@ class HomeScreen {
 
   buildContent() {
     return `
+      <div class="home-illustration animate-fadeInUp">
+        <img 
+          src="https://res.cloudinary.com/dwhe4jadc/image/upload/v1784331231/ChatGPT_Image_17_jul_2026_18_31_28_agt7kt.png" 
+          alt="Palabras Vivas" 
+          class="home-illustration__img"
+          loading="eager"
+        >
+      </div>
+
       <div class="home-hero">
-        <span class="home-hero__badge animate-fadeInUp">
+        <span class="home-hero__badge animate-fadeInUp animation-delay-50">
           <i class="fa-solid fa-child-reaching"></i>
           Para niños de 4 a 6 años
         </span>
-        <h1 class="home-hero__title animate-fadeInUp animation-delay-50">
-          Aprende palabras y sílabas jugando
-        </h1>
         <p class="home-hero__subtitle animate-fadeInUp animation-delay-100">
           Herramienta interactiva para que los más pequeños aprendan vocabulario, sílabas y sonidos a través de imágenes, audio y juegos.
         </p>
@@ -57,15 +63,6 @@ class HomeScreen {
           <span class="home-hero__stat"><i class="fa-solid fa-gamepad"></i> 7 juegos</span>
         </div>
         <h2 class="home-hero__section-title animate-fadeInUp animation-delay-100">¡Elige un mundo!</h2>
-      </div>
-
-      <div class="home-illustration animate-fadeInUp animation-delay-100">
-        <img 
-          src="https://res.cloudinary.com/dwhe4jadc/image/upload/v1784331231/ChatGPT_Image_17_jul_2026_18_31_28_agt7kt.png" 
-          alt="Ilustración de Palabras Vivas" 
-          class="home-illustration__img"
-          loading="eager"
-        >
       </div>
 
       <div class="home-categories">
