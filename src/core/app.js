@@ -291,6 +291,10 @@ class App {
         this.header.setBackButton(true);
         this.header.show();
         break;
+      case 'writePractice':
+        this.header.setBackButton(true);
+        this.header.show();
+        break;
       default:
         this.header.setBackButton(false);
         this.header.show();
@@ -298,12 +302,13 @@ class App {
   }
 
   async handleHeaderBack() {
-    if (store.getState('currentScreen') === 'gamePlay') {
+    const currentScreen = store.getState('currentScreen');
+    if (currentScreen === 'gamePlay' || currentScreen === 'writePractice') {
       const confirmed = await Modal.confirm({
-        title: '¿Salir del juego?',
+        title: currentScreen === 'writePractice' ? '¿Salir de la práctica?' : '¿Salir del juego?',
         message: 'Perderás el progreso de esta partida.',
         confirmText: 'Salir',
-        cancelText: 'Seguir jugando'
+        cancelText: currentScreen === 'writePractice' ? 'Seguir practicando' : 'Seguir jugando'
       });
       if (!confirmed) return;
     }
