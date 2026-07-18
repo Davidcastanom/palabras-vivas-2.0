@@ -23,6 +23,8 @@ class MemoryGame extends BaseGame {
   init() {
     super.init();
     this.totalPairs = Math.min(this.config.totalRounds, this.config.words.length);
+    const shuffledWords = this.shuffleArray([...this.config.words]);
+    this.selectedWords = shuffledWords.slice(0, this.totalPairs);
     this.generateCards();
     return this.state;
   }
@@ -31,7 +33,7 @@ class MemoryGame extends BaseGame {
    * Generar cartas para el juego
    */
   generateCards() {
-    const words = this.config.words.slice(0, this.totalPairs);
+    const words = this.selectedWords || this.shuffleArray([...this.config.words]).slice(0, this.totalPairs);
     this.cards = [];
 
     // Crear pares de cartas (imagen + palabra)

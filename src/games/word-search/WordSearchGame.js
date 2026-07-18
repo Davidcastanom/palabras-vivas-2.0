@@ -23,7 +23,9 @@ class WordSearchGame extends BaseGame {
 
   init() {
     super.init();
-    this.wordsToFind = this.config.words.slice(0, this.config.totalRounds);
+    const shuffledWords = this.shuffleArray([...this.config.words]);
+    this.wordsToFind = shuffledWords.slice(0, this.config.totalRounds);
+    this.currentWordIndex = 0;
     this.generateGrid();
     return this.state;
   }
@@ -213,7 +215,8 @@ class WordSearchGame extends BaseGame {
   reset() {
     super.reset();
     this.currentWordIndex = 0;
-    this.wordsToFind = this.config.words.slice(0, this.config.totalRounds);
+    const shuffledWords = this.shuffleArray([...this.config.words]);
+    this.wordsToFind = shuffledWords.slice(0, this.config.totalRounds);
     this.generateGrid();
   }
 }

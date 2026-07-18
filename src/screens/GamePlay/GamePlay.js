@@ -251,7 +251,9 @@ class GamePlay {
       if (typeof this.gameInstance.nextRound === 'function') {
         this.gameInstance.nextRound();
       }
-      this.renderGame();
+      if (!this.gameInstance.state.isComplete) {
+        this.renderGame();
+      }
     }
   }
 
@@ -312,9 +314,14 @@ class GamePlay {
           </div>
         </div>
 
+        <p class="results-hint">Cada vez que juegues, el orden de las palabras sera diferente</p>
+
         <div class="results-actions">
-          <button class="btn btn-secondary" id="play-again">Jugar de nuevo</button>
-          <button class="btn btn-primary" id="back-to-menu">Volver al menu</button>
+          <button class="btn btn-primary results-actions__play" id="play-again">
+            <i class="fa-solid fa-rotate-right"></i>
+            Jugar de nuevo
+          </button>
+          <button class="btn btn-secondary" id="back-to-menu">Volver al menu</button>
         </div>
       </div>
     `;
