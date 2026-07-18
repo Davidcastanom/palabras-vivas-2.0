@@ -213,6 +213,20 @@ class AudioService {
   }
 
   /**
+   * Play trumpet fanfare MP3
+   */
+  async playTrumpet() {
+    try {
+      const audio = new Audio('/palabras-vivas-2.0/audio/trompeta.mp3');
+      audio.volume = 0.8;
+      await audio.play();
+    } catch (e) {
+      // fallback to TTS celebration
+      this.playCelebration();
+    }
+  }
+
+  /**
    * Convert syllables string to TTS-friendly format
    * 'Pe-rro' -> 'Pe ... rro'
    */

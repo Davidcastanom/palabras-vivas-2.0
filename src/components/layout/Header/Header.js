@@ -18,6 +18,7 @@ class Header {
    * @param {Function} options.onThemeToggle - Callback de cambio de tema
    * @param {Function} options.onMenuToggle - Callback de menú móvil
    * @param {Function} options.onNavClick - Callback de navegación
+   * @param {Function} options.onLogoClick - Callback del logo
    */
   constructor(options = {}) {
     this.options = {
@@ -33,6 +34,7 @@ class Header {
       onMenuToggle: null,
       onNavClick: null,
       onStarsReset: null,
+      onLogoClick: null,
       ...options
     };
 
@@ -70,10 +72,10 @@ class Header {
               <i class="fa-solid fa-arrow-left"></i>
             </button>
           ` : ''}
-          <a href="#/" class="header__logo">
+          <button class="header__logo" aria-label="Ir al inicio">
             <img src="${this.options.logo}" alt="${this.options.title}" class="header__logo-img" loading="lazy">
             <span class="header__logo-text">${this.options.title}</span>
-          </a>
+          </button>
         </div>
 
         <!-- Center Section (Desktop) -->
@@ -187,6 +189,12 @@ class Header {
     const starCounter = this.element.querySelector('.star-counter');
     if (starCounter && this.options.onStarsReset) {
       starCounter.addEventListener('click', this.options.onStarsReset);
+    }
+
+    // Logo click
+    const logo = this.element.querySelector('.header__logo');
+    if (logo && this.options.onLogoClick) {
+      logo.addEventListener('click', this.options.onLogoClick);
     }
   }
 

@@ -157,7 +157,8 @@ class App {
           router.navigate(href);
         }
       },
-      onStarsReset: () => this.resetStars()
+      onStarsReset: () => this.resetStars(),
+      onLogoClick: () => router.navigate('home')
     });
 
     const app = document.getElementById('app');

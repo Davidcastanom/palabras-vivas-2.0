@@ -48,8 +48,12 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   color: var(--text-primary);
+  transition: all var(--transition-normal);
 }
 
 .header__logo-img {

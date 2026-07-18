@@ -3,6 +3,7 @@
  * Pantalla principal de juego - Orquestador delgado
  */
 
+import confetti from 'canvas-confetti';
 import './GamePlay.css';
 import CompleteWordGame from '../../games/complete-word/CompleteWordGame.js';
 import MemoryGame from '../../games/memory/MemoryGame.js';
@@ -341,6 +342,19 @@ class GamePlay {
     if (progressBar) progressBar.style.display = 'none';
     if (pauseBtn) pauseBtn.style.display = 'none';
     if (resetBtn) resetBtn.style.display = 'none';
+
+    // Confetti + trumpet
+    if (result.stars > 0) {
+      audioService.playTrumpet();
+      const duration = 2000;
+      const end = Date.now() + duration;
+      const frame = () => {
+        confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+        confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      };
+      frame();
+    }
 
     this.element.querySelector('#play-again')?.addEventListener('click', () => {
       if (progressBar) progressBar.style.display = '';
