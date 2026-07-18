@@ -217,11 +217,10 @@ class AudioService {
    */
   async playTrumpet() {
     try {
-      const audio = new Audio('/palabras-vivas-2.0/audio/trompeta.mp3');
+      const audio = new Audio('https://res.cloudinary.com/dwhe4jadc/video/upload/v1784339664/pw23check-winning-218995_fkxxj5.mp3');
       audio.volume = 0.8;
       await audio.play();
     } catch (e) {
-      // fallback to TTS celebration
       this.playCelebration();
     }
   }
