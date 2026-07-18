@@ -13,6 +13,7 @@ import { getWordsForCategory as getWords } from '../data/words.js';
 import Header from '../components/layout/Header/Header.js';
 import Toast from '../components/core/Toast/Toast.js';
 import Modal from '../components/core/Modal/Modal.js';
+import installPrompt from '../components/core/InstallPrompt/InstallPrompt.js';
 
 // Router
 import router from './router.js';
@@ -64,6 +65,9 @@ class App {
     setTimeout(() => {
       Toast.info('¡Bienvenido a Palabras Vivas!');
     }, 1000);
+
+    // Initialize PWA install prompt
+    installPrompt.init();
 
     // Register Service Worker for offline support
     if ('serviceWorker' in navigator) {
