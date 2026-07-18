@@ -70,7 +70,7 @@ class Header {
               <i class="fa-solid fa-arrow-left"></i>
             </button>
           ` : ''}
-          <a href="/" class="header__logo">
+          <a href="#/" class="header__logo">
             <img src="${this.options.logo}" alt="${this.options.title}" class="header__logo-img" loading="lazy">
             <span class="header__logo-text">${this.options.title}</span>
           </a>
