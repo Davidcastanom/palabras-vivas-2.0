@@ -98,7 +98,7 @@ class Header {
 
           <!-- Theme Toggle -->
           <button class="theme-toggle" aria-label="Cambiar tema">
-            <i class="fa-solid ${this.options.theme === 'dark' ? 'fa-sun' : 'fa-moon'}"></i>
+            <i class="fa-solid ${this.options.theme === 'dark' ? 'fa-moon' : 'fa-sun'}"></i>
           </button>
 
           <!-- Menu Toggle (Mobile) -->
@@ -233,7 +233,7 @@ class Header {
     this.options.theme = theme;
     const icon = this.element.querySelector('.theme-toggle i');
     if (icon) {
-      icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      icon.className = theme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
     }
   }
 
