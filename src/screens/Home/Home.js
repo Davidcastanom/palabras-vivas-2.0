@@ -78,15 +78,26 @@ class HomeScreen {
 
   renderCategories() {
     return this.categories.map(cat => `
-      <button 
-        class="category-card"
-        data-category="${cat.id}"
-        style="--category-color: ${cat.color}"
-      >
-        <i class="category-card__icon fa-solid ${cat.icon}" style="color: ${cat.color}"></i>
-        <h3 class="category-card__name">${cat.name}</h3>
-        <span class="category-card__count">${cat.count} palabras</span>
-      </button>
+      <div class="category-card-wrapper" data-category="${cat.id}">
+        <button 
+          class="category-card"
+          data-action="games"
+          style="--category-color: ${cat.color}"
+        >
+          <i class="category-card__icon fa-solid ${cat.icon}" style="color: ${cat.color}"></i>
+          <h3 class="category-card__name">${cat.name}</h3>
+          <span class="category-card__count">${cat.count} palabras</span>
+        </button>
+        <button 
+          class="category-card__write-btn"
+          data-action="write"
+          data-category-id="${cat.id}"
+          title="Aprender a escribir"
+        >
+          <i class="fa-solid fa-pen-fancy"></i>
+          Escribir
+        </button>
+      </div>
     `).join('');
   }
 
@@ -96,12 +107,24 @@ class HomeScreen {
   }
 
   setupEventListeners() {
-    const cards = this.screen.getElement().querySelectorAll('.category-card');
-    cards.forEach(card => {
+    const el = this.screen.getElement();
+
+    el.querySelectorAll('[data-action="games"]').forEach(card => {
       card.addEventListener('click', () => {
-        const categoryId = card.dataset.category;
+        const wrapper = card.closest('.category-card-wrapper');
+        const categoryId = wrapper.dataset.category;
         if (this.options.onCategorySelect) {
           this.options.onCategorySelect(categoryId);
+        }
+      });
+    });
+
+    el.querySelectorAll('[data-action="write"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const categoryId = btn.dataset.categoryId;
+        if (this.options.onWriteSelect) {
+          this.options.onWriteSelect(categoryId);
         }
       });
     });

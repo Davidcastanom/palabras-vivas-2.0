@@ -25,6 +25,7 @@ import HomeScreen from '../screens/Home/Home.js';
 import GameMenuScreen from '../screens/GameMenu/GameMenu.js';
 import GameIntroScreen from '../screens/GameIntro/GameIntro.js';
 import GamePlayScreen from '../screens/GamePlay/GamePlay.js';
+import WritePracticeScreen from '../screens/WritePractice/WritePractice.js';
 
 class App {
   constructor() {
@@ -113,6 +114,11 @@ class App {
       this.startGame(params.game, params.category);
     });
 
+    router.on('write/:category', (params) => {
+      store.setState({ category: params.category });
+      this.renderScreen('writePractice', { category: params.category });
+    });
+
     router.init();
   }
 
@@ -187,7 +193,8 @@ class App {
       switch (screenName) {
         case 'home':
           this.currentScreenInstance = new HomeScreen({
-            onCategorySelect: (categoryId) => this.selectCategory(categoryId)
+            onCategorySelect: (categoryId) => this.selectCategory(categoryId),
+            onWriteSelect: (categoryId) => router.navigate(`write/${categoryId}`)
           });
           break;
 
@@ -213,9 +220,18 @@ class App {
           this.currentScreenInstance = new GamePlayScreen(this);
           break;
 
+        case 'writePractice':
+          this.currentScreenInstance = new WritePracticeScreen({
+            category: options.category,
+            onBack: () => this.goBack(),
+            onComplete: () => router.navigate('home')
+          });
+          break;
+
         default:
           this.currentScreenInstance = new HomeScreen({
-            onCategorySelect: (categoryId) => this.selectCategory(categoryId)
+            onCategorySelect: (categoryId) => this.selectCategory(categoryId),
+            onWriteSelect: (categoryId) => router.navigate(`write/${categoryId}`)
           });
       }
 

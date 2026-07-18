@@ -1,0 +1,391 @@
+/* ========================================
+   WRITE PRACTICE - PALABRAS VIVAS 2.0
+   ======================================== */
+
+.write-practice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: var(--space-2xl);
+}
+
+/* ========================================
+   PROGRESS BAR
+   ======================================== */
+.write-practice__progress {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: var(--space-lg);
+}
+
+.write-practice__progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+}
+
+.write-practice__progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+.write-practice__progress-text {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+/* ========================================
+   WORD IMAGE
+   ======================================== */
+.write-practice__image-wrapper {
+  width: 160px;
+  height: 160px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.write-practice__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ========================================
+   SYLLABLE BUTTONS
+   ======================================== */
+.write-practice__syllables {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.write-practice__syllable-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  min-width: 80px;
+  min-height: 48px;
+}
+
+.write-practice__syllable-btn:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  transform: scale(1.05);
+}
+
+.write-practice__syllable-btn:active {
+  transform: scale(0.95);
+}
+
+.write-practice__syllable-btn.playing {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: white;
+  animation: syllablePulse 0.3s ease-out;
+}
+
+.write-practice__syllable-btn i {
+  font-size: var(--text-sm);
+  opacity: 0.6;
+}
+
+/* ========================================
+   LETTER SLOTS (writing area)
+   ======================================== */
+.write-practice__writing-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.write-practice__slots {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.write-practice__slot {
+  width: 48px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  transition: all var(--transition-normal);
+}
+
+.write-practice__slot--space {
+  width: 24px;
+  border-color: transparent;
+  background: transparent;
+}
+
+.write-practice__slot--filled {
+  border-style: solid;
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.write-practice__slot--correct {
+  border-color: var(--color-success);
+  background: var(--color-success-light);
+  color: var(--color-success);
+  animation: slotCorrect 0.3s ease-out;
+}
+
+.write-practice__slot--wrong {
+  border-color: var(--color-error);
+  background: var(--color-error-light);
+  animation: slotWrong 0.3s ease-out;
+}
+
+/* ========================================
+   LETTER BUTTONS (scrambled)
+   ======================================== */
+.write-practice__letters {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.write-practice__letter-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.write-practice__letter-btn:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.write-practice__letter-btn:active {
+  transform: translateY(0);
+}
+
+.write-practice__letter-btn--used {
+  opacity: 0.3;
+  pointer-events: none;
+  transform: scale(0.9);
+}
+
+/* ========================================
+   CONTROLS
+   ======================================== */
+.write-practice__controls {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.write-practice__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border: 2px solid transparent;
+  min-height: 44px;
+}
+
+.write-practice__btn--listen {
+  background: var(--color-primary);
+  color: white;
+}
+
+.write-practice__btn--listen:hover {
+  background: var(--color-primary-hover);
+}
+
+.write-practice__btn--clear {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.write-practice__btn--clear:hover {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+.write-practice__btn--next {
+  background: var(--color-success);
+  color: white;
+}
+
+.write-practice__btn--next:hover {
+  background: var(--color-success-hover);
+}
+
+/* ========================================
+   WORD DISPLAY (above slots)
+   ======================================== */
+.write-practice__word-display {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 6vw, 40px);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  letter-spacing: 4px;
+  margin-bottom: var(--space-md);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+/* ========================================
+   COMPLETION OVERLAY
+   ======================================== */
+.write-practice__completion {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.write-practice__completion-card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  animation: scaleIn 0.3s ease-out;
+}
+
+.write-practice__completion-icon {
+  font-size: 64px;
+  margin-bottom: var(--space-lg);
+}
+
+.write-practice__completion-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.write-practice__completion-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes syllablePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes slotCorrect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@keyframes slotWrong {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (min-width: 640px) {
+  .write-practice__image-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+
+  .write-practice__slot {
+    width: 56px;
+    height: 64px;
+    font-size: var(--text-3xl);
+  }
+
+  .write-practice__letter-btn {
+    width: 56px;
+    height: 56px;
+    font-size: var(--text-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .write-practice__image-wrapper {
+    width: 240px;
+    height: 240px;
+  }
+}
