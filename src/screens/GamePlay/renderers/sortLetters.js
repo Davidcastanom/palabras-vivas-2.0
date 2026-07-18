@@ -1,3 +1,5 @@
+import audioService from '../../../services/AudioService.js';
+
 export function renderSortLetters(gameArea, gameInstance, gamePlay) {
   const shuffled = gameInstance.getShuffledLetters();
   const selected = gameInstance.getSelectedLetters();
@@ -55,13 +57,16 @@ export function renderSortLetters(gameArea, gameInstance, gamePlay) {
     updateSortLettersDisplay(gameArea, gameInstance);
   });
 
-  gamePlay.element.querySelector('#check-sort')?.addEventListener('click', () => {
+  gamePlay.element.querySelector('#check-sort')?.addEventListener('click', async () => {
     const isCorrect = gameInstance.checkWord();
     
     if (isCorrect) {
+      await audioService.playCorrect();
+      await audioService.playCelebration();
       gamePlay.showFeedback(true);
       setTimeout(() => gamePlay.nextRound(), 1500);
     } else {
+      audioService.playWrong();
       gamePlay.showFeedback(false);
     }
   });
