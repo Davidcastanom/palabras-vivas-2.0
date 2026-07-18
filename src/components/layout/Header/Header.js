@@ -130,6 +130,11 @@ class Header {
       ? this.options.navItems 
       : [
           { label: 'Inicio', href: 'home', icon: 'fa-home' },
+          { label: 'Animales', href: 'game/animales', icon: 'fa-paw' },
+          { label: 'Frutas', href: 'game/frutas', icon: 'fa-apple-whole' },
+          { label: 'Objetos', href: 'game/objetos', icon: 'fa-cube' },
+          { label: 'Familia', href: 'game/familia', icon: 'fa-people-roof' },
+          { label: 'Cuerpo', href: 'game/cuerpo', icon: 'fa-person' },
           { label: 'Cambiar tema', href: 'theme', icon: 'fa-palette' }
         ];
 

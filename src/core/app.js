@@ -148,10 +148,13 @@ class App {
       onBack: () => this.handleHeaderBack(),
       onThemeToggle: () => this.toggleTheme(),
       onNavClick: (href) => {
+        this.header.closeMobileMenu();
         if (href === 'home') {
           router.navigate('home');
         } else if (href === 'theme') {
           this.toggleTheme();
+        } else {
+          router.navigate(href);
         }
       }
     });

@@ -196,10 +196,18 @@
    ======================================== */
 .button--glow {
   box-shadow: 0 0 20px var(--color-primary-glow);
+  animation: buttonPulse 2s ease-in-out infinite;
 }
 
 .button--glow:hover:not(:disabled) {
   box-shadow: 0 0 30px var(--color-primary-glow);
+  animation: none;
+  transform: scale(1.03);
+}
+
+@keyframes buttonPulse {
+  0%, 100% { box-shadow: 0 0 20px var(--color-primary-glow); }
+  50% { box-shadow: 0 0 35px var(--color-primary-glow), 0 0 60px var(--color-primary-glow); }
 }
 
 /* ========================================
