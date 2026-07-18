@@ -54,7 +54,6 @@ class Screen {
 
   buildContent() {
     return `
-      <div class="screen__header-spacer"></div>
       <div class="screen__content">
         ${this.options.content || ''}
       </div>

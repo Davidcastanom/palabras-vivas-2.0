@@ -10,7 +10,7 @@
    HERO
    ======================================== */
 .home-hero {
-  padding: var(--space-xl) 0 var(--space-2xl);
+  padding: var(--space-lg) 0 var(--space-xl);
   max-width: 700px;
   margin: 0 auto;
 }
@@ -68,6 +68,21 @@
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
   margin: 0;
+}
+
+/* ========================================
+   ILLUSTRATION
+   ======================================== */
+.home-illustration {
+  max-width: 600px;
+  margin: 0 auto var(--space-xl);
+}
+
+.home-illustration__img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  object-fit: contain;
 }
 
 /* ========================================
@@ -140,17 +155,22 @@
    RESPONSIVE
    ======================================== */
 @media (min-width: 640px) {
+  .home-illustration {
+    max-width: 700px;
+    margin-bottom: var(--space-xl);
+  }
+
   .home-categories__grid {
     grid-template-columns: repeat(3, 1fr);
   }
 
   .category-card {
     min-height: 160px;
-    padding: var(--space-xl);
+    padding: var(--space-lg);
   }
 
   .category-card__icon {
-    font-size: 48px;
+    font-size: 44px;
   }
 
   .category-card__name {
@@ -159,6 +179,10 @@
 }
 
 @media (min-width: 1024px) {
+  .home-illustration {
+    max-width: 800px;
+  }
+
   .home-categories__grid {
     grid-template-columns: repeat(4, 1fr);
   }

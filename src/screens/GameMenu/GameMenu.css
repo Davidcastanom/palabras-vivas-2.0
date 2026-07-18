@@ -10,7 +10,7 @@
    HEADER
    ======================================== */
 .game-menu__header {
-  padding: var(--space-lg) 0 var(--space-xl);
+  padding: var(--space-md) 0 var(--space-lg);
 }
 
 .game-menu__category-title {

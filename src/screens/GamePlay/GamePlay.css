@@ -121,7 +121,7 @@
 
 /* Game Area */
 .game-play-area {
-  min-height: 400px;
+  min-height: clamp(280px, 60vh, 400px);
   padding: var(--space-md);
 }
 

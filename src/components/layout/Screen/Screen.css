@@ -4,7 +4,7 @@
 
 .screen {
   min-height: 100vh;
-  padding-top: calc(var(--header-height) + var(--space-lg));
+  padding-top: calc(var(--header-height) + var(--space-sm));
   padding-bottom: var(--space-2xl);
   transition: opacity var(--transition-normal);
 }
@@ -62,13 +62,6 @@
 }
 
 /* ========================================
-   HEADER SPACER
-   ======================================== */
-.screen__header-spacer {
-  height: var(--header-height);
-}
-
-/* ========================================
    CONTENT
    ======================================== */
 .screen__content {
@@ -89,12 +82,12 @@
    ======================================== */
 @media (min-width: 768px) {
   .screen {
-    padding-top: calc(var(--header-height) + var(--space-xl));
+    padding-top: calc(var(--header-height) + var(--space-md));
   }
 }
 
 @media (min-width: 1024px) {
   .screen {
-    padding-top: calc(var(--header-height) + var(--space-2xl));
+    padding-top: calc(var(--header-height) + var(--space-lg));
   }
 }

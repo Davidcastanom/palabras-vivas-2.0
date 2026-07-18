@@ -304,10 +304,6 @@
     font-size: var(--text-xl);
   }
 
-  .header__menu-toggle {
-    display: none;
-  }
-
   .header__level {
     display: flex;
   }

@@ -59,6 +59,15 @@ class HomeScreen {
         <h2 class="home-hero__section-title animate-fadeInUp animation-delay-100">¡Elige un mundo!</h2>
       </div>
 
+      <div class="home-illustration animate-fadeInUp animation-delay-100">
+        <img 
+          src="./hero-illustration.png" 
+          alt="Ilustración de Palabras Vivas" 
+          class="home-illustration__img"
+          loading="eager"
+        >
+      </div>
+
       <div class="home-categories">
         <div class="home-categories__grid">
           ${this.renderCategories()}

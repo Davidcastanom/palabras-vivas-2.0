@@ -265,7 +265,7 @@
 .game-intro__action {
   position: sticky;
   bottom: 0;
-  padding: var(--space-lg) 0;
+  padding: var(--space-md) 0;
   background: linear-gradient(to top, var(--bg-primary) 60%, transparent);
   width: 100%;
   display: flex;
@@ -282,13 +282,13 @@
    ======================================== */
 @media (min-width: 640px) {
   .game-intro {
-    padding: var(--space-xl) 0;
+    padding: var(--space-lg) 0;
   }
 
   .game-intro__icon {
-    width: 120px;
-    height: 120px;
-    font-size: 56px;
+    width: 96px;
+    height: 96px;
+    font-size: 44px;
   }
 
   .game-intro__card {

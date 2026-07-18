@@ -78,7 +78,7 @@ body {
    ======================================== */
 @media (min-width: 768px) {
   :root {
-    --container-padding: var(--space-xl);
+    --container-padding: var(--space-lg);
     --header-height: 72px;
     --grid-columns: 8;
     --card-min-size: calc(33.333% - var(--space-lg));
@@ -298,20 +298,7 @@ body {
    MAIN CONTENT RESPONSIVE
    ======================================== */
 .main-content {
-  padding-top: calc(var(--header-height) + var(--space-lg));
   min-height: 100vh;
-}
-
-@media (min-width: 768px) {
-  .main-content {
-    padding-top: calc(var(--header-height) + var(--space-xl));
-  }
-}
-
-@media (min-width: 1024px) {
-  .main-content {
-    padding-top: calc(var(--header-height) + var(--space-2xl));
-  }
 }
 
 /* ========================================
@@ -323,7 +310,7 @@ body {
 
 @media (min-width: 768px) {
   .section {
-    padding: var(--space-3xl) 0;
+    padding: var(--space-xl) 0;
   }
 }
 
