@@ -1,8 +1,16 @@
+import audioService from '../../../services/AudioService.js';
+
 export function renderSyllables(gameArea, gameInstance, gamePlay) {
   const syllables = gameInstance.getSyllables();
   const selected = gameInstance.getSelectedSyllables();
+  const currentWord = gameInstance.state.currentWord;
 
   gameArea.innerHTML = `
+    <div class="syllables-hint">
+      <img class="syllables-hint__img" src="${currentWord.img}" alt="${currentWord.word}"
+           onerror="this.style.display='none'" loading="lazy">
+    </div>
+
     <div class="syllables-display">
       <div class="syllables-word">
         ${selected.map(s => `<span class="syllable-selected">${s.syllable}</span>`).join('')}
@@ -18,8 +26,14 @@ export function renderSyllables(gameArea, gameInstance, gamePlay) {
     </div>
 
     <div class="syllables-controls">
-      <button class="btn btn-secondary" id="clear-syllables" aria-label="Limpiar selección">Limpiar</button>
-      <button class="btn btn-primary" id="check-syllables" aria-label="Verificar respuesta">Verificar</button>
+      <button class="button button--secondary button--md" id="clear-syllables" aria-label="Limpiar selección">
+        <i class="fa-solid fa-eraser"></i>
+        Limpiar
+      </button>
+      <button class="button button--primary button--md" id="check-syllables" aria-label="Verificar respuesta">
+        <i class="fa-solid fa-check"></i>
+        Verificar
+      </button>
     </div>
   `;
 
@@ -39,13 +53,16 @@ export function renderSyllables(gameArea, gameInstance, gamePlay) {
     gameArea.querySelectorAll('.syllable-btn').forEach(btn => btn.classList.remove('selected'));
   });
 
-  gamePlay.element.querySelector('#check-syllables')?.addEventListener('click', () => {
+  gamePlay.element.querySelector('#check-syllables')?.addEventListener('click', async () => {
     const isCorrect = gameInstance.checkSyllables();
     
     if (isCorrect) {
+      await audioService.playCorrect();
+      await audioService.playCelebration();
       gamePlay.showFeedback(true);
       setTimeout(() => gamePlay.nextRound(), 1500);
     } else {
+      audioService.playWrong();
       gamePlay.showFeedback(false);
     }
   });

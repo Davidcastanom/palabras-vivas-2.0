@@ -263,6 +263,18 @@
   gap: var(--space-md);
 }
 
+.syllables-hint {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.syllables-hint__img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: var(--radius-xl);
+}
+
 /* Word Search */
 .word-search-hint {
   text-align: center;
@@ -606,7 +618,7 @@
     flex-direction: column;
   }
 
-  .results-actions .btn {
+  .results-actions .button {
     width: 100%;
   }
 }

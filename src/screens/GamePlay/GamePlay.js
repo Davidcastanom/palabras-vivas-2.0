@@ -317,11 +317,14 @@ class GamePlay {
         <p class="results-hint">Cada vez que juegues, el orden de las palabras sera diferente</p>
 
         <div class="results-actions">
-          <button class="btn btn-primary results-actions__play" id="play-again">
+          <button class="button button--primary button--md results-actions__play" id="play-again">
             <i class="fa-solid fa-rotate-right"></i>
             Jugar de nuevo
           </button>
-          <button class="btn btn-secondary" id="back-to-menu">Volver al menu</button>
+          <button class="button button--secondary button--md" id="back-to-menu">
+            <i class="fa-solid fa-arrow-left"></i>
+            Volver al menú
+          </button>
         </div>
       </div>
     `;
