@@ -92,10 +92,10 @@ class Header {
           </div>
 
           <!-- Star Counter -->
-          <div class="star-counter" title="Toca para reiniciar estrellas">
+          <button class="star-counter" title="Toca para reiniciar estrellas" aria-label="Reiniciar estrellas">
             <i class="star-counter__icon fa-solid fa-star"></i>
             <span class="star-counter__value">${this.options.stars}</span>
-          </div>
+          </button>
 
           <!-- Theme Toggle -->
           <button class="theme-toggle" aria-label="Cambiar tema">
@@ -186,7 +186,6 @@ class Header {
     // Star counter reset
     const starCounter = this.element.querySelector('.star-counter');
     if (starCounter && this.options.onStarsReset) {
-      starCounter.style.cursor = 'pointer';
       starCounter.addEventListener('click', this.options.onStarsReset);
     }
   }
