@@ -1,14 +1,15 @@
 const CACHE_NAME = 'palabras-vivas-v1';
 const ASSETS_TO_CACHE = [
   '/',
-  '/index.html',
-  '/logo.png',
-  '/favicon.ico',
-  '/favicon-16x16.png',
-  '/favicon-32x32.png',
-  '/favicon-192x192.png',
-  '/favicon-512x512.png',
-  '/site.webmanifest'
+  '/palabras-vivas-2.0/',
+  '/palabras-vivas-2.0/index.html',
+  '/palabras-vivas-2.0/logo.png',
+  '/palabras-vivas-2.0/favicon.ico',
+  '/palabras-vivas-2.0/favicon-16x16.png',
+  '/palabras-vivas-2.0/favicon-32x32.png',
+  '/palabras-vivas-2.0/favicon-192x192.png',
+  '/palabras-vivas-2.0/favicon-512x512.png',
+  '/palabras-vivas-2.0/site.webmanifest'
 ];
 
 // Install: cache core assets

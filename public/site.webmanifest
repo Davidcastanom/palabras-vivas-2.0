@@ -1,0 +1,25 @@
+{
+  "name": "Palabras Vivas",
+  "short_name": "Palabras Vivas",
+  "description": "App educativa para aprender palabras y sílabas jugando",
+  "start_url": "/palabras-vivas-2.0/",
+  "display": "standalone",
+  "background_color": "#0A0A0F",
+  "theme_color": "#0066FF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/palabras-vivas-2.0/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/palabras-vivas-2.0/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "kids"]
+}
