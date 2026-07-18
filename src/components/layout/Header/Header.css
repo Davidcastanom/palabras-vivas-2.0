@@ -214,7 +214,7 @@
 
 /* Menu Toggle (mobile) */
 .header__menu-toggle {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 40px;
@@ -321,6 +321,10 @@
 
   .header__level-text {
     display: inline;
+  }
+
+  .header__center {
+    display: flex;
   }
 }
 

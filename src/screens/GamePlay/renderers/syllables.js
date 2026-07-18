@@ -26,11 +26,11 @@ export function renderSyllables(gameArea, gameInstance, gamePlay) {
     </div>
 
     <div class="syllables-controls">
-      <button class="button button--secondary button--md" id="clear-syllables" aria-label="Limpiar selección">
+      <button class="button button--secondary button--lg button--rounded" id="clear-syllables" aria-label="Limpiar selección">
         <i class="fa-solid fa-eraser"></i>
         Limpiar
       </button>
-      <button class="button button--primary button--md" id="check-syllables" aria-label="Verificar respuesta">
+      <button class="button button--primary button--lg button--rounded" id="check-syllables" aria-label="Verificar respuesta">
         <i class="fa-solid fa-check"></i>
         Verificar
       </button>
