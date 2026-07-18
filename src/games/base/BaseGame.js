@@ -141,6 +141,8 @@ class BaseGame {
    * Avanzar a siguiente ronda
    */
   nextRound() {
+    if (this.state.isComplete) return;
+
     if (this.state.wordsRemaining.length === 0) {
       this.completeGame();
       return;
@@ -155,6 +157,8 @@ class BaseGame {
    * Completar juego
    */
   completeGame() {
+    if (this.state.isComplete) return;
+
     this.state.isComplete = true;
     this.stopTimer();
 

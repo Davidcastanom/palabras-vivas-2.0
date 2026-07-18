@@ -35,6 +35,8 @@ class CompleteWordGame extends BaseGame {
   }
 
   checkAnswer(selectedOption) {
+    if (this.state.isComplete) return false;
+
     const isCorrect = selectedOption.id === this.currentTarget.id;
 
     if (isCorrect) {

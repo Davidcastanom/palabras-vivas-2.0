@@ -147,6 +147,8 @@ class WordSearchGame extends BaseGame {
    * Verificar si la selección es correcta
    */
   checkSelection() {
+    if (this.state.isComplete) return false;
+
     const selectedWord = this.selectedLetters.map(l => l.letter).join('');
     const targetWord = this.wordsToFind[this.currentWordIndex].word.toUpperCase();
 
@@ -159,16 +161,8 @@ class WordSearchGame extends BaseGame {
 
       this.foundLetters.push(...this.selectedLetters);
       this.selectedLetters = [];
-      this.state.score += 10;
-      this.state.streak++;
 
-      if (this.config.onCorrectAnswer) {
-        this.config.onCorrectAnswer({
-          word: this.wordsToFind[this.currentWordIndex].word,
-          points: 10,
-          streak: this.state.streak
-        });
-      }
+      this.handleCorrectAnswer({ word: this.wordsToFind[this.currentWordIndex].word });
 
       return true;
     }

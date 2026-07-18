@@ -54,6 +54,9 @@ export function renderSyllables(gameArea, gameInstance, gamePlay) {
   });
 
   gamePlay.element.querySelector('#check-syllables')?.addEventListener('click', async () => {
+    const btn = gamePlay.element.querySelector('#check-syllables');
+    if (btn) btn.disabled = true;
+
     const isCorrect = gameInstance.checkSyllables();
     
     if (isCorrect) {
@@ -64,6 +67,7 @@ export function renderSyllables(gameArea, gameInstance, gamePlay) {
     } else {
       audioService.playWrong();
       gamePlay.showFeedback(false);
+      if (btn) btn.disabled = false;
     }
   });
 }

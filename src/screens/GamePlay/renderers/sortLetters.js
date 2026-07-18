@@ -64,6 +64,9 @@ export function renderSortLetters(gameArea, gameInstance, gamePlay) {
   });
 
   gamePlay.element.querySelector('#check-sort')?.addEventListener('click', async () => {
+    const btn = gamePlay.element.querySelector('#check-sort');
+    if (btn) btn.disabled = true;
+
     const isCorrect = gameInstance.checkWord();
     
     if (isCorrect) {
@@ -74,6 +77,7 @@ export function renderSortLetters(gameArea, gameInstance, gamePlay) {
     } else {
       audioService.playWrong();
       gamePlay.showFeedback(false);
+      if (btn) btn.disabled = false;
     }
   });
 }

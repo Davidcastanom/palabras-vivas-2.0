@@ -69,7 +69,7 @@ class MemoryGame extends BaseGame {
    * Voltear carta
    */
   flipCard(cardId) {
-    if (this.isProcessing) return null;
+    if (this.isProcessing || this.state.isComplete) return null;
 
     const card = this.cards.find(c => c.id === cardId);
     if (!card || card.isFlipped || card.isMatched) return null;
