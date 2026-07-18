@@ -168,6 +168,8 @@ class GamePlay {
 
     if (!gameArea || !this.gameInstance) return;
 
+    if (this.gameInstance.state.isComplete) return;
+
     switch (this.currentGameId) {
       case 'complete-word':
         renderCompleteWord(gameArea, this.gameInstance, this);
@@ -333,7 +335,17 @@ class GamePlay {
       gameControls.innerHTML = '';
     }
 
+    const progressBar = this.element.querySelector('.game-play-progress');
+    const pauseBtn = this.element.querySelector('#pause-btn');
+    const resetBtn = this.element.querySelector('#reset-btn');
+    if (progressBar) progressBar.style.display = 'none';
+    if (pauseBtn) pauseBtn.style.display = 'none';
+    if (resetBtn) resetBtn.style.display = 'none';
+
     this.element.querySelector('#play-again')?.addEventListener('click', () => {
+      if (progressBar) progressBar.style.display = '';
+      if (pauseBtn) pauseBtn.style.display = '';
+      if (resetBtn) resetBtn.style.display = '';
       this.gameInstance.reset();
       this.renderGame();
     });

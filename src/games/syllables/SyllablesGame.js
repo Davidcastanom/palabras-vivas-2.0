@@ -92,7 +92,15 @@ class SyllablesGame extends BaseGame {
    */
   checkSyllables() {
     const selectedWord = this.selectedSyllables.map(s => s.syllable).join('');
-    return this.normalizeString(selectedWord) === this.normalizeString(this.state.currentWord.word);
+    const isCorrect = this.normalizeString(selectedWord) === this.normalizeString(this.state.currentWord.word);
+
+    if (isCorrect) {
+      this.handleCorrectAnswer({ word: this.state.currentWord.word });
+    } else {
+      this.handleWrongAnswer({ word: this.state.currentWord.word });
+    }
+
+    return isCorrect;
   }
 
   /**

@@ -38,8 +38,14 @@ export function renderWordSearch(gameArea, gameInstance, gamePlay) {
     </div>
 
     <div class="word-search-controls">
-      <button class="btn btn-secondary" id="clear-word-search" aria-label="Limpiar selección">Limpiar</button>
-      <button class="btn btn-primary" id="check-word-search" aria-label="Verificar palabra">Verificar</button>
+      <button class="button button--secondary button--md" id="clear-word-search" aria-label="Limpiar selección">
+        <i class="fa-solid fa-eraser"></i>
+        Limpiar
+      </button>
+      <button class="button button--primary button--md" id="check-word-search" aria-label="Verificar palabra">
+        <i class="fa-solid fa-check"></i>
+        Verificar
+      </button>
     </div>
   `;
 

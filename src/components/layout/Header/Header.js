@@ -32,6 +32,7 @@ class Header {
       onThemeToggle: null,
       onMenuToggle: null,
       onNavClick: null,
+      onStarsReset: null,
       ...options
     };
 
@@ -91,7 +92,7 @@ class Header {
           </div>
 
           <!-- Star Counter -->
-          <div class="star-counter">
+          <div class="star-counter" title="Toca para reiniciar estrellas">
             <i class="star-counter__icon fa-solid fa-star"></i>
             <span class="star-counter__value">${this.options.stars}</span>
           </div>
@@ -175,13 +176,19 @@ class Header {
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        const href = link.dataset.nav;
+        const href = e.currentTarget.dataset.nav;
         if (this.options.onNavClick) {
           this.options.onNavClick(href);
         }
-        this.closeMobileMenu();
       });
     });
+
+    // Star counter reset
+    const starCounter = this.element.querySelector('.star-counter');
+    if (starCounter && this.options.onStarsReset) {
+      starCounter.style.cursor = 'pointer';
+      starCounter.addEventListener('click', this.options.onStarsReset);
+    }
   }
 
   initScrollListener() {

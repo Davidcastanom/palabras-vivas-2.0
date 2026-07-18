@@ -38,7 +38,7 @@ export function renderCompleteWord(gameArea, gameInstance, gamePlay) {
         gamePlay.showFeedback(true);
         gamePlay.addStarToApp();
         audioService.speak('¡Muy bien!');
-        setTimeout(() => gamePlay.renderGame(), 1500);
+        setTimeout(() => gamePlay.nextRound(), 1500);
       } else {
         gamePlay.showFeedback(false);
         audioService.speak('Oh, no. Inténtalo de nuevo');

@@ -156,7 +156,8 @@ class App {
         } else {
           router.navigate(href);
         }
-      }
+      },
+      onStarsReset: () => this.resetStars()
     });
 
     const app = document.getElementById('app');
@@ -418,6 +419,21 @@ class App {
 
   getWordsForCategory(category) {
     return getWords(category);
+  }
+
+  async resetStars() {
+    const confirmed = await Modal.confirm({
+      title: 'Reiniciar estrellas',
+      message: 'Se perderán todas las estrellas acumuladas. ¿Estás seguro?',
+      confirmText: 'Reiniciar',
+      cancelText: 'Cancelar'
+    });
+    if (confirmed) {
+      store.setState({ stars: 0 });
+      this.header.setStars(0);
+      this.header.setLevel(this.getLevel());
+      this.showToast('Estrellas reiniciadas', 'info');
+    }
   }
 }
 
